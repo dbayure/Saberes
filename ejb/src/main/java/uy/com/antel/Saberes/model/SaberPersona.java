@@ -1,6 +1,7 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,13 +30,14 @@ public abstract class SaberPersona implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaFin;
 	
-	private List<String> comprobantes;
+	
+	private ArrayList<String> comprobantes;
 
-	public List<String> getComprobantes() {
+	public ArrayList<String> getComprobantes() {
 		return comprobantes;
 	}
 
-	public void setComprobantes(List<String> comprobantes) {
+	public void setComprobantes(ArrayList<String> comprobantes) {
 		this.comprobantes = comprobantes;
 	}
 

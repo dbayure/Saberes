@@ -32,9 +32,10 @@ public class Saber implements Serializable {
 		private TipoSaber tipoSaber;
 		
 		@ManyToOne(optional=true) 
-	    @JoinColumn(name="idTipoSaber", nullable=true, updatable=false)
+	    @JoinColumn(name="idInstitucion", nullable=true, updatable=false)
 		private Institucion institucion;
 		
+		@Temporal(TemporalType.DATE)
 		private Date añoPlan;
 
 		public Long getId() {
