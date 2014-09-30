@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -35,7 +37,10 @@ public class Persona implements Serializable {
 	
 	private String nombre;
 	private String apellido;
+	
+	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
+	
 	private String sexo;
 	private String clase;
 	private String jornadaLaboral;
