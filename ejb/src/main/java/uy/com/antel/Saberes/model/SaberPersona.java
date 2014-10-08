@@ -52,6 +52,12 @@ public abstract class SaberPersona implements Serializable{
 	public void setComprobantes(ArrayList<String> comprobantes) {
 		this.comprobantes = comprobantes;
 	}
+	
+	public SaberPersona() {
+		super();
+		saber = new Saber();
+		
+	}
 
 	@Override
 	public int hashCode() {
