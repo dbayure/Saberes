@@ -1,6 +1,7 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,6 +56,11 @@ public class Persona implements Serializable {
 	private String telInterno;
 	private String telCelular;
 	private String Fax;
+	
+	public Persona(){
+		saberes = new ArrayList<SaberPersona>();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -171,7 +177,16 @@ public class Persona implements Serializable {
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}	
+	
+	public List<SaberPersona> getSaberes() {
+		return saberes;
 	}
+
+	public void setSaberes(List<SaberPersona> saberes) {
+		this.saberes = saberes;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

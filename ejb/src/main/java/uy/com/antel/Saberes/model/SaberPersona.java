@@ -3,10 +3,13 @@ package uy.com.antel.Saberes.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
+@Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "SaberPersona")
 public abstract class SaberPersona implements Serializable{
 
@@ -27,6 +31,11 @@ public abstract class SaberPersona implements Serializable{
 	@ManyToOne(optional=false) 
     @JoinColumn(name="idSaber", nullable=false, updatable=false)
 	private Saber saber;
+	
+	public SaberPersona() {
+		super();
+		saber = new Saber();		
+	}
 	
 	public Saber getSaber() {
 		return saber;
@@ -51,12 +60,6 @@ public abstract class SaberPersona implements Serializable{
 
 	public void setComprobantes(ArrayList<String> comprobantes) {
 		this.comprobantes = comprobantes;
-	}
-	
-	public SaberPersona() {
-		super();
-		saber = new Saber();
-		
 	}
 
 	@Override
