@@ -17,10 +17,10 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <name>Saberes</name>
+    <name>prueba-saberes</name>
     <modelVersion>4.0.0</modelVersion>
     <groupId>uy.com.antel</groupId>
-    <artifactId>Saberes</artifactId>
+    <artifactId>prueba-saberes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -81,7 +81,7 @@
                 to repeat ourselves in every module -->
             <dependency>
                 <groupId>uy.com.antel</groupId>
-                <artifactId>Saberes-ejb</artifactId>
+                <artifactId>prueba-saberes-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
@@ -90,7 +90,7 @@
                 ourselves in every module -->
             <dependency>
                 <groupId>uy.com.antel</groupId>
-                <artifactId>Saberes-web</artifactId>
+                <artifactId>prueba-saberes-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
                 <scope>compile</scope>

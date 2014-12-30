@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Saberes</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <h:outputStylesheet name="css/screen.css" />
+   <h:outputStylesheet name="css/default.css" />
+   <h:outputStylesheet name="css/jsfcrud.css"/>
+</h:head>
+<h:body>
+   <div id="container">
+	  <div id="header">
+	  <h:form prependId="false" id="fMenu">	  
+	   <p:menubar autoDisplay="false">
+<!--         <p:submenu label="Formulario" icon="ui-icon-contact"> -->
+<!-- 	        <p:menuitem value="Registro" url="/paginas/formulario/registroPersonas.jsf" icon="ui-icon-document" /> -->
+<!-- 	        <p:menuitem value="Formularios" url="/paginas/formulario/listadoFormularios.jsf" icon="ui-icon-document" /> -->
+<!--         </p:submenu> -->
+        
+        <p:submenu label="Usuarios" icon="ui-icon-person" rendered="#{facesContext.externalContext.isUserInRole('ADMIN')}" >
+	        <p:menuitem value="Roles" url="/paginas/rol/rol.jsf" icon="ui-icon-document" />
+	        <p:menuitem value="Instituciones" url="/paginas/institucion/institucion.jsf" icon="ui-icon-document" />
+	        <p:menuitem value="Tipos de Saber" url="/paginas/tiposaber/tiposaber.jsf" icon="ui-icon-document" />
+	       	<p:menuitem value="Saberes" url="/paginas/saber/saber.jsf" icon="ui-icon-document" />
+	        <p:menuitem value="Perfil" url="/paginas/persona/persona.jsf" icon="ui-icon-document" />	        
+	        <p:menuitem value="Usuario" url="/paginas/usuario/usuario.jsf" icon="ui-icon-document" />
+	       		        
+        </p:submenu>  
+  
+        <f:facet name="options">
+        	<h:outputText value="Usuario: #{request.remoteUser}" style="margin-right: 10px;" />
+            <p:commandButton ajax="false" value="Logout" icon="ui-icon-extlink" action="#{sessionBean.logout}" />
+        </f:facet> 
+        
+	
+    	</p:menubar> 
+    </h:form> 	  
+	  </div>
+      <div id="content">         
+         <ui:insert name="content">
+                    [Template content will be inserted here]
+          </ui:insert>
+      </div>
+      <div id="footer">
+         <h:graphicImage value="/resources/gfx/logoAntel.png" alt="MRREE" height="50px" />
+
+         <p>Complejo Torre de las Telecomunicaciones: Guatemala 1075<br />
+			Tel: 2928 00 00<br />
+			Montevideo - Uruguay<br />
+         </p>
+      </div>
+   </div>
+</h:body>
+</html>
