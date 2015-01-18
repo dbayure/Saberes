@@ -1,13 +1,10 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -33,8 +30,8 @@ public class Rol implements Serializable {
 	
 	private String descripcion;
 	
-	@OneToMany(mappedBy="rol")
-	private List<Persona> persona;
+//	@OneToMany(mappedBy="rol")
+//	private List<Persona> persona;
 
 	public Rol() {
 		super();
@@ -100,11 +97,11 @@ public class Rol implements Serializable {
 		return "Rol [id=" + id + ", rol=" + rol + ", descripcion=" + descripcion + "]";
 	}
 
-	public List<Persona> getPersona() {
-		return persona;
-	}
-
-	public void setPersona(List<Persona> persona) {
-		this.persona = persona;
-	}
+//	public List<Persona> getPersona() {
+//		return persona;
+//	}
+//
+//	public void setPersona(List<Persona> persona) {
+//		this.persona = persona;
+//	}
 }

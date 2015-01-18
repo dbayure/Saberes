@@ -18,15 +18,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>prueba-saberes</artifactId>
+        <artifactId>Saberes</artifactId>
         <groupId>uy.com.antel</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>prueba-saberes-ear</artifactId>
+    <artifactId>Saberes-ear</artifactId>
     <packaging>ear</packaging>
 
-    <name>prueba-saberes - ear</name>
+    <name>Saberes - ear</name>
 
     <url>http://jboss.org/jbossas</url>
     <licenses>
@@ -42,12 +42,12 @@
         <!-- Depend on the ejb module and war so that we can package them -->
         <dependency>
             <groupId>uy.com.antel</groupId>
-            <artifactId>prueba-saberes-web</artifactId>
+            <artifactId>Saberes-web</artifactId>
             <type>war</type>
         </dependency>
         <dependency>
             <groupId>uy.com.antel</groupId>
-            <artifactId>prueba-saberes-ejb</artifactId>
+            <artifactId>Saberes-ejb</artifactId>
             <type>ejb</type>
         </dependency>
     </dependencies>

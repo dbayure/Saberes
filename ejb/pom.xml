@@ -18,15 +18,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>prueba-saberes</artifactId>
+        <artifactId>Saberes</artifactId>
         <groupId>uy.com.antel</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>prueba-saberes-ejb</artifactId>
+    <artifactId>Saberes-ejb</artifactId>
     <packaging>ejb</packaging>
 
-    <name>prueba-saberes - ejb</name>
+    <name>Saberes - ejb</name>
 
     <url>http://jboss.org/jbossas</url>
     <licenses>
@@ -174,3 +174,4 @@
     </profiles>
 
 </project>
+

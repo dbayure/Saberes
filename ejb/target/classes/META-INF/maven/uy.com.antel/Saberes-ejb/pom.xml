@@ -72,6 +72,8 @@
             <scope>provided</scope>
         </dependency>
 
+	
+
 
         <!-- Test scope dependencies -->
         <dependency>
@@ -98,7 +100,7 @@
         <dependency>
         	<groupId>org.codehaus.jackson</groupId>
         	<artifactId>jackson-jaxrs</artifactId>
-        	<version>1.9.13</version>
+        	<version>1.8.0</version>
         </dependency>
     </dependencies>
 
@@ -172,3 +174,4 @@
     </profiles>
 
 </project>
+

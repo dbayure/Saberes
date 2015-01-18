@@ -17,10 +17,10 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <name>prueba-saberes</name>
+    <name>Saberes</name>
     <modelVersion>4.0.0</modelVersion>
     <groupId>uy.com.antel</groupId>
-    <artifactId>prueba-saberes</artifactId>
+    <artifactId>Saberes</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
@@ -50,11 +50,12 @@
         <version.jboss.maven.plugin>7.4.Final</version.jboss.maven.plugin>
 
         <!-- Define the version of the JBoss BOMs we want to import to specify tested stacks. -->
-        <!-- Certified version of the JBoss EAP components we want to use -->
-        <version.jboss.bom>1.0.4.Final-redhat-4</version.jboss.bom>
-        <!-- Alternatively, comment out the above line, and un-comment the
-            line below to use version 1.0.7.Final which is based on community built dependencies. -->
-        <!-- <version.jboss.bom>1.0.7.Final</version.jboss.bom> -->
+        <version.jboss.bom>1.0.7.Final</version.jboss.bom>
+        <!-- Alternatively, comment out the above line, and un-comment the line
+            below to use version 1.0.4.Final-redhat-4 which is a release certified to
+            work with JBoss EAP 6. It requires you have access to the JBoss EAP 6
+            maven repository. -->
+        <!-- <version.jboss.bom>1.0.4.Final-redhat-4</version.jboss.bom>> -->
 
         <version.jboss.as>7.2.0.Final</version.jboss.as>
         <!-- Alternatively, comment out the above line, and un-comment the 
@@ -81,7 +82,7 @@
                 to repeat ourselves in every module -->
             <dependency>
                 <groupId>uy.com.antel</groupId>
-                <artifactId>prueba-saberes-ejb</artifactId>
+                <artifactId>Saberes-ejb</artifactId>
                 <version>${project.version}</version>
                 <type>ejb</type>
             </dependency>
@@ -90,7 +91,7 @@
                 ourselves in every module -->
             <dependency>
                 <groupId>uy.com.antel</groupId>
-                <artifactId>prueba-saberes-web</artifactId>
+                <artifactId>Saberes-web</artifactId>
                 <version>${project.version}</version>
                 <type>war</type>
                 <scope>compile</scope>

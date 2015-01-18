@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd" version="6">
-  <display-name>prueba-saberes-ear</display-name>
+  <display-name>Saberes-ear</display-name>
   <module>
     <web>
-      <web-uri>prueba-saberes-web.war</web-uri>
-      <context-root>/prueba-saberes-web</context-root>
+      <web-uri>Saberes-web.war</web-uri>
+      <context-root>/Saberes-web</context-root>
     </web>
   </module>
   <module>
-    <ejb>prueba-saberes-ejb.jar</ejb>
+    <ejb>Saberes-ejb.jar</ejb>
   </module>
   <library-directory>lib</library-directory>
 </application>

@@ -13,11 +13,12 @@ import javax.persistence.EntityManager;
 
 import uy.com.antel.Saberes.model.Saber;
 
+
 @Stateful
 @Model
 public class RegistroSaber {
 
-	@Inject
+	   @Inject
 	   private Logger log;
 
 	   @Inject

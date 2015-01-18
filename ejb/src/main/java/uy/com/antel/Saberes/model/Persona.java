@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -42,21 +43,67 @@ public class Persona implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
 	
+	@Temporal(TemporalType.DATE)
+	private Date fechaIngreso;
+	
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
+	}
+
 	private String sexo;
 	private String clase;
+	private String descClase;
+	private String situacion;
+	private String regimen;
 	private String jornadaLaboral;
 	private String departamento;
 	private String localidad;
 	private String correo;
 	private String foto;
+	private String division;
+	private String area;
 	private String unidad;
 	private String piso;
 	private String oficina;
 	private String telDirecto;
 	private String telInterno;
 	private String telCelular;
-	private String Fax;
+	private String fax;
+	private String profesion;
+	private String direccion;
 	
+	@Column(unique=true, nullable=false) 
+	private String usuario;
+	
+	
+	public String getDivision() {
+		return division;
+	}
+
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
+	public String getArea() {
+		return area;
+	}
+
+	public void setArea(String area) {
+		this.area = area;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+
 	public Persona(){
 		saberes = new ArrayList<SaberPersona>();
 	}
@@ -170,10 +217,10 @@ public class Persona implements Serializable {
 		this.telCelular = telCelular;
 	}
 	public String getFax() {
-		return Fax;
+		return fax;
 	}
 	public void setFax(String fax) {
-		Fax = fax;
+		this.fax = fax;
 	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -187,22 +234,70 @@ public class Persona implements Serializable {
 		this.saberes = saberes;
 	}
 
+	public String getProfesion() {
+		return profesion;
+	}
+
+	public void setProfesion(String profesion) {
+		this.profesion = profesion;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getDescClase() {
+		return descClase;
+	}
+
+	public void setDescClase(String descClase) {
+		this.descClase = descClase;
+	}
+
+	public String getSituacion() {
+		return situacion;
+	}
+
+	public void setSituacion(String situacion) {
+		this.situacion = situacion;
+	}
+
+	public String getRegimen() {
+		return regimen;
+	}
+
+	public void setRegimen(String regimen) {
+		this.regimen = regimen;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((Fax == null) ? 0 : Fax.hashCode());
 		result = prime * result
 				+ ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result + ((area == null) ? 0 : area.hashCode());
 		result = prime * result + ((clase == null) ? 0 : clase.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
 		result = prime * result
 				+ ((departamento == null) ? 0 : departamento.hashCode());
 		result = prime * result
+				+ ((descClase == null) ? 0 : descClase.hashCode());
+		result = prime * result
+				+ ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result
+				+ ((division == null) ? 0 : division.hashCode());
+		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
+		result = prime * result
+				+ ((fechaIngreso == null) ? 0 : fechaIngreso.hashCode());
+		result = prime * result
 				+ ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + ((foto == null) ? 0 : foto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
 		result = prime * result
 				+ ((jornadaLaboral == null) ? 0 : jornadaLaboral.hashCode());
 		result = prime * result
@@ -210,7 +305,14 @@ public class Persona implements Serializable {
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((oficina == null) ? 0 : oficina.hashCode());
 		result = prime * result + ((piso == null) ? 0 : piso.hashCode());
+		result = prime * result
+				+ ((profesion == null) ? 0 : profesion.hashCode());
+		result = prime * result + ((regimen == null) ? 0 : regimen.hashCode());
+		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
+		result = prime * result + ((saberes == null) ? 0 : saberes.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
+		result = prime * result
+				+ ((situacion == null) ? 0 : situacion.hashCode());
 		result = prime * result
 				+ ((telCelular == null) ? 0 : telCelular.hashCode());
 		result = prime * result
@@ -218,8 +320,10 @@ public class Persona implements Serializable {
 		result = prime * result
 				+ ((telInterno == null) ? 0 : telInterno.hashCode());
 		result = prime * result + ((unidad == null) ? 0 : unidad.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -229,15 +333,15 @@ public class Persona implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Persona other = (Persona) obj;
-		if (Fax == null) {
-			if (other.Fax != null)
-				return false;
-		} else if (!Fax.equals(other.Fax))
-			return false;
 		if (apellido == null) {
 			if (other.apellido != null)
 				return false;
 		} else if (!apellido.equals(other.apellido))
+			return false;
+		if (area == null) {
+			if (other.area != null)
+				return false;
+		} else if (!area.equals(other.area))
 			return false;
 		if (clase == null) {
 			if (other.clase != null)
@@ -254,6 +358,31 @@ public class Persona implements Serializable {
 				return false;
 		} else if (!departamento.equals(other.departamento))
 			return false;
+		if (descClase == null) {
+			if (other.descClase != null)
+				return false;
+		} else if (!descClase.equals(other.descClase))
+			return false;
+		if (direccion == null) {
+			if (other.direccion != null)
+				return false;
+		} else if (!direccion.equals(other.direccion))
+			return false;
+		if (division == null) {
+			if (other.division != null)
+				return false;
+		} else if (!division.equals(other.division))
+			return false;
+		if (fax == null) {
+			if (other.fax != null)
+				return false;
+		} else if (!fax.equals(other.fax))
+			return false;
+		if (fechaIngreso == null) {
+			if (other.fechaIngreso != null)
+				return false;
+		} else if (!fechaIngreso.equals(other.fechaIngreso))
+			return false;
 		if (fechaNacimiento == null) {
 			if (other.fechaNacimiento != null)
 				return false;
@@ -268,11 +397,6 @@ public class Persona implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (rol == null) {
-			if (other.rol != null)
-				return false;
-		} else if (!rol.equals(other.rol))
 			return false;
 		if (jornadaLaboral == null) {
 			if (other.jornadaLaboral != null)
@@ -299,10 +423,35 @@ public class Persona implements Serializable {
 				return false;
 		} else if (!piso.equals(other.piso))
 			return false;
+		if (profesion == null) {
+			if (other.profesion != null)
+				return false;
+		} else if (!profesion.equals(other.profesion))
+			return false;
+		if (regimen == null) {
+			if (other.regimen != null)
+				return false;
+		} else if (!regimen.equals(other.regimen))
+			return false;
+		if (rol == null) {
+			if (other.rol != null)
+				return false;
+		} else if (!rol.equals(other.rol))
+			return false;
+		if (saberes == null) {
+			if (other.saberes != null)
+				return false;
+		} else if (!saberes.equals(other.saberes))
+			return false;
 		if (sexo == null) {
 			if (other.sexo != null)
 				return false;
 		} else if (!sexo.equals(other.sexo))
+			return false;
+		if (situacion == null) {
+			if (other.situacion != null)
+				return false;
+		} else if (!situacion.equals(other.situacion))
 			return false;
 		if (telCelular == null) {
 			if (other.telCelular != null)
@@ -324,8 +473,16 @@ public class Persona implements Serializable {
 				return false;
 		} else if (!unidad.equals(other.unidad))
 			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
 		return true;
-	}
+	}	
 	
-
+	
+	
+	
 }
+

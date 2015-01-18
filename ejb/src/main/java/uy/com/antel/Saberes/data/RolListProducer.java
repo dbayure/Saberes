@@ -17,6 +17,7 @@ import javax.persistence.criteria.Root;
 import uy.com.antel.Saberes.model.Rol;
 
 
+
 @RequestScoped
 public class RolListProducer {
 	

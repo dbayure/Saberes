@@ -1,7 +1,6 @@
 package uy.com.antel.Saberes.controller;
 
 import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.enterprise.event.Event;
@@ -10,15 +9,16 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-
+import javax.persistence.Query;
 import uy.com.antel.Saberes.model.Rol;
+
 
 
 @Stateful
 @Model
 public class RegistroRol {
 	
-	@Inject
+	   @Inject
 	   private Logger log;
 
 	   @Inject
@@ -53,7 +53,23 @@ public class RegistroRol {
 		   em.remove(rol);
 		   rolEventSrc.fire(newRol);
 	   }
+	   
+	   public Rol buscar(Long id) throws Exception {
+		   log.info("Buscar " + id);
+		   Rol rol = em.find(Rol.class, id);
+		   return rol;
+	   }
 
+	   public Rol buscarPerfilBasico() throws Exception{
+		   Query q = em.createQuery("Select r from Rol r where r.descripcion = ?1");
+		   q.setParameter(1,"BASICO");
+		   
+		   Rol rolBasico = (Rol) q.getSingleResult(); 
+		   
+		   return rolBasico;
+
+	   }
+	   
 	   @PostConstruct
 	   public void initNewrol() {
 		   newRol = new Rol();

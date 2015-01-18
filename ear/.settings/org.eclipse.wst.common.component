@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="prueba-saberes-ear">
+    <wb-module deploy-name="Saberes-ear">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
-        <dependent-module archiveName="prueba-saberes-web.war" deploy-path="/" handle="module:/resource/prueba-saberes-web/prueba-saberes-web">
+        <dependent-module archiveName="Saberes-web.war" deploy-path="/" handle="module:/resource/Saberes-web/Saberes-web">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="prueba-saberes-ejb.jar" deploy-path="/" handle="module:/resource/prueba-saberes-ejb/prueba-saberes-ejb">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jackson-jaxrs.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-jaxrs/1.8.0/jackson-jaxrs-1.8.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jackson-core-asl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-core-asl/1.8.0/jackson-core-asl-1.8.0.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="jackson-mapper-asl.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-mapper-asl/1.8.0/jackson-mapper-asl-1.8.0.jar">
+        <dependent-module archiveName="Saberes-ejb.jar" deploy-path="/" handle="module:/resource/Saberes-ejb/Saberes-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>
