@@ -5,7 +5,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.logging.Logger;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
@@ -14,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import uy.com.antel.Saberes.model.Persona;
 
 @Stateful
@@ -117,12 +120,16 @@ public class RegistroPersona {
 		}
 
 		public Object buscarPersonaPorUsr(String usr) {
-			   Query q = em.createQuery("Select p from Persona p where p.usuario = ?1");
-			   q.setParameter(1,usr);
-			   
-			   Persona persona = (Persona) q.getSingleResult(); 
-			   
-			   return persona;
+			Query q = em
+					.createQuery("Select p from Persona p where p.usuario = ?1");
+			q.setParameter(1, usr);
+	
+			List <Persona> resultado = q.getResultList();
+	
+			if (resultado.isEmpty())
+				return null;
+			return resultado.get(0);
+	
 		}
 		
 //		public void modificarSaberPersona(Persona p){

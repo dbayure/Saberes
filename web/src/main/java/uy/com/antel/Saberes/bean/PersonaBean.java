@@ -30,6 +30,8 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocat
 @RequestScoped
 public class PersonaBean {
 
+	private String usuario;
+	
 	@Inject
 	private RegistroPersona registroPersona;
 	
@@ -65,7 +67,7 @@ public class PersonaBean {
 		try {
 
 			Persona aPersona = registroPersona.getNewPersona();
-			DatoPer datos = obtenerDatosPersona(aPersona.getUsuario());
+			DatoPer datos = obtenerDatosPersona(this.getUsuario());
 			
 			String apellido = datos.getPriape().trim()+" "+datos.getSegape().trim();
 			String nombre = datos.getNombre().trim();
@@ -108,11 +110,12 @@ public class PersonaBean {
 			aPersona.setFax(fax);
 			aPersona.setPiso(piso);
 			aPersona.setCorreo(email);
+			aPersona.setUsuario(this.usuario);
 			
 						
 			registroPersona.registro();
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+//			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
+//	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
 		catch (Exception e) {
@@ -122,8 +125,8 @@ public class PersonaBean {
 		 
 	}
 	
-	public boolean personaRegistrada(String usr) {
-		return registroPersona.buscarPersonaPorUsr(usr) != null;
+	public boolean personaRegistrada() {
+		return (registroPersona.buscarPersonaPorUsr(this.usuario) != null);
 	}
 
 	private DatoPer obtenerDatosPersona(String usuario)  {
@@ -162,6 +165,14 @@ public class PersonaBean {
 	public void onCancel(RowEditEvent event) {  
         FacesMessage msg = new FacesMessage("Se canceló modificar ", ((Rol) event.getObject()).getRol());  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
+    }
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}  
 
 }
