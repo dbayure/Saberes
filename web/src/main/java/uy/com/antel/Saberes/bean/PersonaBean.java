@@ -12,6 +12,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import javax.validation.constraints.Null;
 import javax.xml.rpc.ServiceException;
 
 import org.primefaces.event.FileUploadEvent;
@@ -65,8 +66,14 @@ public class PersonaBean {
 		FacesMessage msg;
 	
 		try {
-
-			Persona aPersona = registroPersona.getNewPersona();
+			
+			Persona aPersona;
+			if (personaRegistrada())
+				aPersona = registroPersona.buscarPersonaPorUsr(this.usuario);
+			else
+				aPersona = registroPersona.getNewPersona();
+				
+				
 			DatoPer datos = obtenerDatosPersona(this.getUsuario());
 			
 			String apellido = datos.getPriape().trim()+" "+datos.getSegape().trim();
@@ -112,8 +119,13 @@ public class PersonaBean {
 			aPersona.setCorreo(email);
 			aPersona.setUsuario(this.usuario);
 			
-						
-			registroPersona.registro();
+			if (personaRegistrada())
+				registroPersona.modificar(aPersona);
+			else
+				registroPersona.registro();
+			
+			this.setPersonaBean(this.usuario);
+			
 //			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
 //	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
@@ -151,6 +163,10 @@ public class PersonaBean {
 
 	}
 	
+	public void setPersonaBean (String usr ){
+		registroPersona.setPersonaPorUsr(usr);
+	}
+	
 	private String getCi(String ci) {
 		List<String> conv = Arrays.asList("a","b","c","d","e","f","g","h","i","j","k");
 		if (ci.length() < 7){
@@ -173,6 +189,5 @@ public class PersonaBean {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
-	}  
-
+	}
 }
