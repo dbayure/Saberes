@@ -6,7 +6,7 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Perfil Persona</h1>
+      <h1 style="text-align: center;">Perfil Personal</h1>
 	
 
       <h:form id="form" prependId="false">
@@ -16,45 +16,113 @@
          
          
 
-			<h2><p:outputLabel value="#{actualPersona.nombre}" /></h2>
-			<h2><p:outputLabel value="#{actualPersona.apellido}" /></h2>
+			<h2><p:outputLabel value="# " />
+			<p:outputLabel value="Sanguinetti" /></h2>
 			
-			<p:outputLabel value="Clase:" />
-         	<p:outputLabel value="#{actualPersona.clase}" />
+			<p:outputLabel value="Clase: " style="font-weight:bold"/>
+         	<p:outputLabel value="M.19.M8 - C. A TNO. TEC. BASICO RED DE NUCLEO " /><br />
          	
-         	<p:outputLabel value="Profesion:" />
-         	<p:outputLabel value="#{actualPersona.profesion}" />
+         	<p:outputLabel value="Profesion: " style="font-weight:bold"/> 
+         	<p:outputLabel value="Analista en Computación" />
+         	<br /><br /><br />
          	
          	<h:panelGrid columns="2" >
          	
-         		<h:panelGrid columns="2" >
+         		<h:panelGrid columns="2" >         			
+					<h:graphicImage value="/resources/imagenes/foto.jpeg" />
+					<h3 style="margin-top:0"></h3>
+					
          			<h:form enctype="multipart/form-data">
 					    <p:growl id="messages" showDetail="true" />
 					 
 <!-- 					    <p:fileUpload fileUploadListener="#{personaBean.upload}" mode="simple" skinSimple="true"/> -->
 					    <p:fileUpload fileUploadListener="#{personaBean.upload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" sizeLimit="1000000" description="Selecciona Imagen"/>
-
 					 
 <!-- 					    <p:commandButton value="Submit" ajax="false" actionListener="#{personaBean.upload()}" disabled="true" /> -->
 					</h:form>
          		</h:panelGrid>
          		
          		<h:panelGrid columns="2" >
-         	
-		         	<p:outputLabel  value="Dirección:" />
-		         	<p:outputLabel id="direccion"  value="#{actualPersona.direccion}" />
+         			
+		         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
+		         	<p:outputLabel id="direccion"  value="Rondeau 1177" />
 		         	
-		         	<p:outputLabel  value="Tel Directo:" />
-		         	<p:outputLabel id="telDirecto"  value="#{actualPersona.telDirecto}" />
+		         	<h:graphicImage value="/resources/gfx/telefono.png" />
+		         	<p:outputLabel id="telDirecto"  value="20002810" />
 		         	
-		         	<p:outputLabel  value="Tel Celular:" />
-		         	<p:outputLabel id="telCelular"  value="#{actualPersona.telCelular}" />
+		         	<h:graphicImage value="/resources/gfx/telefono.png" />
+		         	<p:outputLabel id="telCelular"  value="099123456" />
 		         	
-		         	<p:outputLabel  value="Correo:" />
-		         	<p:outputLabel id="correo"  value="#{actualPersona.correo}" />
+		         	<h:graphicImage value="/resources/gfx/correo.png" />
+		         	<p:outputLabel id="correo"  value="jsanguinetti@mail.antel.com.uy" />
 		         	
-		         	<p:outputLabel  value="Fecha de Nacimiento:" />
-		         	<p:outputLabel id="fnac"  value="#{actualPersona.fechaNacimiento}" />
+		         	<h:graphicImage value="/resources/gfx/fnac.png" />
+		         	<p:outputLabel id="fnac"  value="16/06/1985" />
+		         	
+					<h:graphicImage value="/resources/gfx/info.png" />
+					
+				    <p:growl id="growl" life="2000" />
+				 
+				    <p:commandLink id="ajax" update="growl" onclick="PF('dlg').show()">
+				        <h:outputText value="Mas info" />
+				    </p:commandLink>
+					
+				<p:dialog header="Mas informacion" widgetVar="dlg" resizable="false" >  
+				    <h:form id="formDialog">  
+				        <h:panelGrid columns="2" style="margin-bottom:10px">
+				         	
+				         	<h:panelGrid columns="2" >				         		
+				         		
+				         		<h:panelGrid columns="2" >
+				         			
+						         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
+						         	<p:outputLabel id="direccion"  value="Rondeau 1177" />
+						         	
+						         	<h:graphicImage value="/resources/gfx/telefono.png" />
+						         	<p:outputLabel id="telDirecto"  value="20002810" />
+						         	
+						         	<h:graphicImage value="/resources/gfx/telefono.png" />
+						         	<p:outputLabel id="telCelular"  value="099123456" />
+						         	
+						         	<h:graphicImage value="/resources/gfx/correo.png" />
+						         	<p:outputLabel id="correo"  value="jsanguinetti@mail.antel.com.uy" />
+						         	
+						         	<h:graphicImage value="/resources/gfx/fnac.png" />
+						         	<p:outputLabel id="fnac"  value="16/06/1985" />																	
+						         	
+						    	</h:panelGrid>
+				            </h:panelGrid>  
+				            
+				            
+				            <br /><br /><br />
+				            <h2><p:outputLabel value="DATOS PERSONALES" style="font-weight:bold"/></h2>
+				            <br /><br /><br />
+				            
+				            <h:panelGrid columns="6" >
+					            <p:outputLabel value="Nombre: " style="font-weight:bold"/>
+					         	<p:outputLabel value="#{newPersona.nombre}" />
+					         	
+					         	<p:outputLabel value="Apellido: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.apellido}" />
+					         	
+					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.clase}" />
+					         	
+					         	<p:outputLabel value="Jornada Laboral: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.jornadaLaboral}" />
+					         	
+					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.clase}" />
+					         	
+					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.clase}" />
+				            </h:panelGrid>
+				                 
+				        </h:panelGrid>  
+				        <p:commandButton id="submitButton" value="Cerrar" action="#{formulariosBean.home}" actionListener="#{formularioBean.registrar}" oncomplete="PF('dlg').hide();"/>  
+					</h:form>  
+				</p:dialog>	
+						
 		         	
 		    	</h:panelGrid>     	
 		         	
