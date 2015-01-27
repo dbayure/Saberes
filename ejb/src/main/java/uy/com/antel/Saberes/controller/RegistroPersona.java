@@ -37,6 +37,7 @@ public class RegistroPersona {
 
 	   private Persona newPersona;
 	   
+	   
 //	   private SaberPersona _saberPersona;
 	   
 	   private String destination="/home/jsanguinetti/Descargas/prueba";
@@ -119,7 +120,19 @@ public class RegistroPersona {
 			return p;
 		}
 
-		public Object buscarPersonaPorUsr(String usr) {
+		public void setPersonaPorUsr(String usr) {
+			Query q = em
+					.createQuery("Select p from Persona p where p.usuario = ?1");
+			q.setParameter(1, usr);
+	
+			List <Persona> resultado = q.getResultList();
+	
+			if (!resultado.isEmpty())
+				this.newPersona = resultado.get(0);
+	
+		}
+		
+		public Persona buscarPersonaPorUsr(String usr) {
 			Query q = em
 					.createQuery("Select p from Persona p where p.usuario = ?1");
 			q.setParameter(1, usr);
