@@ -1,6 +1,7 @@
 package uy.com.antel.Saberes.data;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
 import javax.enterprise.event.Reception;
@@ -33,14 +34,13 @@ public class PersonaListProducer {
 		retrieveAllOrderedByName();
 	}
 
-	private void retrieveAllOrderedByName() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Persona> criteria = cb.createQuery(Persona.class);
-		Root<Persona> persona = criteria.from(Persona.class);
-		criteria.select(persona).orderBy(cb.asc(persona.get("nombre")));
-		persona = (Root<Persona>) em.createQuery(criteria).getResultList();
-		
-	}
-
+   @PostConstruct
+   public void retrieveAllOrderedByName() {
+      CriteriaBuilder cb = em.getCriteriaBuilder();
+      CriteriaQuery<Persona> criteria = cb.createQuery(Persona.class);
+      Root<Persona> persona = criteria.from(Persona.class);
+      criteria.select(persona).orderBy(cb.asc(persona.get("id")));
+      personas = em.createQuery(criteria).getResultList();
+   }
 
 }

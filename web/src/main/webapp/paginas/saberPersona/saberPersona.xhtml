@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Administración Saber de la persona</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Registro</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         
+         <h:panelGrid columns="2" >
+
+			<p:outputLabel for="fechaIni" value="Fecha de Inicio" />
+			<p:calendar	value="#{newSaberPersona.fechaInicio}" pattern="dd/MM/yyyy" id="fechaIni" mode="popup"	navigator="true" />
+			
+			<p:outputLabel for="fechaFin" value="Fecha de Fin" />
+			<p:calendar	value="#{newSaberPersona.fechaFin}" pattern="dd/MM/yyyy" id="fechaFin" mode="popup"	navigator="true" />
+				
+			<p:outputLabel for="Saber" value="Saber:" />
+			<p:selectOneMenu id="Saber" value="#{newSaberPersona.saber}" required="true">
+				<f:converter converterId="saberConverter" />				
+				<f:selectItem itemLabel="Seleccione..." itemValue="" />
+				<f:selectItems value="#{saberes}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}"  />
+			</p:selectOneMenu>
+	
+<!-- 			<p:outputLabel for="comprobante" value="Comprobantes" /> -->
+<!-- 			<p:fileUpload id="comprobante" value="#{fileUploadView.file}" mode="simple" skinSimple="true"/> -->
+ 
+<!--     		<p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" /> -->
+
+			
+		</h:panelGrid>
+         
+         <p>            
+            <h:commandButton id="register" action="#{saberPersonaBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+         </p>      
+     
+       <p:dataTable id="saberesPersona" var="_saberesPersona" value="#{saberesPersona}" editable="true">
+       		<f:facet name="header">  
+            	Administrar Saberes de las Personas  
+        	</f:facet>
+        	
+        	<p:ajax event="rowEdit" listener="#{saberPersonaBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{saberPersonaBean.onCancel}" update=":form:messages" />  
+        	 
+        	 <p:column headerText="Id" style="width:5%">
+        	 	<h:outputText value="#{_saberesPersona.id}" />
+        	 </p:column>
+        	 
+        	 <p:column headerText="Nombre" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_saberesPersona}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputSaber" value="#{_saberesPersona.saber.nombre}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	 
+           	 <p:column headerText="Tipo de Saber" style="width:25%">  
+               <p:cellEditor>  
+               		<f:facet name="output">
+                   		<h:outputText value="#{_saberesPersona.saber.tipoSaber.nombre}" />
+                   </f:facet> 
+                   <f:facet name="input">
+               			<p:selectOneMenu value="#{_saberesPersona.saber.tipoSaber}" converter="tipoSaberConverter">			
+							<f:selectItems value="#{tipoSaberes}" var="tipoSaber" itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}"  />
+						</p:selectOneMenu>
+             		</f:facet>  
+               </p:cellEditor>  
+           	 </p:column> 
+           	 
+           	 <p:column headerText="Institucion" style="width:25%">  
+               <p:cellEditor>
+                   <f:facet name="output">
+                   		<h:outputText value="#{_saberesPersona.saber.institucion.nombre}" />
+                   </f:facet>  
+                   <f:facet name="input">
+                   		<p:selectOneMenu value="#{_saberesPersona.saber.institucion}" converter="institucionConverter">			
+							<f:selectItems value="#{instituciones}" var="institucion" itemLabel="#{institucion.nombre}" itemValue="#{institucion}"  />
+						</p:selectOneMenu>
+                   </f:facet>  
+               </p:cellEditor>  
+           	 </p:column> 
+           	            	 
+           	 <p:column style="width:3%">           	 
+	            <p:rowEditor />	         	           
+	        </p:column>
+	       <!--  -->
+	        <p:column style="width:3%">
+	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{saberPersonaBean.eliminar(_saberesPersona.id)}">
+	        	</p:commandLink>	        	
+	        </p:column>
+	        
+       </p:dataTable>       
+		</h:form>     
+   </ui:define>
+</ui:composition>

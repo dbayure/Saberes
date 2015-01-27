@@ -13,10 +13,7 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private boolean validado;
-	private boolean completo;	
-	
-	public NoCorporativo() {
-	}
+	private boolean completo;
 	public boolean isValidado() {
 		return validado;
 	}
@@ -35,7 +32,7 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		int result = super.hashCode();
 		result = prime * result + (completo ? 1231 : 1237);
 		result = prime * result + (validado ? 1231 : 1237);
 		return result;
@@ -44,7 +41,7 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
+		if (!super.equals(obj))
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
@@ -55,7 +52,11 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "NoCorporativo [validado=" + validado + ", completo=" + completo
+				+ "]";
+	}	
 	
 	
-		
 }

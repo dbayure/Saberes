@@ -39,7 +39,7 @@ public class RegistroSaber {
 	      log.info("Registro " + newSaber.getNombre());
 	      em.persist(newSaber);
 	      saberEventSrc.fire(newSaber);
-	      initNewrol();
+	      initNewSaber();
 	   }
 	   
 	   public void modificar(Saber saber) throws Exception {
@@ -55,7 +55,7 @@ public class RegistroSaber {
 	   }
 
 	   @PostConstruct
-	   public void initNewrol() {
+	   public void initNewSaber() {
 		   newSaber = new Saber();
 	   }
 	  

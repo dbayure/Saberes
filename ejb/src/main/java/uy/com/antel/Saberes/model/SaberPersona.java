@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "SaberPersona")
-public abstract class SaberPersona implements Serializable{
+public class SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -32,11 +32,22 @@ public abstract class SaberPersona implements Serializable{
     @JoinColumn(name="idSaber", nullable=false, updatable=false)
 	private Saber saber;
 	
-	public SaberPersona() {
-		super();
-		saber = new Saber();		
-	}
+	@Temporal(TemporalType.DATE)
+	private Date fechaInicio;
 	
+	@Temporal(TemporalType.DATE)
+	private Date fechaFin;
+	
+	private ArrayList<String> comprobantes;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Saber getSaber() {
 		return saber;
 	}
@@ -45,14 +56,21 @@ public abstract class SaberPersona implements Serializable{
 		this.saber = saber;
 	}
 
-	@Temporal(TemporalType.DATE)
-	private Date fechaInicio;
-	
-	@Temporal(TemporalType.DATE)
-	private Date fechaFin;
-	
-	
-	private ArrayList<String> comprobantes;
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
 
 	public ArrayList<String> getComprobantes() {
 		return comprobantes;
@@ -60,6 +78,10 @@ public abstract class SaberPersona implements Serializable{
 
 	public void setComprobantes(ArrayList<String> comprobantes) {
 		this.comprobantes = comprobantes;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -113,7 +135,5 @@ public abstract class SaberPersona implements Serializable{
 			return false;
 		return true;
 	}
-
-		
 	
 }

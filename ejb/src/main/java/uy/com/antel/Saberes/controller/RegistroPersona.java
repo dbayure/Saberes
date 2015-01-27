@@ -130,5 +130,7 @@ public class RegistroPersona {
 //			log.info("La persona " + p.getNombre() + "fue modificada correctamente");
 //		}
 		
-   
+   public Persona encontrarPorId(long id){
+	   return em.find(Persona.class,id);
+   }
 }

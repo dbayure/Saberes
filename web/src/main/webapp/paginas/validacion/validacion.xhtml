@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Validacion de Saberes</h1>
+	
+
+      <h:form id="form" prependId="false">
+         <h2>Bandeja de Entrada</h2>
+         
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+      <p:dataScroller value="#{personas}" var="_persona" chunkSize="10">
+   
+        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail" rendered="#{personaBean.faltaValidar(_persona.id) == true}">
+            <p:graphicImage name="/resources/gfx/persona.png" />
+ 
+            <p:outputPanel>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputText value="Nombre:" />
+                    <h:outputText value="#{_persona.nombre}" style="font-weight: bold"/>
+ 
+                    <h:outputText value="Apellido:" />
+                    <h:outputText value="#{_persona.apellido}" style="font-weight: bold"/>
+ 
+                    <h:outputText value="Usuario:" />
+                    <h:outputText value="#{_persona.usuario}" style="font-weight: bold"/>
+                </h:panelGrid>
+            </p:outputPanel>
+        </h:panelGrid>
+    </p:dataScroller>
+    		
+		</h:form>     
+   </ui:define>
+</ui:composition>

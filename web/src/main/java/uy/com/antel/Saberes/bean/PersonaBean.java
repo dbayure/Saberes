@@ -5,23 +5,21 @@ import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.persistence.PersistenceException;
 import javax.xml.rpc.ServiceException;
-
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
-
 import WebServices.sgp.antel.com.DatoPer;
+import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.Rol;
+import uy.com.antel.Saberes.model.SaberPersona;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocator;
@@ -33,6 +31,9 @@ public class PersonaBean {
 	@Inject
 	private RegistroPersona registroPersona;
 	
+	@Inject
+	private RegistroNoCorporativo registroNoCorporativo;
+	
 	private UploadedFile file;
 	
 	public UploadedFile getFile() {
@@ -42,22 +43,6 @@ public class PersonaBean {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-     
-//	public void upload(FileUploadEvent event) {  
-//        FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-//        
-//         //aca deberia refrescar la imagen
-//        
-//        try {
-//            registroPersona.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-// 
-//    }  
- 
-    
 	
 	public void registrar() {
 		FacesMessage msg;
@@ -164,4 +149,21 @@ public class PersonaBean {
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
 
+	public boolean faltaValidar(long id){
+		Persona p = registroPersona.encontrarPorId(id);
+		boolean validar = false;
+		int i = 0;
+		for (SaberPersona sp : p.getSaberes()){
+			if(sp instanceof NoCorporativo){
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				if(nc.isValidado()){
+					i++;
+				}
+			}
+		if (i > 0){
+			validar =  true;
+			}
+		}
+		return validar;
+	}
 }

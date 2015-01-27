@@ -11,21 +11,22 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import uy.com.antel.Saberes.model.Saber;
+import uy.com.antel.Saberes.model.SaberPersona;
 /**
  * JAX-RS Example
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/saberes")
+@Path("/saberesPersona")
 @RequestScoped
-public class SaberResourceRESTService {
+public class SaberesPersonaResourceRESTService {
 	
    @Inject
    private EntityManager em;
 
    @GET
    @Produces("application/json")
-   public List<Saber> listAll() {
+   public List<SaberPersona> listAll() {
       // Use @SupressWarnings to force IDE to ignore warnings about "genericizing" the results of
       // this query
       @SuppressWarnings("unchecked")
@@ -33,14 +34,14 @@ public class SaberResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<Saber> results = em.createQuery("select c from Saber c order by c.id").getResultList();
+      final List<SaberPersona> results = em.createQuery("select c from SaberPersona c order by c.id").getResultList();
       return results;
    }
 
    @GET
    @Path("/{id:[0-9][0-9]*}")
    @Produces("application/json")
-   public Saber lookupById(@PathParam("id") long id) {
-      return em.find(Saber.class, id);
+   public SaberPersona lookupById(@PathParam("id") long id) {
+      return em.find(SaberPersona.class, id);
    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class Persona implements Serializable {
     @JoinColumn(name="idRol", nullable=false, updatable=false)
 	private Rol rol;
 	
-	@OneToMany
+	@OneToMany (fetch = FetchType.EAGER)
 	@JoinColumn(name="idSaberPersona", nullable=false, updatable=false)
 	private List<SaberPersona> saberes;
 	
@@ -45,15 +46,6 @@ public class Persona implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
-	
-	public Date getFechaIngreso() {
-		return fechaIngreso;
-	}
-
-	public void setFechaIngreso(Date fechaIngreso) {
-		this.fechaIngreso = fechaIngreso;
-	}
-
 	private String sexo;
 	private String clase;
 	private String descClase;
@@ -143,6 +135,13 @@ public class Persona implements Serializable {
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
+	}
+	public Date getFechaIngreso() {
+		return fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 	public String getClase() {
 		return clase;
