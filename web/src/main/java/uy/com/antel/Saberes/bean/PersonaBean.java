@@ -192,7 +192,4 @@ public class PersonaBean {
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
 }
