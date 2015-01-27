@@ -2,49 +2,62 @@ package uy.com.antel.Saberes.filtro;
 
 import java.io.IOException;
 
-import javax.servlet.DispatcherType;
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.jboss.security.SecurityContextAssociation;
 
-@WebFilter(filterName="loginFiltro",urlPatterns="/paginas/formulario/j_security_check")
+import uy.com.antel.Saberes.bean.PersonaBean;
+
+/**
+ * Servlet Filter implementation class FiltroLogin
+ */
 public class FiltroLogin implements Filter {
+
+	@Inject
+	PersonaBean persona;
 	
-	 protected FilterConfig filterConfig;
-	
+    /**
+     * Default constructor. 
+     */
     public FiltroLogin() {
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see Filter#destroy()
+	 */
 	public void destroy() {
-		 this.filterConfig = null;
+		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest req = (HttpServletRequest)request;
-	    HttpServletResponse res = (HttpServletResponse)response;
 
-	      // pre login action
-	      
-	      // get username 
-	      String username = req.getParameter("j_username");
-	      System.out.println("ESTOY");
-	      
-	      // call next filter in the chain : let j_security_check authenticate 
-	      // user
-	      chain.doFilter(request, response);
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		String userBean = persona.getUsuario();
 
-	      // post login action
+		persona.setUsuario(userName);
+
+		persona.registrar();
+
+		System.out.println("Yeeey! Get me here and find me in the database: "
+				+ userName);
+		chain.doFilter(request, response);
 	}
 
+	/**
+	 * @see Filter#init(FilterConfig)
+	 */
 	public void init(FilterConfig fConfig) throws ServletException {
-		 this.filterConfig = filterConfig;
+		// TODO Auto-generated method stub
 	}
 
 }
