@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.validation.constraints.Null;
 import javax.xml.rpc.ServiceException;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
@@ -28,6 +29,8 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocat
 @RequestScoped
 public class PersonaBean {
 
+	private String usuario;
+	
 	@Inject
 	private RegistroPersona registroPersona;
 	
@@ -48,9 +51,15 @@ public class PersonaBean {
 		FacesMessage msg;
 	
 		try {
-
-			Persona aPersona = registroPersona.getNewPersona();
-			DatoPer datos = obtenerDatosPersona(aPersona.getUsuario());
+			
+			Persona aPersona;
+			if (personaRegistrada())
+				aPersona = registroPersona.buscarPersonaPorUsr(this.usuario);
+			else
+				aPersona = registroPersona.getNewPersona();
+				
+				
+			DatoPer datos = obtenerDatosPersona(this.getUsuario());
 			
 			String apellido = datos.getPriape().trim()+" "+datos.getSegape().trim();
 			String nombre = datos.getNombre().trim();
@@ -93,11 +102,17 @@ public class PersonaBean {
 			aPersona.setFax(fax);
 			aPersona.setPiso(piso);
 			aPersona.setCorreo(email);
+			aPersona.setUsuario(this.usuario);
 			
-						
-			registroPersona.registro();
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
-	        FacesContext.getCurrentInstance().addMessage(null, msg);
+			if (personaRegistrada())
+				registroPersona.modificar(aPersona);
+			else
+				registroPersona.registro();
+			
+			this.setPersonaBean(this.usuario);
+			
+//			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
+//	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
 		catch (Exception e) {
@@ -107,8 +122,8 @@ public class PersonaBean {
 		 
 	}
 	
-	public boolean personaRegistrada(String usr) {
-		return registroPersona.buscarPersonaPorUsr(usr) != null;
+	public boolean personaRegistrada() {
+		return (registroPersona.buscarPersonaPorUsr(this.usuario) != null);
 	}
 
 	private DatoPer obtenerDatosPersona(String usuario)  {
@@ -133,6 +148,10 @@ public class PersonaBean {
 
 	}
 	
+	public void setPersonaBean (String usr ){
+		registroPersona.setPersonaPorUsr(usr);
+	}
+	
 	private String getCi(String ci) {
 		List<String> conv = Arrays.asList("a","b","c","d","e","f","g","h","i","j","k");
 		if (ci.length() < 7){
@@ -147,7 +166,11 @@ public class PersonaBean {
 	public void onCancel(RowEditEvent event) {  
         FacesMessage msg = new FacesMessage("Se canceló modificar ", ((Rol) event.getObject()).getRol());  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
-    }  
+    }
+
+	public String getUsuario() {
+		return usuario;
+	}
 
 	public boolean faltaValidar(long id){
 		Persona p = registroPersona.encontrarPorId(id);
@@ -165,5 +188,11 @@ public class PersonaBean {
 			}
 		}
 		return validar;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 }
