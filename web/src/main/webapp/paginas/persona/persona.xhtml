@@ -16,14 +16,14 @@
          
          
 
-			<h2><p:outputLabel value="# " />
-			<p:outputLabel value="Sanguinetti" /></h2>
+			<h2><p:outputLabel value="#{newPersona.nombre} " />
+			<p:outputLabel value="#{newPersona.apellido}" /></h2>
 			
 			<p:outputLabel value="Clase: " style="font-weight:bold"/>
-         	<p:outputLabel value="M.19.M8 - C. A TNO. TEC. BASICO RED DE NUCLEO " /><br />
+         	<p:outputLabel value="#{newPersona.clase} " /><br />
          	
          	<p:outputLabel value="Profesion: " style="font-weight:bold"/> 
-         	<p:outputLabel value="Analista en Computación" />
+         	<p:outputLabel value="#{newPersona.profesion}" />
          	<br /><br /><br />
          	
          	<h:panelGrid columns="2" >
@@ -45,19 +45,19 @@
          		<h:panelGrid columns="2" >
          			
 		         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
-		         	<p:outputLabel id="direccion"  value="Rondeau 1177" />
+		         	<p:outputLabel id="direccion"  value="#{newPersona.direccion}" />
 		         	
 		         	<h:graphicImage value="/resources/gfx/telefono.png" />
-		         	<p:outputLabel id="telDirecto"  value="20002810" />
+		         	<p:outputLabel id="telDirecto"  value="#{newPersona.telDirecto}" />
 		         	
 		         	<h:graphicImage value="/resources/gfx/telefono.png" />
-		         	<p:outputLabel id="telCelular"  value="099123456" />
+		         	<p:outputLabel id="telCelular"  value="#{newPersona.telCelular}" />
 		         	
 		         	<h:graphicImage value="/resources/gfx/correo.png" />
-		         	<p:outputLabel id="correo"  value="jsanguinetti@mail.antel.com.uy" />
+		         	<p:outputLabel id="correo"  value="#{newPersona.correo}" />
 		         	
 		         	<h:graphicImage value="/resources/gfx/fnac.png" />
-		         	<p:outputLabel id="fnac"  value="16/06/1985" />
+		         	<p:outputLabel id="fnac"  value="#{newPersona.fechaNacimiento}" />
 		         	
 					<h:graphicImage value="/resources/gfx/info.png" />
 					
@@ -76,19 +76,19 @@
 				         		<h:panelGrid columns="2" >
 				         			
 						         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
-						         	<p:outputLabel id="direccion"  value="Rondeau 1177" />
+						         	<p:outputLabel id="direccion"  value="#{newPersona.direccion}" />
 						         	
 						         	<h:graphicImage value="/resources/gfx/telefono.png" />
-						         	<p:outputLabel id="telDirecto"  value="20002810" />
+						         	<p:outputLabel id="telDirecto"  value="#{newPersona.telDirecto}" />
 						         	
 						         	<h:graphicImage value="/resources/gfx/telefono.png" />
-						         	<p:outputLabel id="telCelular"  value="099123456" />
+						         	<p:outputLabel id="telCelular"  value="#{newPersona.telCelular}" />
 						         	
 						         	<h:graphicImage value="/resources/gfx/correo.png" />
-						         	<p:outputLabel id="correo"  value="jsanguinetti@mail.antel.com.uy" />
+						         	<p:outputLabel id="correo"  value="#{newPersona.correo}" />
 						         	
 						         	<h:graphicImage value="/resources/gfx/fnac.png" />
-						         	<p:outputLabel id="fnac"  value="16/06/1985" />																	
+						         	<p:outputLabel id="fnac"  value="#{newPersona.fechaNacimiento}" />																	
 						         	
 						    	</h:panelGrid>
 				            </h:panelGrid>  
@@ -111,11 +111,48 @@
 					         	<p:outputLabel value="Jornada Laboral: " style="font-weight:bold"/> 
 					         	<p:outputLabel value="#{newPersona.jornadaLaboral}" />
 					         	
-					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="Clase: " style="font-weight:bold"/> 
 					         	<p:outputLabel value="#{newPersona.clase}" />
 					         	
 					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
-					         	<p:outputLabel value="#{newPersona.clase}" />
+					         	<p:outputLabel value="#{newPersona.sexo}" />
+					         	
+					         	<p:outputLabel value="Departamento: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.departamento}" />
+					         	
+					         	<p:outputLabel value="Localidad: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.localidad}" />
+					         	
+					   			<p:outputLabel value="Profesion: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.profesion}" />
+					         	
+								<p:outputLabel value="Situación Laboral: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.situacion}" />
+					         	
+					   			<p:outputLabel value="Division: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.division}" />
+					         	
+					   			<p:outputLabel value="Unidad: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.unidad}" />
+					         	
+					   			<p:outputLabel value="E-Mail: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.correo}" />
+					         	
+					   			<p:outputLabel value="Piso: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.piso}" />
+
+					   			<p:outputLabel value="Oficina: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.oficina}" />
+					         	
+					   			<p:outputLabel value="Tel Directo: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.telDirecto}" />
+					         	
+					   			<p:outputLabel value="Celular: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.telCelular}" />
+					         	
+					         	<p:outputLabel value="Fax: " style="font-weight:bold"/> 
+					         	<p:outputLabel value="#{newPersona.fax}" />							         						         	
+					         	
 				            </h:panelGrid>
 				                 
 				        </h:panelGrid>  
