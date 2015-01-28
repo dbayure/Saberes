@@ -1,5 +1,7 @@
 package uy.com.antel.Saberes.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +14,8 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import uy.com.antel.Saberes.model.NoCorporativo;
+import uy.com.antel.Saberes.model.Persona;
+import uy.com.antel.Saberes.model.SaberPersona;
 
 
 @Stateful
@@ -20,6 +24,8 @@ public class RegistroNoCorporativo {
 	
 	@Inject
 	   private Logger log;
+		
+	   private RegistroPersona rp = new RegistroPersona();
 
 	   @Inject
 	   private EntityManager em;
@@ -35,8 +41,14 @@ public class RegistroNoCorporativo {
 	      return newNoCorporativo;
 	   }
 
-	   public void registro() throws Exception {
+	   public void registro(String usuario) throws Exception {
 	      log.info("Registro " + newNoCorporativo.getSaber().getNombre());
+	      System.out.println("###############Id de la persona a buscar en la base: " + usuario);
+	      Persona p = rp.buscarPersonaPorUsr(usuario);
+	      System.out.println("################Usuario de la persona encontrada: " + p.getUsuario());
+	      List<SaberPersona> saberes = new ArrayList<SaberPersona>();
+	      saberes.add(newNoCorporativo);
+	      p.setSaberes(saberes);
 	      em.persist(newNoCorporativo);
 	      noCorporativoEventSrc.fire(newNoCorporativo);
 	      initNewNoCorporativo();

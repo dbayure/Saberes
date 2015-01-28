@@ -41,7 +41,7 @@ public class NoCorporativoListProducer {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<NoCorporativo> criteria = cb.createQuery(NoCorporativo.class);
 		Root<NoCorporativo> noCorporativo = criteria.from(NoCorporativo.class);
-		criteria.select(noCorporativo).orderBy(cb.asc(noCorporativo.get("corporativo")));
+		criteria.select(noCorporativo).orderBy(cb.asc(noCorporativo.get("id")));
 		noCorporativos = em.createQuery(criteria).getResultList();
 	}
 }

@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 
 @Stateful
@@ -31,14 +32,8 @@ public class RegistroPersona {
 	   
 	   @Inject
 	   private RegistroRol rol;
-
-//	   @Inject
-//	   private Event<SaberPersona> saberPersonaEventSrc;
-
+	   
 	   private Persona newPersona;
-	   
-	   
-//	   private SaberPersona _saberPersona;
 	   
 	   private String destination="/home/jsanguinetti/Descargas/prueba";
 	   
@@ -48,11 +43,6 @@ public class RegistroPersona {
 	      return newPersona;
 	   }
 	   
-//	   @Produces
-//	   @Named
-//	   public SaberPersona getSaberPersona() {
-//			return _saberPersona;
-//		}
 
 		public void registro() throws Exception {
 			log.info("Registro " + newPersona.getNombre());
@@ -95,25 +85,6 @@ public class RegistroPersona {
 	   public void initNewPersona() {
 		   newPersona = new Persona();
 	   }
-	   
-//	   public void ingresarSaberPersona () throws Exception{
-//
-//		   actualPersona.getSaberes().add(_saberPersona);
-//			//init();
-//		}
-		
-//		public void eliminarSaberPersona (long idPersona, long idSaberPersona) throws Exception {
-//			log.info("Se va a eliminar el saber " + idSaberPersona + "de la persona " + idPersona);
-//			SaberPersona sp = em.find(SaberPersona.class, idSaberPersona);
-//			Persona p = em.find(Persona.class,idPersona);
-//			p.getSaberes().remove(sp);
-//			saberPersonaEventSrc.fire(_saberPersona);
-//			em.remove(sp);
-//			em.merge(p);
-//			
-//			log.info("saberes restantes en la persona: " + p.getSaberes().size());
-//			log.info("persona: " + p.getId());
-//		}
 		
 		public Persona buscarPersona(long idp){
 			Persona p = em.find(Persona.class, idp);
@@ -122,33 +93,23 @@ public class RegistroPersona {
 
 		public void setPersonaPorUsr(String usr) {
 			Query q = em
-					.createQuery("Select p from Persona p where p.usuario = ?1");
+			.createQuery("Select p from Persona p where p.usuario = ?1");
 			q.setParameter(1, usr);
-	
 			List <Persona> resultado = q.getResultList();
-	
 			if (!resultado.isEmpty())
-				this.newPersona = resultado.get(0);
-	
-		}
+			this.newPersona = resultado.get(0);
+			}
 		
 		public Persona buscarPersonaPorUsr(String usr) {
-			Query q = em
-					.createQuery("Select p from Persona p where p.usuario = ?1");
-			q.setParameter(1, usr);
-	
-			List <Persona> resultado = q.getResultList();
-	
-			if (resultado.isEmpty())
-				return null;
-			return resultado.get(0);
-	
+		Query q = em
+		.createQuery("Select p from Persona p where p.usuario = ?1");
+		q.setParameter(1, usr);
+		List <Persona> resultado = q.getResultList();
+		if (resultado.isEmpty())
+		return null;
+		return resultado.get(0);
 		}
 		
-//		public void modificarSaberPersona(Persona p){
-//			em.merge(p);
-//			log.info("La persona " + p.getNombre() + "fue modificada correctamente");
-//		}
 		
    public Persona encontrarPorId(long id){
 	   return em.find(Persona.class,id);
