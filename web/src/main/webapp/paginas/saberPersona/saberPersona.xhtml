@@ -16,14 +16,14 @@
          
          <h:panelGrid columns="2" >
 
-			<p:outputLabel for="fechaIni" value="Fecha de Inicio" />
-			<p:calendar	value="#{newSaberPersona.fechaInicio}" pattern="dd/MM/yyyy" id="fechaIni" mode="popup"	navigator="true" />
+			<p:outputLabel for="fechaInicio" value="Fecha de Inicio" />
+			<p:calendar	value="#{newNoCorporativo.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicio" mode="popup"	navigator="true" />
 			
 			<p:outputLabel for="fechaFin" value="Fecha de Fin" />
-			<p:calendar	value="#{newSaberPersona.fechaFin}" pattern="dd/MM/yyyy" id="fechaFin" mode="popup"	navigator="true" />
+			<p:calendar	value="#{newNoCorporativo.fechaFin}" pattern="dd/MM/yyyy" id="fechaFin" mode="popup"	navigator="true" />
 				
 			<p:outputLabel for="Saber" value="Saber:" />
-			<p:selectOneMenu id="Saber" value="#{newSaberPersona.saber}" required="true">
+			<p:selectOneMenu id="Saber" value="#{newNoCorporativo.saber}" required="true">
 				<f:converter converterId="saberConverter" />				
 				<f:selectItem itemLabel="Seleccione..." itemValue="" />
 				<f:selectItems value="#{saberes}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}"  />
@@ -38,35 +38,35 @@
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{saberPersonaBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <h:commandButton id="register" action="#{noCorporativoBean.registrar}" value="Registrar" style="margin-left: 400px;" />
          </p>      
      
-       <p:dataTable id="saberesPersona" var="_saberesPersona" value="#{saberesPersona}" editable="true">
+       <p:dataTable id="noCorporativos" var="_noCorporativos" value="#{noCorporativos}" editable="true">
        		<f:facet name="header">  
             	Administrar Saberes de las Personas  
         	</f:facet>
         	
-        	<p:ajax event="rowEdit" listener="#{saberPersonaBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{saberPersonaBean.onCancel}" update=":form:messages" />  
+        	<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}" update=":form:messages" />  
+        	<p:ajax event="rowEditCancel" listener="#{noCorporativoBean.onCancel}" update=":form:messages" />  
         	 
         	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_saberesPersona.id}" />
+        	 	<h:outputText value="#{_noCorporativos.id}" />
         	 </p:column>
         	 
         	 <p:column headerText="Nombre" style="width:25%">  
                <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_saberesPersona}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputSaber" value="#{_saberesPersona.saber.nombre}" style="width:96%" required="true"/></f:facet>  
+                   <f:facet name="output"><h:outputText value="#{_noCorporativos.saber.nombre}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputSaber" value="#{_noCorporativos.saber.nombre}" style="width:96%" required="true"/></f:facet>  
                </p:cellEditor>  
            	 </p:column>  
            	 
            	 <p:column headerText="Tipo de Saber" style="width:25%">  
                <p:cellEditor>  
                		<f:facet name="output">
-                   		<h:outputText value="#{_saberesPersona.saber.tipoSaber.nombre}" />
+                   		<h:outputText value="#{_noCorporativos.saber.tipoSaber.nombre}" />
                    </f:facet> 
                    <f:facet name="input">
-               			<p:selectOneMenu value="#{_saberesPersona.saber.tipoSaber}" converter="tipoSaberConverter">			
+               			<p:selectOneMenu value="#{_noCorporativos.saber.tipoSaber}" converter="tipoSaberConverter">			
 							<f:selectItems value="#{tipoSaberes}" var="tipoSaber" itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}"  />
 						</p:selectOneMenu>
              		</f:facet>  
@@ -76,10 +76,10 @@
            	 <p:column headerText="Institucion" style="width:25%">  
                <p:cellEditor>
                    <f:facet name="output">
-                   		<h:outputText value="#{_saberesPersona.saber.institucion.nombre}" />
+                   		<h:outputText value="#{_noCorporativos.saber.institucion.nombre}" />
                    </f:facet>  
                    <f:facet name="input">
-                   		<p:selectOneMenu value="#{_saberesPersona.saber.institucion}" converter="institucionConverter">			
+                   		<p:selectOneMenu value="#{_noCorporativos.saber.institucion}" converter="institucionConverter">			
 							<f:selectItems value="#{instituciones}" var="institucion" itemLabel="#{institucion.nombre}" itemValue="#{institucion}"  />
 						</p:selectOneMenu>
                    </f:facet>  
@@ -89,10 +89,10 @@
            	 <p:column style="width:3%">           	 
 	            <p:rowEditor />	         	           
 	        </p:column>
-	       <!--  -->
+	       
 	        <p:column style="width:3%">
 	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{saberPersonaBean.eliminar(_saberesPersona.id)}">
+	        		styleClass="ui-icon ui-icon-trash" actionListener="#{noCorporativoBean.eliminar(_saberesPersona.id)}">
 	        	</p:commandLink>	        	
 	        </p:column>
 	        

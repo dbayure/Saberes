@@ -34,11 +34,7 @@
 			</p:selectOneMenu>
 			
 			<p:outputLabel for="anoPlan" value="Año del Plan:" />
-						<p:calendar
-							value="#{newSaber.añoPlan}"
-							pattern="dd/MM/yyyy" id="anoPlan" mode="popup"
-							navigator="true" />
-			
+			<p:inputText id="anoPlan" value="#{newSaber.añoPlan}" label="anoPlan" size="4" maxlength="4" required="true" />
 			
 		</h:panelGrid>
          
@@ -92,7 +88,14 @@
 						</p:selectOneMenu>
                    </f:facet>  
                </p:cellEditor>  
-           	 </p:column> 
+           	 </p:column>
+           	 
+			<p:column headerText="Plan" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_saber.añoPlan}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputAnio" value="#{_saber.añoPlan}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>   
            	            	 
            	 <p:column style="width:3%">           	 
 	            <p:rowEditor />	         	           

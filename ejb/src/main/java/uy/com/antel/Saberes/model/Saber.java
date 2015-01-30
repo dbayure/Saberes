@@ -35,8 +35,7 @@ public class Saber implements Serializable {
 	    @JoinColumn(name="idInstitucion", nullable=true, updatable=false)
 		private Institucion institucion;
 		
-		@Temporal(TemporalType.DATE)
-		private Date añoPlan;
+		private String añoPlan;
 
 		public Long getId() {
 			return id;
@@ -70,12 +69,11 @@ public class Saber implements Serializable {
 			this.institucion = institucion;
 		}
 
-		@Temporal(TemporalType.DATE)
-		public Date getAñoPlan() {
+		public String getAñoPlan() {
 			return añoPlan;
 		}
 
-		public void setAñoPlan(Date añoPlan) {
+		public void setAñoPlan(String añoPlan) {
 			this.añoPlan = añoPlan;
 		}
 
@@ -137,5 +135,5 @@ public class Saber implements Serializable {
 		}
 		
 		
-		
+
 }
