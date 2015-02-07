@@ -1,8 +1,11 @@
 package uy.com.antel.Saberes.bean;
 
+import java.util.ArrayList;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -10,9 +13,9 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
 
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
-import uy.com.antel.Saberes.controller.RegistroSaberPersona;
+import uy.com.antel.Saberes.model.Institucion;
 import uy.com.antel.Saberes.model.NoCorporativo;
-import uy.com.antel.Saberes.model.SaberPersona;
+import uy.com.antel.Saberes.model.Saber;
 
 @ManagedBean
 @RequestScoped
@@ -21,12 +24,22 @@ public class NoCorporativoBean {
 	@Inject
 	private RegistroNoCorporativo registroNoCorporativo;
 	
+	private String text;
+	
 	@Inject
 	PersonaBean persona;
 	
+    @Inject
+	private SaberBean saberBean;
+	
+    private Institucion institucionSeleccionada;
+    
     private UploadedFile file;
     
-    public UploadedFile getFile() {
+    private ArrayList<Saber> saberPorInst;
+    
+
+	public UploadedFile getFile() {
         return file;
     }
  
@@ -83,6 +96,35 @@ public class NoCorporativoBean {
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		  
+	}
+	
+	public void saberesPorInstitucion(){
+      	saberPorInst = this.saberBean.buscarPorInstitucion(this.institucionSeleccionada);
+	}
+
+	
+    public ArrayList<Saber> getSaberPorInst() {
+		return saberPorInst;
+	}
+
+	public void setSaberPorInst(ArrayList<Saber> saberPorInst) {
+		this.saberPorInst = saberPorInst;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Institucion getInstitucionSeleccionada() {
+		return institucionSeleccionada;
+	}
+
+	public void setInstitucionSeleccionada(Institucion institucionSeleccionada) {
+		this.institucionSeleccionada = institucionSeleccionada;
 	}
 }
 

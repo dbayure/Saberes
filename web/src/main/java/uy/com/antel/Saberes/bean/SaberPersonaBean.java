@@ -1,5 +1,7 @@
 package uy.com.antel.Saberes.bean;
 
+import java.util.ArrayList;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -10,6 +12,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
 
 import uy.com.antel.Saberes.controller.RegistroSaberPersona;
+import uy.com.antel.Saberes.model.Saber;
 import uy.com.antel.Saberes.model.SaberPersona;
 
 @ManagedBean
@@ -28,7 +31,7 @@ public class SaberPersonaBean {
     public void setFile(UploadedFile file) {
         this.file = file;
     }
-     
+    
     public void upload() {
         if(file != null) {
             FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
@@ -76,7 +79,8 @@ public class SaberPersonaBean {
 			FacesMessage msg = new FacesMessage("Error al eliminar", id.toString());  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
-		  
 	}
+
+
 }
 

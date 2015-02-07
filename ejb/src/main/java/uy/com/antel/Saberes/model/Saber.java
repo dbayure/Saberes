@@ -1,7 +1,6 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -35,7 +32,9 @@ public class Saber implements Serializable {
 	    @JoinColumn(name="idInstitucion", nullable=true, updatable=false)
 		private Institucion institucion;
 		
-		private String añoPlan;
+		private Integer añoPlan;
+		
+		private Integer duracion;
 
 		public Long getId() {
 			return id;
@@ -69,16 +68,24 @@ public class Saber implements Serializable {
 			this.institucion = institucion;
 		}
 
-		public String getAñoPlan() {
+		public Integer getAñoPlan() {
 			return añoPlan;
 		}
 
-		public void setAñoPlan(String añoPlan) {
+		public void setAñoPlan(Integer añoPlan) {
 			this.añoPlan = añoPlan;
 		}
 
 		public static long getSerialversionuid() {
 			return serialVersionUID;
+		}
+
+		public Integer getDuracion() {
+			return duracion;
+		}
+
+		public void setDuracion(Integer duracion) {
+			this.duracion = duracion;
 		}
 
 		@Override
@@ -87,6 +94,8 @@ public class Saber implements Serializable {
 			int result = 1;
 			result = prime * result
 					+ ((añoPlan == null) ? 0 : añoPlan.hashCode());
+			result = prime * result
+					+ ((duracion == null) ? 0 : duracion.hashCode());
 			result = prime * result + ((id == null) ? 0 : id.hashCode());
 			result = prime * result
 					+ ((institucion == null) ? 0 : institucion.hashCode());
@@ -111,6 +120,11 @@ public class Saber implements Serializable {
 					return false;
 			} else if (!añoPlan.equals(other.añoPlan))
 				return false;
+			if (duracion == null) {
+				if (other.duracion != null)
+					return false;
+			} else if (!duracion.equals(other.duracion))
+				return false;
 			if (id == null) {
 				if (other.id != null)
 					return false;
@@ -133,7 +147,8 @@ public class Saber implements Serializable {
 				return false;
 			return true;
 		}
-		
-		
 
+
+
+		
 }

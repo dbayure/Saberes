@@ -1,5 +1,8 @@
 package uy.com.antel.Saberes.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -7,13 +10,19 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import org.primefaces.event.RowEditEvent;
+
 import uy.com.antel.Saberes.controller.RegistroSaber;
+import uy.com.antel.Saberes.model.Institucion;
 import uy.com.antel.Saberes.model.Saber;
 
 @ManagedBean
 @RequestScoped
-public class SaberBean {
+public class SaberBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 700416364811225450L;
 	@Inject
 	private RegistroSaber registroSaber;
 	
@@ -59,5 +68,19 @@ public class SaberBean {
 		}
 		  
 	}
+	
+	public ArrayList<Saber> buscarPorInstitucion(Institucion institucion){
+		try {
+			return registroSaber.buscarPorInstitucion(institucion.getId());
+		}
+		catch(Exception e) {
+			FacesMessage msg = new FacesMessage("No se encontraron saberes para ", institucion.getNombre());  
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		
+		return null;
+	}
+	
+	
 }
 

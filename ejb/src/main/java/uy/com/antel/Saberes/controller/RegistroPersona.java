@@ -101,12 +101,12 @@ public class RegistroPersona {
 			}
 		
 		public Persona buscarPersonaPorUsr(String usr) {
-		Query q = em
-		.createQuery("Select p from Persona p where p.usuario = ?1");
+		Query q = em.createQuery("Select p from Persona p where p.usuario = ?1");
 		q.setParameter(1, usr);
 		List <Persona> resultado = q.getResultList();
+		
 		if (resultado.isEmpty())
-		return null;
+			return null;
 		return resultado.get(0);
 		}
 		

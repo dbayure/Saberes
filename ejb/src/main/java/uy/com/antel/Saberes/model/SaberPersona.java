@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "SaberPersona")
-public class SaberPersona implements Serializable{
+public abstract class SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -39,6 +39,8 @@ public class SaberPersona implements Serializable{
 	private Date fechaFin;
 	
 	private ArrayList<String> comprobantes;
+	
+	private Boolean aprobacion;
 
 	public Long getId() {
 		return id;
@@ -84,10 +86,20 @@ public class SaberPersona implements Serializable{
 		return serialVersionUID;
 	}
 
+	public Boolean getAprobacion() {
+		return aprobacion;
+	}
+
+	public void setAprobacion(Boolean aprobacion) {
+		this.aprobacion = aprobacion;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((aprobacion == null) ? 0 : aprobacion.hashCode());
 		result = prime * result
 				+ ((comprobantes == null) ? 0 : comprobantes.hashCode());
 		result = prime * result
@@ -108,6 +120,11 @@ public class SaberPersona implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		SaberPersona other = (SaberPersona) obj;
+		if (aprobacion == null) {
+			if (other.aprobacion != null)
+				return false;
+		} else if (!aprobacion.equals(other.aprobacion))
+			return false;
 		if (comprobantes == null) {
 			if (other.comprobantes != null)
 				return false;

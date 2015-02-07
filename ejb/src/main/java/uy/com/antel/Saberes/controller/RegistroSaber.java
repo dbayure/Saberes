@@ -1,5 +1,7 @@
 package uy.com.antel.Saberes.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +12,9 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
+import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.Saber;
 
 
@@ -58,5 +62,15 @@ public class RegistroSaber {
 	   public void initNewSaber() {
 		   newSaber = new Saber();
 	   }
+
+	public ArrayList<Saber> buscarPorInstitucion(Long idInstitucion) {
+		Query q = em.createQuery("from Saber as saber where saber.institucion.id = ?");
+		q.setParameter(1, idInstitucion);
+		List <Saber> resultado = q.getResultList();
+		
+		if (resultado.isEmpty())
+			return null;
+		return (ArrayList<Saber>) resultado;
+	}
 	  
 }
