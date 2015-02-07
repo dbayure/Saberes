@@ -32,9 +32,21 @@
 				<f:selectItem itemLabel="Seleccione..." itemValue="" />
 				<f:selectItems value="#{instituciones}" var="institucion" itemLabel="#{institucion.nombre}" itemValue="#{institucion}"  />
 			</p:selectOneMenu>
-			
-			<p:outputLabel for="anoPlan" value="Año del Plan:" />
-			<p:inputText id="anoPlan" value="#{newSaber.añoPlan}" label="anoPlan" size="4" maxlength="4" required="true" />
+
+			<p:outputLabel for="duracion" value="Duracion:" />
+			<p:selectOneMenu id="duracion" value="#{newSaber.duracion}"	label="duracion">
+				<f:selectItem itemLabel="1 Año" itemValue="1" />
+				<f:selectItem itemLabel="2 Año" itemValue="2" />
+				<f:selectItem itemLabel="3 Año" itemValue="3" />
+				<f:selectItem itemLabel="4 Año" itemValue="4" />
+				<f:selectItem itemLabel="5 Año" itemValue="5" />
+				<f:selectItem itemLabel="6 Año" itemValue="6" />
+			</p:selectOneMenu>
+
+			<p:outputLabel for="anoPlan" value="Plan:" />
+			<p:inputText id="anoPlan" value="#{newSaber.añoPlan}" label="anoPlan" size="4" maxlength="4">
+				<f:validateLength minimum="2" maximum="4"/> 
+			 </p:inputText>
 			
 		</h:panelGrid>
          
@@ -66,9 +78,7 @@
            	 
            	 <p:column headerText="Tipo de Saber" style="width:25%">  
                <p:cellEditor>  
-               		<f:facet name="output">
-                   		<h:outputText value="#{_saber.tipoSaber.nombre}" />
-                   </f:facet> 
+               		<f:facet name="output"><h:outputText value="#{_saber.tipoSaber.nombre}" /></f:facet> 
                    <f:facet name="input">
                			<p:selectOneMenu value="#{_saber.tipoSaber}" converter="tipoSaberConverter">			
 							<f:selectItems value="#{tipoSaberes}" var="tipoSaber" itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}"  />
@@ -90,17 +100,33 @@
                </p:cellEditor>  
            	 </p:column>
            	 
+			<p:column headerText="Duracion" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_saber.duracion}" /></f:facet>  
+                   <f:facet name="input">
+                   			<p:selectOneMenu id="modelInputDuracion" value="#{_saber.duracion}" label="duracion">
+								<f:selectItem itemLabel="1 Año" itemValue="1" />
+								<f:selectItem itemLabel="2 Año" itemValue="2" />
+								<f:selectItem itemLabel="3 Año" itemValue="3" />
+								<f:selectItem itemLabel="4 Año" itemValue="4" />
+								<f:selectItem itemLabel="5 Año" itemValue="5" />
+								<f:selectItem itemLabel="6 Año" itemValue="6" />
+							</p:selectOneMenu>
+                   </f:facet>  
+               </p:cellEditor>  
+           	 </p:column>
+
 			<p:column headerText="Plan" style="width:25%">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_saber.añoPlan}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputAnio" value="#{_saber.añoPlan}" style="width:96%" required="true"/></f:facet>  
                </p:cellEditor>  
            	 </p:column>   
-           	            	 
+           	 
            	 <p:column style="width:3%">           	 
 	            <p:rowEditor />	         	           
 	        </p:column>
-	       <!--  -->
+	        <!--  -->
 	        <p:column style="width:3%">
 	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
 	        		styleClass="ui-icon ui-icon-trash" actionListener="#{saberBean.eliminar(_saber.id)}">
