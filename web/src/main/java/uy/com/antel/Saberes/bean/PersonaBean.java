@@ -2,6 +2,7 @@ package uy.com.antel.Saberes.bean;
 
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -10,7 +11,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.validation.constraints.Null;
 import javax.xml.rpc.ServiceException;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
@@ -172,23 +172,30 @@ public class PersonaBean {
 		return usuario;
 	}
 
-	public boolean faltaValidar(long id){
+	public List<NoCorporativo> obtenerSaberesPersona(long id){
 		Persona p = registroPersona.encontrarPorId(id);
-		boolean validar = false;
-		int i = 0;
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
 		for (SaberPersona sp : p.getSaberes()){
 			if(sp instanceof NoCorporativo){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
-				if(nc.isValidado()){
-					i++;
+				if(!nc.isValidado()){
+					listanc.add(nc);
 				}
 			}
-		if (i > 0){
-			validar =  true;
-			}
 		}
-		return validar;
+		return listanc;
 	}
+	
+	public boolean faltaValidar (long id){
+		boolean falta = false;
+		System.out.println("Esta preguntando por la validación");
+		if(obtenerSaberesPersona(id).size() > 0){
+			falta = true;
+		}
+		return falta;
+	}
+	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}
