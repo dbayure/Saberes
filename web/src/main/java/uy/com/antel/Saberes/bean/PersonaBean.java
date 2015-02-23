@@ -196,17 +196,6 @@ public class PersonaBean {
 		return listanc;
 	}
 	
-	public boolean faltaValidar (long id){
-		boolean falta = false;
-		System.out.println("Esta preguntando por la validación");
-		if(obtenerSaberesPersona(id).size() > 0){
-			falta = true;
-		}
-		return falta;
-	}
-	
-	
-	
 	public List<NoCorporativo> obtenerNoCorporativos(){
 		String userName = SecurityContextAssociation.getPrincipal().getName();
 		Persona p = registroPersona.buscarPersonaPorUsr(userName);
@@ -258,6 +247,15 @@ public class PersonaBean {
 		else
 			return "No";		
 	}	
+	
+	public boolean faltaValidar (long id){
+		boolean falta = false;
+		System.out.println("Esta preguntando por la validación");
+		if(obtenerSaberesPersona(id).size() > 0){
+			falta = true;
+		}
+		return falta;
+	}
 	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
