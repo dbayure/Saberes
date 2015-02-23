@@ -2,25 +2,31 @@ package uy.com.antel.Saberes.bean;
 
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.validation.constraints.Null;
 import javax.xml.rpc.ServiceException;
+
+import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
+
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.Rol;
 import uy.com.antel.Saberes.model.SaberPersona;
+import uy.com.antel.Saberes.model.TipoSaber;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocator;
@@ -36,6 +42,9 @@ public class PersonaBean {
 	
 	@Inject
 	private RegistroNoCorporativo registroNoCorporativo;
+	
+	@Inject
+	private RegistroNoCorporativo registroCorporativo;
 	
 	private UploadedFile file;
 	
@@ -172,23 +181,84 @@ public class PersonaBean {
 		return usuario;
 	}
 
-	public boolean faltaValidar(long id){
+	public List<NoCorporativo> obtenerSaberesPersona(long id){
 		Persona p = registroPersona.encontrarPorId(id);
-		boolean validar = false;
-		int i = 0;
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
 		for (SaberPersona sp : p.getSaberes()){
 			if(sp instanceof NoCorporativo){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
-				if(nc.isValidado()){
-					i++;
+				if(!nc.isValidado()){
+					listanc.add(nc);
 				}
 			}
-		if (i > 0){
-			validar =  true;
+		}
+		return listanc;
+	}
+	
+	public boolean faltaValidar (long id){
+		boolean falta = false;
+		System.out.println("Esta preguntando por la validación");
+		if(obtenerSaberesPersona(id).size() > 0){
+			falta = true;
+		}
+		return falta;
+	}
+	
+	
+	
+	public List<NoCorporativo> obtenerNoCorporativos(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		Persona p = registroPersona.buscarPersonaPorUsr(userName);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		for (SaberPersona sp : p.getSaberes()){
+			String ts = sp.getSaber().getTipoSaber().getNombre();
+			if(ts.contains("Formal No Corporativo")){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
 			}
 		}
-		return validar;
+		return listanc;
 	}
+	
+	public List<Corporativo> obtenerCorporativos(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		Persona p = registroPersona.buscarPersonaPorUsr(userName);
+		List<Corporativo> listanc = new ArrayList<Corporativo>();
+		for (SaberPersona sp : p.getSaberes()){
+			String ts = sp.getSaber().getTipoSaber().getNombre();
+			if(ts.contains("Formal Corporativo")){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
+				Corporativo nc = registroCorporativo.obtenerCorpPorID(sp.getId());
+				listanc.add(nc);
+			}
+		}
+		return listanc;
+	}
+	
+	public List<NoCorporativo> obtenerCurriculares(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		Persona p = registroPersona.buscarPersonaPorUsr(userName);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		for (SaberPersona sp : p.getSaberes()){
+			String ts = sp.getSaber().getTipoSaber().getNombre();
+			if(ts.contains("Formal Curricular")){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
+			}
+		}
+		return listanc;
+	}
+	
+	public String convertirBoolean(Boolean var){
+		if (var)
+			return "Si";
+		else
+			return "No";		
+	}	
+	
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
 	}

@@ -44,22 +44,22 @@
          		
          		<h:panelGrid columns="2" >
          			
-		         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
+		         	<h:graphicImage value="/resources/gfx/glyphicons-89-address-book.png" />
 		         	<p:outputLabel id="direccion"  value="#{newPersona.direccion}" />
 		         	
-		         	<h:graphicImage value="/resources/gfx/telefono.png" />
+		         	<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" /> 
 		         	<p:outputLabel id="telDirecto"  value="#{newPersona.telDirecto}" />
 		         	
-		         	<h:graphicImage value="/resources/gfx/telefono.png" />
+		         	<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
 		         	<p:outputLabel id="telCelular"  value="#{newPersona.telCelular}" />
 		         	
-		         	<h:graphicImage value="/resources/gfx/correo.png" />
+		         	<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
 		         	<p:outputLabel id="correo"  value="#{newPersona.correo}" />
 		         	
-		         	<h:graphicImage value="/resources/gfx/fnac.png" />
+		         	<h:graphicImage value="/resources/gfx/glyphicons-279-birthday-cake.png" />
 		         	<p:outputLabel id="fnac"  value="#{newPersona.fechaNacimiento}" />
 		         	
-					<h:graphicImage value="/resources/gfx/info.png" />
+					<h:graphicImage value="/resources/gfx/glyphicons-196-circle-info.png" />
 					
 				    <p:growl id="growl" life="2000" />
 				 
@@ -75,25 +75,27 @@
 				         		
 				         		<h:panelGrid columns="2" >
 				         			
-						         	<h:graphicImage value="/resources/gfx/lugarTrabajo.jpeg" />
+						         	<h:graphicImage value="/resources/gfx/glyphicons-89-address-book.png" />
 						         	<p:outputLabel id="direccion"  value="#{newPersona.direccion}" />
 						         	
-						         	<h:graphicImage value="/resources/gfx/telefono.png" />
+						         	<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" />
 						         	<p:outputLabel id="telDirecto"  value="#{newPersona.telDirecto}" />
 						         	
-						         	<h:graphicImage value="/resources/gfx/telefono.png" />
+						         	<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
 						         	<p:outputLabel id="telCelular"  value="#{newPersona.telCelular}" />
 						         	
-						         	<h:graphicImage value="/resources/gfx/correo.png" />
+						         	<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
 						         	<p:outputLabel id="correo"  value="#{newPersona.correo}" />
 						         	
-						         	<h:graphicImage value="/resources/gfx/fnac.png" />
+						         	<h:graphicImage value="/resources/gfx/glyphicons-279-birthday-cake.png" />
 						         	<p:outputLabel id="fnac"  value="#{newPersona.fechaNacimiento}" />																	
 						         	
 						    	</h:panelGrid>
 				            </h:panelGrid>  
 				            
 				            
+				            <br /><br /><br />
+				            <br /><br /><br />
 				            <br /><br /><br />
 				            <h2><p:outputLabel value="DATOS PERSONALES" style="font-weight:bold"/></h2>
 				            <br /><br /><br />
@@ -164,9 +166,306 @@
 		    	</h:panelGrid>     	
 		         	
          	</h:panelGrid>
-        <p>            
-           <h:commandButton id="register" action="#{saberBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-        </p>      
+         	
+         	
+         	<h1>SABER FORMAL</h1> 
+         	
+         	<p:dataTable id="curriculares" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+	       		<f:facet name="header">  
+	            	Formación Curricular
+	        	</f:facet>
+	        	
+	        	<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}" update=":form:messages" />  
+	        	<p:ajax event="rowEditCancel" listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
+	
+	
+					<p:column headerText="Institución" style="width:25%">
+						<h:outputText value="#{_noCorporativos.saber.institucion.nombre}" />
+					</p:column>
+	
+					<p:column headerText="Curso" style="width:25%">
+						<h:outputText value="#{_noCorporativos.saber.nombre}" />
+					</p:column>
+	
+	           	 <p:column headerText="F.Inicio" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_noCorporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_noCorporativos.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioInput" mode="popup"	navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column> 
+	
+	           	 <p:column headerText="F.Fin" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_noCorporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_noCorporativos.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinInput" mode="popup" navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>
+	
+					<p:column headerText="Aprobación" style="width:25%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.aprobacion)}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_noCorporativos.aprobacion}">	</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+	
+				<p:column headerText="Duración" style="width:25%">  
+	                  		<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
+	           	 </p:column> 
+	
+				<p:column headerText="Tipo de Saber" style="width:25%">  
+	                  		<h:outputText value="#{_noCorporativos.saber.tipoSaber.nombre}" />
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Validado" style="width:25%">  
+	                   		<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.validado)}" />
+	           	 </p:column> 
+	           	            	 
+	           	 <p:column style="width:3%">           	 
+		            <p:rowEditor />	         	           
+		        </p:column>
+		       
+		        <p:column style="width:3%">
+		        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+		        		styleClass="ui-icon ui-icon-trash" actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
+		        	</p:commandLink>	        	
+		        </p:column>
+		        
+	       </p:dataTable>
+	            	
+         	
+         	<p:dataTable id="Corporativos" var="_Corporativos" value="#{personaBean.obtenerCorporativos()}" editable="true">
+	       		<f:facet name="header">  
+	            	Saber Corporativo 
+	        	</f:facet>
+	        	
+	        	<p:ajax event="rowEdit" listener="#{CorporativoBean.onEdit}" update=":form:messages" />  
+	        	<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}" update=":form:messages" />
+					
+				<p:column headerText="Curso" style="width:25%">
+					<h:outputText value="#{_noCorporativos.saber.nombre}" />
+				</p:column>	
+	
+	           	 <p:column headerText="F.Inicio" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_Corporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_Corporativos.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioInput" mode="popup"	navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column> 
+	
+	           	 <p:column headerText="F.Fin" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_Corporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_Corporativos.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinInput" mode="popup" navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>
+	
+				<p:column headerText="Aprobación" style="width:25%">
+
+					<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{personaBean.convertirBoolean(_Corporativos.aprobacion)}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_Corporativos.aprobacion}">	</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+
+				</p:column>
+				
+				<p:column headerText="Puntaje" style="width:25%">  
+	                  		<h:outputText value="#{_Corporativos.puntaje}" />
+	           	</p:column>
+	
+				<p:column headerText="Duración" style="width:25%">  
+	                  		<h:outputText value="#{_Corporativos.saber.duracion} Años" />
+	           	 </p:column> 
+	
+				<p:column headerText="Libreta" style="width:25%">  
+	                  		<h:outputText value="#{_Corporativos.libreta}" />
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Rol" style="width:25%">  
+	                   		<h:outputText value="#{_Corporativos.rolSaber}" />
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Clase" style="width:25%">  
+	                   		<h:outputText value="#{_Corporativos.clase}" />
+	           	 </p:column>
+	           	            	 
+	           	 <p:column style="width:3%">           	 
+		            <p:rowEditor />	         	           
+		        </p:column>
+		       
+		        <p:column style="width:3%">
+		        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+		        		styleClass="ui-icon ui-icon-trash" actionListener="#{CorporativoBean.eliminar(_Corporativos.id)}">
+		        	</p:commandLink>	        	
+		        </p:column>
+		        
+	       </p:dataTable>
+         	
+         	<p:dataTable id="noCorporativos" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+	       		<f:facet name="header">  
+	            	Saber No Corporativo 
+	        	</f:facet>
+	        	
+	        	<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}" update=":form:messages" />  
+	        	<p:ajax event="rowEditCancel" listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
+	
+	
+					<p:column headerText="Institución" style="width:25%">
+						<h:outputText value="#{_noCorporativos.saber.institucion.nombre}" />
+					</p:column>
+	
+					<p:column headerText="Curso" style="width:25%">
+						<h:outputText value="#{_noCorporativos.saber.nombre}" />
+					</p:column>
+	
+	           	 <p:column headerText="F.Inicio" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_noCorporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_noCorporativos.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioInput" mode="popup"	navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column> 
+	
+	           	 <p:column headerText="F.Fin" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_noCorporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_noCorporativos.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinInput" mode="popup" navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>
+	
+					<p:column headerText="Aprobación" style="width:25%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.aprobacion)}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_noCorporativos.aprobacion}">	</p:selectBooleanCheckbox>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+	
+				<p:column headerText="Duración" style="width:25%">  
+	                  		<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
+	           	 </p:column> 
+	
+				<p:column headerText="Tipo de Saber" style="width:25%">  
+	                  		<h:outputText value="#{_noCorporativos.saber.tipoSaber.nombre}" />
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Validado" style="width:25%">  
+	                   		<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.validado)}" />
+	           	 </p:column> 
+	           	            	 
+	           	 <p:column style="width:3%">           	 
+		            <p:rowEditor />	         	           
+		        </p:column>
+		       
+		        <p:column style="width:3%">
+		        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+		        		styleClass="ui-icon ui-icon-trash" actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
+		        	</p:commandLink>	        	
+		        </p:column>
+		        
+	       </p:dataTable> 
+	       
+	       <h1>SABER NO FORMAL</h1> 
+	       
+	       <p:dataTable id="cursos" var="_cursos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+	       		<f:facet name="header">  
+	            	Cursos
+	        	</f:facet>
+	        	
+	        	<p:ajax event="rowEdit" listener="#{cursos.onEdit}" update=":form:messages" />  
+	        	<p:ajax event="rowEditCancel" listener="#{cursos.onCancel}" update=":form:messages" />
+	
+	
+					<p:column headerText="Institución" style="width:25%">
+						<h:outputText value="#{_cursos.saber.institucion.nombre}" />
+					</p:column>
+	
+					<p:column headerText="Curso" style="width:25%">
+						<h:outputText value="#{_cursos.saber.nombre}" />
+					</p:column>
+	
+	           	 <p:column headerText="F.Inicio" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_cursos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_cursos.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioInput" mode="popup"	navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column> 
+	
+	           	 <p:column headerText="F.Fin" style="width:25%">  
+	               <p:cellEditor>
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_cursos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
+	                   </f:facet>  
+	                   <f:facet name="input">
+								<p:calendar	value="#{_cursos.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinInput" mode="popup" navigator="true" />
+	                  </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>
+	
+				<p:column headerText="Duración" style="width:25%">  
+	                  		<h:outputText value="#{_cursos.saber.duracion} Años" />
+	           	 </p:column> 
+	
+				<p:column headerText="Comprobantes" style="width:25%">  
+	                  		<p:commandButton onclick="PF('dlgPDF').show()" icon="ui-icon-document" style="horizontal-align: center"/>
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Validado" style="width:25%">  
+	                   		<h:outputText value="#{_cursos.validado}" />
+	           	 </p:column> 
+	           	            	 
+	           	 <p:column style="width:3%">           	 
+		            <p:rowEditor />	         	           
+		        </p:column>
+		       
+		        <p:column style="width:3%">
+		        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+		        		styleClass="ui-icon ui-icon-trash" actionListener="#{cursos.eliminar(_cursos.id)}">
+		        	</p:commandLink>	        	
+		        </p:column>
+		        
+	       </p:dataTable>
+         	
+        <p:dialog widgetVar="dlgPDF" modal="true" width="100%" height="1024px" position="top">
+        	<object type="application/pdf" data="/Saberes-web/resources/gfx/1.pdf?pfdrid_c=true" height="100%" width="100%"/>
+        </p:dialog>                 
          
 		</h:form>     
    </ui:define>

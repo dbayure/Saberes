@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
+import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.SaberPersona;
@@ -72,5 +73,9 @@ public class RegistroNoCorporativo {
 	   
 	   public NoCorporativo obtenerPorID(long id){
 		   return em.find(NoCorporativo.class, id);
+	   }
+	   
+	   public Corporativo obtenerCorpPorID(long id){
+		   return em.find(Corporativo.class, id);
 	   }
 }
