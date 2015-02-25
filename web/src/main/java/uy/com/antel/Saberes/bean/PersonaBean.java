@@ -241,6 +241,36 @@ public class PersonaBean {
 		return listanc;
 	}
 	
+	public List<NoCorporativo> obtenerCursos(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		Persona p = registroPersona.buscarPersonaPorUsr(userName);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		for (SaberPersona sp : p.getSaberes()){
+			String ts = sp.getSaber().getTipoSaber().getNombre();
+			if(ts.contains("No Formal Cursos")){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
+			}
+		}
+		return listanc;
+	}
+	
+	public List<NoCorporativo> obtenerConocimientos(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		Persona p = registroPersona.buscarPersonaPorUsr(userName);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		for (SaberPersona sp : p.getSaberes()){
+			String ts = sp.getSaber().getTipoSaber().getNombre();
+			if(ts.contains("No Formal Conocimientos")){
+				System.out.println("Nombre del saber seleccionado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
+			}
+		}
+		return listanc;
+	}
+	
 	public String convertirBoolean(Boolean var){
 		if (var)
 			return "Si";
