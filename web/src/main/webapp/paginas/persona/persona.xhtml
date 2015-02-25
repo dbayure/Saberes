@@ -107,9 +107,6 @@
 					         	<p:outputLabel value="Apellido: " style="font-weight:bold"/> 
 					         	<p:outputLabel value="#{newPersona.apellido}" />
 					         	
-					         	<p:outputLabel value="Sexo: " style="font-weight:bold"/> 
-					         	<p:outputLabel value="#{newPersona.clase}" />
-					         	
 					         	<p:outputLabel value="Jornada Laboral: " style="font-weight:bold"/> 
 					         	<p:outputLabel value="#{newPersona.jornadaLaboral}" />
 					         	
@@ -170,7 +167,7 @@
          	
          	<h1>SABER FORMAL</h1> 
          	
-         	<p:dataTable id="curriculares" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+         	<p:dataTable id="curriculares" var="_noCorporativos" value="#{personaBean.obtenerCurriculares()}" editable="true">
 	       		<f:facet name="header">  
 	            	Formación Curricular
 	        	</f:facet>
@@ -243,7 +240,9 @@
 		        </p:column>
 		        
 	       </p:dataTable>
-	            	
+	         
+	         <br />   
+	         <br /><br />	
          	
          	<p:dataTable id="Corporativos" var="_Corporativos" value="#{personaBean.obtenerCorporativos()}" editable="true">
 	       		<f:facet name="header">  
@@ -323,6 +322,8 @@
 		        </p:column>
 		        
 	       </p:dataTable>
+	       
+	       <br /><br /><br />
          	
          	<p:dataTable id="noCorporativos" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
 	       		<f:facet name="header">  
@@ -400,7 +401,7 @@
 	       
 	       <h1>SABER NO FORMAL</h1> 
 	       
-	       <p:dataTable id="cursos" var="_cursos" value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+	       <p:dataTable id="cursos" var="_cursos" value="#{personaBean.obtenerCursos()}" editable="true">
 	       		<f:facet name="header">  
 	            	Cursos
 	        	</f:facet>
@@ -448,7 +449,48 @@
 	           	 </p:column> 
 	           	 
 	           	 <p:column headerText="Validado" style="width:25%">  
-	                   		<h:outputText value="#{_cursos.validado}" />
+	                   		<h:outputText value="#{personaBean.convertirBoolean(_cursos.validado)}" />
+	           	 </p:column> 
+	           	            	 
+	           	 <p:column style="width:3%">           	 
+		            <p:rowEditor />	         	           
+		        </p:column>
+		       
+		        <p:column style="width:3%">
+		        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
+		        		styleClass="ui-icon ui-icon-trash" actionListener="#{cursos.eliminar(_cursos.id)}">
+		        	</p:commandLink>	        	
+		        </p:column>
+		        
+	       </p:dataTable>
+	       
+	       <p:dataTable id="conocimientos" var="_cursos" value="#{personaBean.obtenerConocimientos()}" editable="true">
+	       		<f:facet name="header">  
+	            	Conocimientos
+	        	</f:facet>
+	        	
+	        	<p:ajax event="rowEdit" listener="#{conocimientos.onEdit}" update=":form:messages" />  
+	        	<p:ajax event="rowEditCancel" listener="#{conocimientos.onCancel}" update=":form:messages" />
+	
+	
+					<p:column headerText="Institución" style="width:25%">
+						<h:outputText value="#{_cursos.saber.institucion.nombre}" />
+					</p:column>
+	
+					<p:column headerText="Curso" style="width:25%">
+						<h:outputText value="#{_cursos.saber.nombre}" />
+					</p:column>
+	
+				<p:column headerText="Duración" style="width:25%">  
+	                  		<h:outputText value="#{_cursos.saber.duracion} Años" />
+	           	 </p:column> 
+	
+				<p:column headerText="Comprobantes" style="width:25%">  
+	                  		<p:commandButton onclick="PF('dlgPDF').show()" icon="ui-icon-document" style="horizontal-align: center"/>
+	           	 </p:column> 
+	           	 
+	           	 <p:column headerText="Validado" style="width:25%">  
+	                   		<h:outputText value="#{personaBean.convertirBoolean(_cursos.validado)}" />
 	           	 </p:column> 
 	           	            	 
 	           	 <p:column style="width:3%">           	 
