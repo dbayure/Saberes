@@ -36,8 +36,11 @@
         	<p:ajax event="rowEdit" listener="#{tipoSaberBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{tipoSaberBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_tipoSaber.id}" />
+        	 <p:column headerText="Código:" style="width:5%">
+        	    <p:cellEditor> 
+				   <f:facet name="output"><h:outputText value="#{_tipoSaber.id}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="tipoSaberId" value="#{_tipoSaber.id}" style="width:96%" required="true"/></f:facet>  
+        	 	</p:cellEditor>
         	 </p:column>
         	 
         	 <p:column headerText="Nombre" style="width:25%">  
