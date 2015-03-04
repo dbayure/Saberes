@@ -9,126 +9,183 @@
       <h1 style="text-align: center;">Administración Saber de la persona</h1>
 
 
+	<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" collapsed="true">
+    <p:ajax event="toggle" />
       <h:form id="form" prependId="false">
       
       <p:growl id="msgs" showDetail="true" />
- 
-         <h2>Registro</h2>
     
          <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
          
-         <h:panelGrid columns="2" >
-			<p:outputLabel for="idInstitucion" value="Institución:" />
-			<p:selectOneMenu id="idInstitucion" value="#{noCorporativoBean.institucionSeleccionada}" >
-				<p:ajax listener="#{noCorporativoBean.saberesPorInstitucion}" update="saber" />			
+		<p:dataTable id="curricularIngreso" value="" editable="true">
+       		<f:facet name="header">Formación curricular</f:facet>
+        	
+			<p:column headerText="Institución" >
+			<p:selectOneMenu id="idInstitucion" value="#{noCorporativoBean.institucionSeleccionadaCurricular}" style="width:100%" >
+				<p:ajax listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(1)}" update="saber" />			
 				<f:converter converterId="institucionConverter" />
 				<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
 				<f:selectItems value="#{instituciones}" var="_institucion" itemLabel="#{_institucion.nombre}" itemValue="#{_institucion}"  />
 			</p:selectOneMenu>
-			
-			<p:outputLabel for="saber" value="Saber:" />
-			<p:selectOneMenu id="saber" value="#{newNoCorporativo.saber}" required="true">
+			</p:column>
+
+			<p:column headerText="Educación">
+			<p:selectOneMenu id="saber" value="#{newNoCorporativo.saber}" required="true" style="width:100%" >
 				<f:converter converterId="saberConverter"/>
-				<f:selectItem itemLabel="Seleccione..." itemValue="" />
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
 				<f:selectItems value="#{noCorporativoBean.saberPorInst}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}"  />
 			</p:selectOneMenu>
+			</p:column>
 
-			<p:outputLabel for="fechaInicio" value="Fecha de Inicio" />
-			<p:calendar	value="#{newNoCorporativo.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicio" mode="popup"	navigator="true" />
-			
-			<p:outputLabel for="fechaFin" value="Fecha de Fin" />
-			<p:calendar	value="#{newNoCorporativo.fechaFin}" pattern="dd/MM/yyyy" id="fechaFin" mode="popup"	navigator="true" />
-			
-			<p:outputLabel for="aprobacion" value="Aprobación" />
-			<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}" id="aprobacion"> </p:selectBooleanCheckbox>
-
-			<p:outputLabel for="comprobante" value="Comprobantes" />
-			<p:fileUpload id="comprobante" value="#{fileUploadView.file}" mode="simple" skinSimple="true"/>
- 			
- 			<h:outputText value="" />
-    		<p:commandButton value="Cargar" ajax="false" actionListener="#{fileUploadView.upload}" disabled="true" />
-
-			
-		</h:panelGrid>
-         <p>            
-            <h:commandButton id="register" action="#{noCorporativoBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-         </p>      
-      
-      <p:separator />
-      
-       <p:dataTable id="noCorporativos" var="_noCorporativos" value="#{noCorporativos}" editable="true">
-       		<f:facet name="header">  
-            	Administrar Saberes de las Personas  
-        	</f:facet>
-        	
-        	<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
-
-
-				<p:column headerText="Institución" style="width:25%">
-					<h:outputText value="#{_noCorporativos.saber.institucion.nombre}" />
-				</p:column>
-
-				<p:column headerText="Curso" style="width:25%">
-					<h:outputText value="#{_noCorporativos.saber.nombre}" />
-				</p:column>
-
-           	 <p:column headerText="F.Inicio" style="width:25%">  
-               <p:cellEditor>
-                   <f:facet name="output">
-                   		<h:outputText value="#{_noCorporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
-                   </f:facet>  
-                   <f:facet name="input">
-							<p:calendar	value="#{_noCorporativos.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioInput" mode="popup"	navigator="true" />
-                  </f:facet>  
-               </p:cellEditor>  
+           	 <p:column headerText="F.Inicio">  
+				<p:calendar	value="#{newNoCorporativo.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicio" mode="popup" navigator="true" size="9"/>
            	 </p:column> 
 
-           	 <p:column headerText="F.Fin" style="width:25%">  
-               <p:cellEditor>
-                   <f:facet name="output">
-                   		<h:outputText value="#{_noCorporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
-                   </f:facet>  
-                   <f:facet name="input">
-							<p:calendar	value="#{_noCorporativos.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinInput" mode="popup" navigator="true" />
-                  </f:facet>  
-               </p:cellEditor>  
+           	 <p:column headerText="F.Fin">  
+				<p:calendar	value="#{newNoCorporativo.fechaFin}" pattern="dd/MM/yyyy" id="fechaFin" mode="popup" navigator="true" size="9" />
            	 </p:column>
 
-				<p:column headerText="Aprobación" style="width:25%">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{_noCorporativos.aprobacion}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_noCorporativos.aprobacion}">	</p:selectBooleanCheckbox>
-						</f:facet>
-					</p:cellEditor>
-				</p:column>
+			<p:column headerText="Aprobación" style="width:10%">
+				<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}" id="aprobacion" > </p:selectBooleanCheckbox>
+			</p:column>
+      	 
+           	 <p:column headerText="Comprobantes">  
+				<p:fileUpload id="comprobante" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+           	 </p:column>  
 
-			<p:column headerText="Duración" style="width:25%">  
-                  		<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
-           	 </p:column> 
-
-			<p:column headerText="Tipo de Saber" style="width:25%">  
-                  		<h:outputText value="#{_noCorporativos.saber.tipoSaber.nombre}" />
-           	 </p:column> 
-           	 
-           	 <p:column headerText="Validado" style="width:25%">  
-                   		<h:outputText value="#{_noCorporativos.validado}" />
-           	 </p:column> 
-           	            	 
-           	 <p:column style="width:3%">           	 
-	            <p:rowEditor />	         	           
+           	 <p:column  >           	 
+	            <h:commandButton id="register" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
 	        </p:column>
 	       
-	        <p:column style="width:3%">
-	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
-	        	</p:commandLink>	        	
+       </p:dataTable>    
+    </h:form> 
+    </p:fieldset>  
+       	<p:separator />
+       
+	 <p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" collapsed="true">
+     <p:ajax event="toggle" />
+	 <h:form id="form2" prependId="false">
+		<p:dataTable id="noCorporativoIngreso" value="" editable="true">
+       		<f:facet name="header">Cursos no corporativos</f:facet>
+        	
+			<p:column headerText="Institución" >
+			<p:selectOneMenu id="idNoCorporativoInstitucion" value="#{noCorporativoBean.institucionSeleccionada}" style="width:100%" >
+				<p:ajax listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(2)}" update="saberNoCorporativo" />			
+				<f:converter converterId="institucionConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+				<f:selectItems value="#{instituciones}" var="_institucion" itemLabel="#{_institucion.nombre}" itemValue="#{_institucion}"  />
+			</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Curso">
+			<p:selectOneMenu id="saberNoCorporativo" value="#{newNoCorporativo.saber}" required="true" style="width:100%" >
+				<f:converter converterId="saberConverter"/>
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{noCorporativoBean.saberPorInst}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}"  />
+			</p:selectOneMenu>
+			</p:column>
+
+           	 <p:column headerText="F.Inicio">  
+				<p:calendar	value="#{newNoCorporativo.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioNoCorporativo" mode="popup" navigator="true" size="9"/>
+           	 </p:column> 
+
+           	 <p:column headerText="F.Fin">  
+				<p:calendar	value="#{newNoCorporativo.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinNoCorporativo" mode="popup" navigator="true" size="9" />
+           	 </p:column>
+
+			<p:column headerText="Aprobación" style="width:10%">
+				<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}" id="aprobacionNoCorporativo" > </p:selectBooleanCheckbox>
+			</p:column>
+      	 
+           	 <p:column headerText="Comprobantes">  
+				<p:fileUpload id="comprobanteNoCorporativo" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+           	 </p:column>  
+
+           	 <p:column  >           	 
+	            <h:commandButton id="registerNoCorporativo" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
 	        </p:column>
-	        
-       </p:dataTable>       
-		</h:form>     
+	       
+       </p:dataTable>
+	   <p:separator />
+	   </h:form>
+	</p:fieldset>	   
+	   
+
+	<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" collapsed="true">
+    <p:ajax event="toggle" />	   
+	 <h:form id="form3" prependId="false">
+		<p:dataTable id="cursosIngreso" value="" editable="true">
+       		<f:facet name="header">Cursos</f:facet>
+        	
+			<p:column headerText="Institución:" >
+			<p:selectOneMenu id="idCursosInstitucion" value="#{noCorporativoBean.institucionSeleccionadaCurso}" style="width:100%" >
+				<p:ajax listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}" update="saberCurso" />			
+				<f:converter converterId="institucionConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+				<f:selectItems value="#{instituciones}" var="_institucion" itemLabel="#{_institucion.nombre}" itemValue="#{_institucion}"  />
+			</p:selectOneMenu>
+			</p:column>
+
+			<p:column headerText="Curso">
+			<p:selectOneMenu id="saberCurso" value="#{newNoCorporativo.saber}" required="true" style="width:100%" >
+				<f:converter converterId="saberConverter"/>
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{noCorporativoBean.saberPorInst}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}"  />
+			</p:selectOneMenu>
+			</p:column>
+
+           	 <p:column headerText="F.Inicio">  
+				<p:calendar	value="#{newNoCorporativo.fechaInicio}" pattern="dd/MM/yyyy" id="fechaInicioCurso" mode="popup" navigator="true" size="9"/>
+           	 </p:column> 
+
+           	 <p:column headerText="F.Fin">  
+				<p:calendar	value="#{newNoCorporativo.fechaFin}" pattern="dd/MM/yyyy" id="fechaFinCurso" mode="popup" navigator="true" size="9" />
+           	 </p:column>
+
+           	 <p:column headerText="Comprobantes">  
+				<p:fileUpload id="comprobanteCursos" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+           	 </p:column>  
+
+           	 <p:column  >           	 
+	            <h:commandButton id="registerCursos" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
+	        </p:column>
+       </p:dataTable>
+	   <p:separator />
+	   </h:form>
+	</p:fieldset>   
+	   
+	<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500" collapsed="true">
+        <p:ajax event="toggle" />
+		<h:form id="form4" prependId="false">
+		<p:dataTable id="conocimientosIngreso" value="" editable="true">
+       		<f:facet name="header">Conocimientos</f:facet>
+        	
+			<p:column headerText="Saber">
+			<p:selectOneMenu id="saberConocimiento" value="#{newNoCorporativo.saber}" required="true" style="width:100%" >
+				<f:converter converterId="saberConverter"/>
+				<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+				<f:selectItems value="#{conocimientos}" var="_conocimiento" itemLabel="#{_conocimiento.nombre}" itemValue="#{_conocimiento}"  />
+			</p:selectOneMenu>
+			</p:column>
+			
+			<p:column headerText="Origen:" >
+			<p:selectOneMenu id="idConocimientoOrigen" value="#{newNoCorporativo.origen}" style="width:100%" >
+				<f:converter converterId="origenConverter" />
+				<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+				<f:selectItems value="#{origenes}" var="_origen" itemLabel="#{_origen.descripcion}" itemValue="#{_origen}"  />
+			</p:selectOneMenu>
+			</p:column>
+
+           	 <p:column headerText="Comprobantes">  
+				<p:fileUpload id="comprobanteCursos" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+           	 </p:column>  
+
+           	 <p:column  >           	 
+	            <h:commandButton id="registerCursos" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
+	        </p:column>
+       </p:dataTable>
+	   <p:separator />
+	   </h:form>        
+    </p:fieldset>	   
    </ui:define>
 </ui:composition>

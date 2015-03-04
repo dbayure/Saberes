@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -32,8 +31,10 @@ public class NoCorporativoBean {
     @Inject
 	private SaberBean saberBean;
 	
+    private Institucion institucionSeleccionadaCurricular;
     private Institucion institucionSeleccionada;
-    
+    private Institucion institucionSeleccionadaCurso;
+   
     private UploadedFile file;
     
     private ArrayList<Saber> saberPorInst;
@@ -98,11 +99,24 @@ public class NoCorporativoBean {
 		  
 	}
 	
-	public void saberesPorInstitucion(){
-      	saberPorInst = this.saberBean.buscarPorInstitucion(this.institucionSeleccionada);
+	public void saberesNoCorporativosPorTipo(Long tipo){
+		ArrayList<Saber> resultado = new ArrayList<Saber>();
+		
+		if (tipo.longValue() == 2){
+			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionada);
+		}else if (tipo.longValue() == 1){
+			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurricular);
+		} else if (tipo.longValue() == 5){
+			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurso);
+		} 
+		ArrayList <Saber> cursos = new ArrayList<Saber>();
+		for (Saber s: resultado){ 
+			if (s.getTipoSaber().getId() == tipo.longValue())
+				cursos.add(s);
+		}
+      	saberPorInst = cursos;
 	}
 
-	
     public ArrayList<Saber> getSaberPorInst() {
 		return saberPorInst;
 	}
@@ -125,6 +139,24 @@ public class NoCorporativoBean {
 
 	public void setInstitucionSeleccionada(Institucion institucionSeleccionada) {
 		this.institucionSeleccionada = institucionSeleccionada;
+	}
+
+	public Institucion getInstitucionSeleccionadaCurricular() {
+		return institucionSeleccionadaCurricular;
+	}
+
+	public void setInstitucionSeleccionadaCurricular(
+			Institucion institucionSeleccionadaCurricular) {
+		this.institucionSeleccionadaCurricular = institucionSeleccionadaCurricular;
+	}
+
+	public Institucion getInstitucionSeleccionadaCurso() {
+		return institucionSeleccionadaCurso;
+	}
+
+	public void setInstitucionSeleccionadaCurso(
+			Institucion institucionSeleccionadaCurso) {
+		this.institucionSeleccionadaCurso = institucionSeleccionadaCurso;
 	}
 }
 

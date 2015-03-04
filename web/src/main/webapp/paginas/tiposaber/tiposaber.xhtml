@@ -15,6 +15,9 @@
          <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
          
          <h:panelGrid columns="2" >
+	
+			<p:outputLabel for="codigo" value="Código:" />
+			<p:inputMask mask="9?9999" id="codigo" value="#{newTipoSaber.id}" label="codigo" required="true" size="5" maxlength="5" />
 
 			<p:outputLabel for="nombre" value="Nombre:" />
 			<p:inputText id="nombre" value="#{newTipoSaber.nombre}" label="nombre" required="true" />
@@ -30,14 +33,17 @@
       
        <p:dataTable id="tipoSaberes" var="_tipoSaber" value="#{tipoSaberes}" editable="true">
        		<f:facet name="header">  
-            	Administrar Tipo de Saber  
+            	Administrar Tipo de Saber
         	</f:facet>
         	
         	<p:ajax event="rowEdit" listener="#{tipoSaberBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{tipoSaberBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_tipoSaber.id}" />
+        	 <p:column headerText="Código:" style="width:5%">
+        	    <p:cellEditor> 
+				   <f:facet name="output"><h:outputText value="#{_tipoSaber.id}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="tipoSaberId" value="#{_tipoSaber.id}" style="width:96%" required="true"/></f:facet>  
+        	 	</p:cellEditor>
         	 </p:column>
         	 
         	 <p:column headerText="Nombre" style="width:25%">  
