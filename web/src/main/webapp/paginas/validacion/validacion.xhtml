@@ -1,38 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:p="http://primefaces.org/ui"
-   template="/WEB-INF/templates/default.xhtml">
-   <ui:define name="content">
-      <h1 style="text-align: center;">Validacion de Saberes</h1>
-	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h1 style="text-align: center;">Validacion de Saberes</h1>
 
-      <h:form id="form" prependId="false">
-         <h2>Bandeja de Entrada</h2>
-         
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
-      <p:dataScroller value="#{personas}" var="_persona" chunkSize="5">
-   
-        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail" rendered="#{personaBean.faltaValidar(_persona.id) eq true}">
-            <p:graphicImage name="/resources/gfx/persona.png" />
- 
-            <p:outputPanel>
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputText value="Nombre:" />
-                    <h:outputText value="#{_persona.nombre}" style="font-weight: bold"/>
- 
-                    <h:outputText value="Apellido:" />
-                    <h:outputText value="#{_persona.apellido}" style="font-weight: bold"/>
- 
-                    <h:outputText value="Usuario:" />
-                    <h:outputText value="#{_persona.usuario}" style="font-weight: bold"/>
-                </h:panelGrid>
-            </p:outputPanel>
-        </h:panelGrid>
-    </p:dataScroller>
-    		
-		</h:form>     
-   </ui:define>
+
+		<h:form id="form" prependId="false">
+			<h2>Bandeja de Entrada</h2>
+			
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+				
+			<p:dataScroller id="personasValidar" value="#{personas}" var="_persona" chunkSize="5">
+
+				<h:panelGrid columns="3" style="width:100%"	rendered="#{personaBean.faltaValidar(_persona.id) eq true}">
+
+					<h:panelGrid style="width:30%">
+						<h:graphicImage value="#{personaBean.rutaIMG}/foto.jpeg"
+							style="height: 60px; width: 60px;" />
+					</h:panelGrid>
+
+					<h:panelGrid columns="4" style="width:70%;">
+
+						<h:outputText value="Nombre:" />
+						<h:outputText value="#{_persona.nombre}" style="font-weight: bold" />
+
+						<h:outputText value="Apellido:" />
+						<h:outputText value="#{_persona.apellido}"
+							style="font-weight: bold" />
+
+						<h:outputText value="Usuario:" />
+						<h:outputText value="#{_persona.usuario}"
+							style="font-weight: bold" />
+
+					</h:panelGrid>
+
+					<h:panelGrid style="width:10%">
+
+						<p:commandLink action="#{personaBean.asignarId(_persona.id)}" update=":form">
+							<h:graphicImage value="/resources/imagenes/mas.png" height="20px" />
+						</p:commandLink>
+
+					</h:panelGrid>
+
+				</h:panelGrid>
+				<p:dataTable var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}" rendered="#{personaBean.idPersona == _persona.id}">
+					<p:column headerText="Nombre">
+						<h:outputText value="#{_nc.saber.nombre}" />
+					</p:column>
+
+					<p:column headerText="Institucion">
+						<h:outputText value="#{_nc.saber.institucion.nombre}" />
+					</p:column>
+
+					<p:column headerText="Fecha inicio">
+						<h:outputText value="#{_nc.fechaInicio}" />
+					</p:column>
+
+					<p:column headerText="Fecha fin">
+						<h:outputText value="#{_nc.fechaFin}" />
+					</p:column>
+					
+					<p:column headerText="Comprobantes">            
+            			<p:commandButton id="comprobante" value="Comprobante" onclick="PF('dlgPDF').show()" />
+         			</p:column>
+		
+					<p:column headerText="Validado">
+						<h:outputText value="#{_nc.validado}" />
+					</p:column>
+				</p:dataTable>
+							
+			</p:dataScroller>
+				
+			<p:dialog widgetVar="dlgPDF" modal="true" width="100%" height="1024px" position="top">
+				<object type="application/pdf" data="#{personaBean.rutaPDF}/1.pdf?pfdrid_c=true" height="100%" width="100%"/>
+			</p:dialog>
+			
+		</h:form>
+	</ui:define>
 </ui:composition>
