@@ -40,17 +40,14 @@
         	 </p:column>
         	 
         	 <p:column headerText="Nombre" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_persona.nombre}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputPersona" value="#{_persona.nombre}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>  
-           	            	 
-           	 <p:column style="width:3%">           	 
-	            <p:rowEditor />	         	           
-	        </p:column>
-	       <!--  -->
-        
+                   <h:outputText value="#{_persona.nombre}" />  
+           	 </p:column>
+			 <p:column headerText="Apellido" style="width:25%">  
+                   <h:outputText value="#{_persona.apellido}" />  
+           	 </p:column>
+			 <p:column headerText="Usuario:" style="width:25%">  
+                   <h:outputText value="#{_persona.usuario}" />  
+           	 </p:column>
        </p:dataTable>       
 		</h:form>     
    </ui:define>

@@ -218,13 +218,13 @@
 	                  		<h:outputText value="#{_curriculares.saber.duracion} Años" />
 	           	 </p:column> 
 	
-				<p:column headerText="Tipo de Saber" style="width:25%">  
-	                  		<h:outputText value="#{_curriculares.saber.tipoSaber.nombre}" />
-	           	 </p:column> 
-	           	 
 	           	 <p:column headerText="Validado" style="width:15%">  
 	                   		<h:outputText value="#{personaBean.convertirBoolean(_curriculares.validado)}" />
-	           	 </p:column> 
+	           	 </p:column>
+
+				<p:column headerText="Comprobantes" style="width:30%">  
+	                  		<p:commandButton onclick="PF('dlgPDF').show()" icon="ui-icon-document" style="horizontal-align: center"/>
+	           	 </p:column>	           	  
 	           	            	 
 	           	 <p:column style="width:3%">           	 
 		            <p:rowEditor />	         	           
@@ -276,11 +276,11 @@
 			</p:column>
       	 
            	 <p:column headerText="Comprobantes">  
-				<p:fileUpload id="comprobante" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+				<p:fileUpload id="comprobante" value="#{fileUploadView.file}" mode="advance" auto="true" />
            	 </p:column>  
 
-           	 <p:column  >           	 
-	            <h:commandButton id="register" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
+           	 <p:column headerText="Agregar" style="width:5%" >           	 
+ 	            <p:commandButton id="register" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar" update=":form:curriculares" />
 	        </p:column>
 	       
       	</p:dataTable>    
@@ -393,13 +393,13 @@
 	                  		<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
 	           	 </p:column> 
 	
-				<p:column headerText="Tipo de Saber" style="width:25%">  
-	                  		<h:outputText value="#{_noCorporativos.saber.tipoSaber.nombre}" />
-	           	 </p:column> 
-	           	 
 	           	 <p:column headerText="Validado" style="width:25%">  
 	                   		<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.validado)}" />
-	           	 </p:column> 
+	           	 </p:column>
+
+				<p:column headerText="Comprobantes" style="width:30%">  
+	                  		<p:commandButton onclick="PF('dlgPDF').show()" icon="ui-icon-document" style="horizontal-align: center"/>
+	           	 </p:column> 	           	  
 	           	            	 
 	           	 <p:column style="width:3%">           	 
 		            <p:rowEditor />	         	           
@@ -447,15 +447,15 @@
 				<p:column headerText="Aprobación" style="width:10%">
 					<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}" id="aprobacionNoCorporativo" > </p:selectBooleanCheckbox>
 				</p:column>
-	      	 
+
 	           	 <p:column headerText="Comprobantes">  
-					<p:fileUpload id="comprobanteNoCorporativo" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+					<p:fileUpload id="comprobanteNoCorporativo" value="#{fileUploadView.file}" mode="advance" auto="true" />
 	           	 </p:column>  
+	           	 
+	          	 <p:column headerText="Agregar" style="width:5%" >           	 
+		            <p:commandButton id="registerNoCorporativo" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar" update=":form2:noCorporativos" />
+	        	</p:column>	           	 
 	
-	           	 <p:column  >           	 
-		            <h:commandButton id="registerNoCorporativo" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
-		        </p:column>
-		       
 	       </p:dataTable>
 		   <p:separator />
 		   </p:fieldset>	       
@@ -565,12 +565,13 @@
 	           	 </p:column>
 	
 	           	 <p:column headerText="Comprobantes">  
-					<p:fileUpload id="comprobanteCursos" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+					<p:fileUpload id="comprobanteCursos" value="#{fileUploadView.file}" mode="advance" auto="true" />
 	           	 </p:column>  
 	
-	           	 <p:column  >           	 
-		            <h:commandButton id="registerCursos" action="#{noCorporativoBean.registrar}" styleClass="" title="Registrar" />         	           
-		        </p:column>
+	          	 <p:column headerText="Agregar" style="width:5%" >           	 
+		            <p:commandButton id="registerCursos" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar" update=":form3:cursos" />
+	        	</p:column>			        
+		        
 	       </p:dataTable>
 		   <p:separator />
 		</p:fieldset> 
@@ -672,12 +673,12 @@
            	 </p:column>			
 
            	 <p:column headerText="Comprobantes">  
-				<p:fileUpload id="comprobanteConocimiento" value="#{fileUploadView.file}" mode="simple" skinSimple="true" />
+				<p:fileUpload id="comprobanteConocimiento" value="#{fileUploadView.file}" mode="advance" auto="true" />
            	 </p:column>  
-
-           	 <p:column  >           	 
-	            <h:commandButton id="registerCursos" action="#{noCorporativoBean.registrar}" icon="ui-icon-star" title="Registrar" />         	           
-	        </p:column>
+           	 
+           	 <p:column headerText="Agregar" style="width:5%" >          	 
+		    	 <p:commandButton id="registerCursos" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar" update=":form4:conocimientos" />
+	       	 </p:column>			
        </p:dataTable>
     </p:fieldset>
 	</h:form>
