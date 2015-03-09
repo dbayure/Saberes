@@ -16,32 +16,16 @@
 	<div id="container">
 		<div id="header">
 			<h:form prependId="false" id="fMenu">
-				<p:menubar autoDisplay="false">
-					<!--         <p:submenu label="Formulario" icon="ui-icon-contact"> -->
-					<!-- 	        <p:menuitem value="Registro" url="/paginas/formulario/registroPersonas.jsf" icon="ui-icon-document" /> -->
-					<!-- 	        <p:menuitem value="Formularios" url="/paginas/formulario/listadoFormularios.jsf" icon="ui-icon-document" /> -->
-					<!--         </p:submenu> -->
-
-					<p:submenu label="Usuarios" icon="ui-icon-person"
-						rendered="#{facesContext.externalContext.isUserInRole('ADMIN')}">
-						<p:menuitem value="Roles" url="/paginas/rol/rol.jsf"
-							icon="ui-icon-document" />
-						<p:menuitem value="Instituciones"
-							url="/paginas/institucion/institucion.jsf"
-							icon="ui-icon-document" />
-						<p:menuitem value="Tipos de Saber"
-							url="/paginas/tiposaber/tiposaber.jsf" icon="ui-icon-document" />
-						<p:menuitem value="Saberes" url="/paginas/saber/saber.jsf"
-							icon="ui-icon-document" />
-						<p:menuitem value="Perfil" url="/paginas/persona/persona.jsf"
-							icon="ui-icon-document" />
-						<p:menuitem value="Usuario" url="/paginas/usuario/usuario.jsf"
-							icon="ui-icon-document" />
-						<p:menuitem value="Validacion"
-							url="/paginas/validacion/validacion.jsf" icon="ui-icon-document" />
-						<p:menuitem value="Origenes" url="/paginas/origen/origen.jsf"
-							icon="ui-icon-document" />
-
+				<p:menubar autoDisplay="false">				
+					<p:submenu label="Usuarios" icon="ui-icon-person" rendered="#{facesContext.externalContext.isUserInRole('ADMIN')}">
+						<p:menuitem value="Roles" url="/paginas/rol/rol.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Instituciones" url="/paginas/institucion/institucion.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Tipos de Saber" url="/paginas/tiposaber/tiposaber.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Saberes" url="/paginas/saber/saber.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Perfil" url="/paginas/persona/persona.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Usuario" url="/paginas/usuario/usuario.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Validacion" url="/paginas/validacion/validacion.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Origenes" url="/paginas/origen/origen.jsf" icon="ui-icon-document" />	
 					</p:submenu>
 
 					<f:facet name="options">
