@@ -216,7 +216,7 @@ public void upload(FileUploadEvent event) {
 						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
-				if (!nc.isValidado()) {
+				if (nc.getValidado()=='P') {
 					listanc.add(nc);
 				}
 			}
