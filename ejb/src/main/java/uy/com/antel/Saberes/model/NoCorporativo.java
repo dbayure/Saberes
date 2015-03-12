@@ -14,21 +14,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class NoCorporativo extends SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private boolean validado;
+	private char validado;
 	
 	@ManyToOne(optional=true) 
     @JoinColumn(name="idOrigen", nullable=true, updatable=false)
 	private Origen origen;
 
-	public boolean isValidado() {
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public char getValidado() {
 		return validado;
 	}
-	public void setValidado(boolean validado) {
+
+	public void setValidado(char validado) {
 		this.validado = validado;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Origen getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(Origen origen) {
+		this.origen = origen;
 	}
 
 	@Override
@@ -36,9 +45,10 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result + ((origen == null) ? 0 : origen.hashCode());
-		result = prime * result + (validado ? 1231 : 1237);
+		result = prime * result + validado;
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -57,15 +67,11 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 			return false;
 		return true;
 	}
+
 	@Override
 	public String toString() {
-		return "NoCorporativo [validado=" + validado + "]";
-	}
-	public Origen getOrigen() {
-		return origen;
-	}
-	public void setOrigen(Origen origen) {
-		this.origen = origen;
+		return "NoCorporativo [validado=" + validado + ", origen=" + origen
+				+ "]";
 	}
 
 	

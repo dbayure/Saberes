@@ -41,6 +41,8 @@ public abstract class SaberPersona implements Serializable{
 	private ArrayList<String> comprobantes;
 	
 	private Boolean aprobacion;
+	
+	private String comentarios;
 
 	public Long getId() {
 		return id;
@@ -94,12 +96,22 @@ public abstract class SaberPersona implements Serializable{
 		this.aprobacion = aprobacion;
 	}
 
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
 				+ ((aprobacion == null) ? 0 : aprobacion.hashCode());
+		result = prime * result
+				+ ((comentarios == null) ? 0 : comentarios.hashCode());
 		result = prime * result
 				+ ((comprobantes == null) ? 0 : comprobantes.hashCode());
 		result = prime * result
@@ -124,6 +136,11 @@ public abstract class SaberPersona implements Serializable{
 			if (other.aprobacion != null)
 				return false;
 		} else if (!aprobacion.equals(other.aprobacion))
+			return false;
+		if (comentarios == null) {
+			if (other.comentarios != null)
+				return false;
+		} else if (!comentarios.equals(other.comentarios))
 			return false;
 		if (comprobantes == null) {
 			if (other.comprobantes != null)
@@ -152,5 +169,15 @@ public abstract class SaberPersona implements Serializable{
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "SaberPersona [id=" + id + ", saber=" + saber + ", fechaInicio="
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", comprobantes="
+				+ comprobantes + ", aprobacion=" + aprobacion
+				+ ", comentarios=" + comentarios + "]";
+	}
+	
+	
 	
 }
