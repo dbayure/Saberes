@@ -1,5 +1,8 @@
 package uy.com.antel.Saberes.bean;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -15,11 +18,17 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
 
+import org.apache.tomcat.jni.File;
 import org.jboss.security.SecurityContextAssociation;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import WebServices.sgp.antel.com.DatoPer;
@@ -50,6 +59,8 @@ public class PersonaBean {
 
 	@Inject
 	private RegistroNoCorporativo registroNoCorporativo;
+	
+	private StreamedContent graphicText;
 
 	@Inject
 	private RegistroNoCorporativo registroCorporativo;
@@ -157,9 +168,23 @@ public class PersonaBean {
 
 	}
 
-	public void setPersonaBean(String usr) {
-		registroPersona.setPersonaPorUsr(usr);
-	}
+public void setPersonaBean(String usr) {
+	registroPersona.setPersonaPorUsr(usr);
+}
+
+public void upload(FileUploadEvent event) {  
+  FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
+  FacesContext.getCurrentInstance().addMessage(null, msg);
+  
+   //aca deberia refrescar la imagen
+  
+  try {
+      registroPersona.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+  } catch (IOException e) {
+      e.printStackTrace();
+  }
+
+}  
 
 	private String getCi(String ci) {
 		List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g",
@@ -282,7 +307,7 @@ public class PersonaBean {
 			}
 		}
 		return listanc;
-	}
+	}    
 
 	public String convertirBoolean(Boolean var) {
 		if (var)
@@ -357,9 +382,31 @@ public class PersonaBean {
 		rutaIMG = p.getProperty("urlIMG");
 		System.out.println("ruta seleccionada para archivos pdf " + rutaPDF);
 		System.out.println("ruta seleccionada para archivos img " + rutaIMG);
+		init();
 	}
+	
+	public void init() {
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+        try {          
+            
+            BufferedImage bufferedImg = null;
+            try {
+            	bufferedImg = ImageIO.read( new java.io.File(rutaIMG+"/Imagenes/"+userName+ ".jpeg"));
+            } catch (IOException e) { }
+            
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImg, "jpeg", os);
+            setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()), "image/jpeg"));
+ 
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	public String getRutaIMG() {
+		obtenerRuta();
 		return rutaIMG;
 	}
 
@@ -381,5 +428,13 @@ public class PersonaBean {
 
 	public void setFile(UploadedFile file) {
 		this.file = file;
+	}
+
+	public StreamedContent getGraphicText() {
+		return graphicText;
+	}
+
+	public void setGraphicText(StreamedContent graphicText) {
+		this.graphicText = graphicText;
 	}
 }

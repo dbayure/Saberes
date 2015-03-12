@@ -35,7 +35,7 @@ public class RegistroPersona {
 	   
 	   private Persona newPersona;
 	   
-	   private String destination="/home/jsanguinetti/Descargas/prueba";
+	   private String destination="/media/ifsRemoto";
 	   
 	   @Produces
 	   @Named
