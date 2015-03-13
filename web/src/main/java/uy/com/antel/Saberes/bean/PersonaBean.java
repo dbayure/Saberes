@@ -309,11 +309,15 @@ public void upload(FileUploadEvent event) {
 		return listanc;
 	}    
 
-	public String convertirBoolean(Boolean var) {
-		if (var)
-			return "Si";
+	public String convertirBoolean(char var) {
+		if (var == 'P')
+			return "Pendiente de Aprobación";
 		else
-			return "No";
+			if (var == 'V')
+				return "Validado";
+			else
+				return "No Validado";
+		
 	}
 
 	public boolean faltaValidar(long id) {
@@ -378,11 +382,14 @@ public void upload(FileUploadEvent event) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//rutaPDF = System.getProperty("urlPDF");
 		rutaPDF = p.getProperty("urlPDF");
-		rutaIMG = p.getProperty("urlIMG");
+		rutaIMG = p.getProperty("urlIMG");		
+		
 		System.out.println("ruta seleccionada para archivos pdf " + rutaPDF);
 		System.out.println("ruta seleccionada para archivos img " + rutaIMG);
-		init();
+		//init();
 	}
 	
 	public void init() {
@@ -431,6 +438,7 @@ public void upload(FileUploadEvent event) {
 	}
 
 	public StreamedContent getGraphicText() {
+		init();
 		return graphicText;
 	}
 
