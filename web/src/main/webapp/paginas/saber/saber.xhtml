@@ -62,7 +62,12 @@
          <em>No hay Saber registrado.</em>
       </h:panelGroup>
       
-       <p:dataTable id="saberes" var="_saber" value="#{saberes}" editable="true">
+       <p:dataTable id="saberes" var="_saber" value="#{saberes}"
+       rows="10" 
+       paginator="true"
+       paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+       rowsPerPageTemplate="5,10,15"
+       editable="true">
        		<f:facet name="header">  
             	Administrar Saber  
         	</f:facet>

@@ -19,6 +19,10 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 	@ManyToOne(optional=true) 
     @JoinColumn(name="idOrigen", nullable=true, updatable=false)
 	private Origen origen;
+	
+	public NoCorporativo() {
+		this.validado = 'P';
+	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -39,6 +43,7 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 	public void setOrigen(Origen origen) {
 		this.origen = origen;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -73,6 +78,8 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 		return "NoCorporativo [validado=" + validado + ", origen=" + origen
 				+ "]";
 	}
+
+
 
 	
 }

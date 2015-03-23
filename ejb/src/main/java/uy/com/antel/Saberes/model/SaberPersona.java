@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "SaberPersona")
-public abstract class SaberPersona implements Serializable{
+public class SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	@Id

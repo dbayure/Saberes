@@ -397,13 +397,16 @@ public void upload(FileUploadEvent event) {
         try {          
             
             BufferedImage bufferedImg = null;
+            String rutaArchivoUsuario = rutaIMG+"/"+userName+".jpeg";
             try {
-            	bufferedImg = ImageIO.read( new java.io.File(rutaIMG+"/Imagenes/"+userName+ ".jpeg"));
+            	bufferedImg = ImageIO.read( new java.io.File(rutaArchivoUsuario));
             } catch (IOException e) { }
             
-            ByteArrayOutputStream os = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImg, "jpeg", os);
-            setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()), "image/jpeg"));
+            if (bufferedImg != null) {
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+            	ImageIO.write(bufferedImg, "jpeg", os);
+            	setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()), "image/jpeg"));
+            }
  
 
         }
