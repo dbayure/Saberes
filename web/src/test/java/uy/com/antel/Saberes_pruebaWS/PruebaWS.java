@@ -16,12 +16,15 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocat
 public class PruebaWS {
 
 	@Test
+	/*IMPORTANTE: Para que funcione el test verificar que se tiene en el pom.xml
+	 * commons-discovery, axis-wsdl4j y junit */
 	public void test() {
 		 
 		WsDatosPerService service = new WsDatosPerServiceLocator();
+		WsDatosPer llamada;
 		
 		try {
-			WsDatosPer llamada = service.getWSDatoPer();
+			llamada = service.getWSDatoPer();
 			
 			String sCedula = "4138704";
 			String sAppl = "SABERES";

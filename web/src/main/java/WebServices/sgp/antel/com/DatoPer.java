@@ -44,7 +44,11 @@ public class DatoPer  implements java.io.Serializable {
 
     private java.lang.String descEdificio;
 
+    private java.lang.String descJornada;
+
     private java.lang.String descLocalidad;
+
+    private java.lang.String descProfesion;
 
     private java.lang.String descRegimen;
 
@@ -66,6 +70,8 @@ public class DatoPer  implements java.io.Serializable {
 
     private java.lang.String faxUnidad;
 
+    private java.lang.String jornada;
+
     private java.lang.String localidad;
 
     private java.lang.String nivelJer;
@@ -80,11 +86,15 @@ public class DatoPer  implements java.io.Serializable {
 
     private java.lang.String priape;
 
+    private java.lang.String profesion;
+
     private java.lang.String programa;
 
     private java.lang.String regimen;
 
     private java.lang.String segape;
+
+    private java.lang.String sexo;
 
     private java.lang.String telefonoUnidad;
 
@@ -124,7 +134,9 @@ public class DatoPer  implements java.io.Serializable {
            java.lang.String descDepartamento,
            java.lang.String descDivision,
            java.lang.String descEdificio,
+           java.lang.String descJornada,
            java.lang.String descLocalidad,
+           java.lang.String descProfesion,
            java.lang.String descRegimen,
            java.lang.String descUnidad,
            java.lang.String division,
@@ -135,6 +147,7 @@ public class DatoPer  implements java.io.Serializable {
            boolean esRP,
            boolean esRU,
            java.lang.String faxUnidad,
+           java.lang.String jornada,
            java.lang.String localidad,
            java.lang.String nivelJer,
            java.lang.String nombre,
@@ -142,9 +155,11 @@ public class DatoPer  implements java.io.Serializable {
            java.lang.String oficina,
            java.lang.String planta,
            java.lang.String priape,
+           java.lang.String profesion,
            java.lang.String programa,
            java.lang.String regimen,
            java.lang.String segape,
+           java.lang.String sexo,
            java.lang.String telefonoUnidad,
            int topeUnidadesRP,
            int topeUnidadesRU,
@@ -171,7 +186,9 @@ public class DatoPer  implements java.io.Serializable {
            this.descDepartamento = descDepartamento;
            this.descDivision = descDivision;
            this.descEdificio = descEdificio;
+           this.descJornada = descJornada;
            this.descLocalidad = descLocalidad;
+           this.descProfesion = descProfesion;
            this.descRegimen = descRegimen;
            this.descUnidad = descUnidad;
            this.division = division;
@@ -182,6 +199,7 @@ public class DatoPer  implements java.io.Serializable {
            this.esRP = esRP;
            this.esRU = esRU;
            this.faxUnidad = faxUnidad;
+           this.jornada = jornada;
            this.localidad = localidad;
            this.nivelJer = nivelJer;
            this.nombre = nombre;
@@ -189,9 +207,11 @@ public class DatoPer  implements java.io.Serializable {
            this.oficina = oficina;
            this.planta = planta;
            this.priape = priape;
+           this.profesion = profesion;
            this.programa = programa;
            this.regimen = regimen;
            this.segape = segape;
+           this.sexo = sexo;
            this.telefonoUnidad = telefonoUnidad;
            this.topeUnidadesRP = topeUnidadesRP;
            this.topeUnidadesRU = topeUnidadesRU;
@@ -564,6 +584,26 @@ public class DatoPer  implements java.io.Serializable {
 
 
     /**
+     * Gets the descJornada value for this DatoPer.
+     * 
+     * @return descJornada
+     */
+    public java.lang.String getDescJornada() {
+        return descJornada;
+    }
+
+
+    /**
+     * Sets the descJornada value for this DatoPer.
+     * 
+     * @param descJornada
+     */
+    public void setDescJornada(java.lang.String descJornada) {
+        this.descJornada = descJornada;
+    }
+
+
+    /**
      * Gets the descLocalidad value for this DatoPer.
      * 
      * @return descLocalidad
@@ -580,6 +620,26 @@ public class DatoPer  implements java.io.Serializable {
      */
     public void setDescLocalidad(java.lang.String descLocalidad) {
         this.descLocalidad = descLocalidad;
+    }
+
+
+    /**
+     * Gets the descProfesion value for this DatoPer.
+     * 
+     * @return descProfesion
+     */
+    public java.lang.String getDescProfesion() {
+        return descProfesion;
+    }
+
+
+    /**
+     * Sets the descProfesion value for this DatoPer.
+     * 
+     * @param descProfesion
+     */
+    public void setDescProfesion(java.lang.String descProfesion) {
+        this.descProfesion = descProfesion;
     }
 
 
@@ -784,6 +844,26 @@ public class DatoPer  implements java.io.Serializable {
 
 
     /**
+     * Gets the jornada value for this DatoPer.
+     * 
+     * @return jornada
+     */
+    public java.lang.String getJornada() {
+        return jornada;
+    }
+
+
+    /**
+     * Sets the jornada value for this DatoPer.
+     * 
+     * @param jornada
+     */
+    public void setJornada(java.lang.String jornada) {
+        this.jornada = jornada;
+    }
+
+
+    /**
      * Gets the localidad value for this DatoPer.
      * 
      * @return localidad
@@ -924,6 +1004,26 @@ public class DatoPer  implements java.io.Serializable {
 
 
     /**
+     * Gets the profesion value for this DatoPer.
+     * 
+     * @return profesion
+     */
+    public java.lang.String getProfesion() {
+        return profesion;
+    }
+
+
+    /**
+     * Sets the profesion value for this DatoPer.
+     * 
+     * @param profesion
+     */
+    public void setProfesion(java.lang.String profesion) {
+        this.profesion = profesion;
+    }
+
+
+    /**
      * Gets the programa value for this DatoPer.
      * 
      * @return programa
@@ -980,6 +1080,26 @@ public class DatoPer  implements java.io.Serializable {
      */
     public void setSegape(java.lang.String segape) {
         this.segape = segape;
+    }
+
+
+    /**
+     * Gets the sexo value for this DatoPer.
+     * 
+     * @return sexo
+     */
+    public java.lang.String getSexo() {
+        return sexo;
+    }
+
+
+    /**
+     * Sets the sexo value for this DatoPer.
+     * 
+     * @param sexo
+     */
+    public void setSexo(java.lang.String sexo) {
+        this.sexo = sexo;
     }
 
 
@@ -1224,9 +1344,15 @@ public class DatoPer  implements java.io.Serializable {
             ((this.descEdificio==null && other.getDescEdificio()==null) || 
              (this.descEdificio!=null &&
               this.descEdificio.equals(other.getDescEdificio()))) &&
+            ((this.descJornada==null && other.getDescJornada()==null) || 
+             (this.descJornada!=null &&
+              this.descJornada.equals(other.getDescJornada()))) &&
             ((this.descLocalidad==null && other.getDescLocalidad()==null) || 
              (this.descLocalidad!=null &&
               this.descLocalidad.equals(other.getDescLocalidad()))) &&
+            ((this.descProfesion==null && other.getDescProfesion()==null) || 
+             (this.descProfesion!=null &&
+              this.descProfesion.equals(other.getDescProfesion()))) &&
             ((this.descRegimen==null && other.getDescRegimen()==null) || 
              (this.descRegimen!=null &&
               this.descRegimen.equals(other.getDescRegimen()))) &&
@@ -1251,6 +1377,9 @@ public class DatoPer  implements java.io.Serializable {
             ((this.faxUnidad==null && other.getFaxUnidad()==null) || 
              (this.faxUnidad!=null &&
               this.faxUnidad.equals(other.getFaxUnidad()))) &&
+            ((this.jornada==null && other.getJornada()==null) || 
+             (this.jornada!=null &&
+              this.jornada.equals(other.getJornada()))) &&
             ((this.localidad==null && other.getLocalidad()==null) || 
              (this.localidad!=null &&
               this.localidad.equals(other.getLocalidad()))) &&
@@ -1272,6 +1401,9 @@ public class DatoPer  implements java.io.Serializable {
             ((this.priape==null && other.getPriape()==null) || 
              (this.priape!=null &&
               this.priape.equals(other.getPriape()))) &&
+            ((this.profesion==null && other.getProfesion()==null) || 
+             (this.profesion!=null &&
+              this.profesion.equals(other.getProfesion()))) &&
             ((this.programa==null && other.getPrograma()==null) || 
              (this.programa!=null &&
               this.programa.equals(other.getPrograma()))) &&
@@ -1281,6 +1413,9 @@ public class DatoPer  implements java.io.Serializable {
             ((this.segape==null && other.getSegape()==null) || 
              (this.segape!=null &&
               this.segape.equals(other.getSegape()))) &&
+            ((this.sexo==null && other.getSexo()==null) || 
+             (this.sexo!=null &&
+              this.sexo.equals(other.getSexo()))) &&
             ((this.telefonoUnidad==null && other.getTelefonoUnidad()==null) || 
              (this.telefonoUnidad!=null &&
               this.telefonoUnidad.equals(other.getTelefonoUnidad()))) &&
@@ -1366,8 +1501,14 @@ public class DatoPer  implements java.io.Serializable {
         if (getDescEdificio() != null) {
             _hashCode += getDescEdificio().hashCode();
         }
+        if (getDescJornada() != null) {
+            _hashCode += getDescJornada().hashCode();
+        }
         if (getDescLocalidad() != null) {
             _hashCode += getDescLocalidad().hashCode();
+        }
+        if (getDescProfesion() != null) {
+            _hashCode += getDescProfesion().hashCode();
         }
         if (getDescRegimen() != null) {
             _hashCode += getDescRegimen().hashCode();
@@ -1393,6 +1534,9 @@ public class DatoPer  implements java.io.Serializable {
         if (getFaxUnidad() != null) {
             _hashCode += getFaxUnidad().hashCode();
         }
+        if (getJornada() != null) {
+            _hashCode += getJornada().hashCode();
+        }
         if (getLocalidad() != null) {
             _hashCode += getLocalidad().hashCode();
         }
@@ -1414,6 +1558,9 @@ public class DatoPer  implements java.io.Serializable {
         if (getPriape() != null) {
             _hashCode += getPriape().hashCode();
         }
+        if (getProfesion() != null) {
+            _hashCode += getProfesion().hashCode();
+        }
         if (getPrograma() != null) {
             _hashCode += getPrograma().hashCode();
         }
@@ -1422,6 +1569,9 @@ public class DatoPer  implements java.io.Serializable {
         }
         if (getSegape() != null) {
             _hashCode += getSegape().hashCode();
+        }
+        if (getSexo() != null) {
+            _hashCode += getSexo().hashCode();
         }
         if (getTelefonoUnidad() != null) {
             _hashCode += getTelefonoUnidad().hashCode();
@@ -1578,8 +1728,20 @@ public class DatoPer  implements java.io.Serializable {
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("descJornada");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "descJornada"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("descLocalidad");
         elemField.setXmlName(new javax.xml.namespace.QName("", "descLocalidad"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("descProfesion");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "descProfesion"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
@@ -1644,6 +1806,12 @@ public class DatoPer  implements java.io.Serializable {
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("jornada");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "jornada"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("localidad");
         elemField.setXmlName(new javax.xml.namespace.QName("", "localidad"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
@@ -1686,6 +1854,12 @@ public class DatoPer  implements java.io.Serializable {
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
         elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("profesion");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "profesion"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("programa");
         elemField.setXmlName(new javax.xml.namespace.QName("", "programa"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
@@ -1700,6 +1874,12 @@ public class DatoPer  implements java.io.Serializable {
         elemField = new org.apache.axis.description.ElementDesc();
         elemField.setFieldName("segape");
         elemField.setXmlName(new javax.xml.namespace.QName("", "segape"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
+        elemField.setNillable(true);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("sexo");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "sexo"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"));
         elemField.setNillable(true);
         typeDesc.addFieldDesc(elemField);
