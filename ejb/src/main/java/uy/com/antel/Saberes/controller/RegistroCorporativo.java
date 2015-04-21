@@ -58,4 +58,8 @@ public class RegistroCorporativo {
 	   public void initNewCorporativo() {
 		   newCorporativo = new Corporativo();
 	   }
+	   
+	   public Corporativo obtenerCorpPorID(long id){
+		   return em.find(Corporativo.class, id);
+	   }
 }

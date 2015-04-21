@@ -12,26 +12,22 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
-
-import org.apache.tomcat.jni.File;
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import WebServices.sgp.antel.com.DatoPer;
+import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
 import uy.com.antel.Saberes.model.Corporativo;
@@ -52,6 +48,7 @@ public class PersonaBean {
 	private String rutaPDF;
 	private String rutaIMG;
 	protected boolean mostrar = false;
+	private String motivoRechazo;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 
 	@Inject
@@ -63,7 +60,7 @@ public class PersonaBean {
 	private StreamedContent graphicText;
 
 	@Inject
-	private RegistroNoCorporativo registroCorporativo;
+	private RegistroCorporativo registroCorporativo;
 
 	private UploadedFile file;
 
@@ -414,6 +411,76 @@ public void upload(FileUploadEvent event) {
             e.printStackTrace();
         }
     }
+	
+public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
+		
+		Persona p = registroPersona.encontrarPorId(idPersona);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
+		for (SaberPersona sp : p.getSaberes()) {
+			if (sp instanceof NoCorporativo) {
+				System.out.println("Nombre del saber aprobado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
+				}
+			}
+		for (NoCorporativo ncorp : listanc){
+			if (ncorp.getId().equals(idNoCorporativo)) {
+				System.out.println("id del saber a evaluar:  " + idNoCorporativo + " valor de validacion " + ncorp.getValidado());
+				ncorp.setValidado('V');
+				try {
+					registroNoCorporativo.modificar(ncorp);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("valor de la variable asignada " + ncorp.getValidado());
+			}
+			System.out.println("#############################################");
+			listanc2.add(ncorp);
+		}
+		p.setSaberes(listanc2);
+		System.out.println("cantidad de saberes de la persona " + p.getNombre() + ": " + p.getSaberes().size() );
+		try {
+			registroPersona.modificar(p);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void rechazarNoCorporativo(long idNoCorporativo, long idPersona) {
+		Persona p = registroPersona.encontrarPorId(idPersona);
+		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
+		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
+		for (SaberPersona sp : p.getSaberes()) {
+			if (sp instanceof NoCorporativo) {
+				System.out.println("Nombre del saber Rechazado " + sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				listanc.add(nc);
+				}
+			}
+		for (NoCorporativo ncorp : listanc){
+			if (ncorp.getId().equals(idNoCorporativo)) {
+				ncorp.setValidado('R');
+				try {
+					registroNoCorporativo.modificar(ncorp);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			listanc2.add(ncorp);
+		}
+		p.setSaberes(listanc2);
+		try {
+			registroPersona.modificar(p);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 
 	public String getRutaIMG() {
 		obtenerRuta();
@@ -447,5 +514,13 @@ public void upload(FileUploadEvent event) {
 
 	public void setGraphicText(StreamedContent graphicText) {
 		this.graphicText = graphicText;
+	}
+	
+	public String getMotivoRechazo() {
+		return motivoRechazo;
+	}
+
+	public void setMotivoRechazo(String motivoRechazo) {
+		this.motivoRechazo = motivoRechazo;
 	}
 }

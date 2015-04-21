@@ -3,7 +3,6 @@ package uy.com.antel.Saberes.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.enterprise.event.Event;
@@ -12,8 +11,6 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-
-import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.SaberPersona;
@@ -75,7 +72,4 @@ public class RegistroNoCorporativo {
 		   return em.find(NoCorporativo.class, id);
 	   }
 	   
-	   public Corporativo obtenerCorpPorID(long id){
-		   return em.find(Corporativo.class, id);
-	   }
 }
