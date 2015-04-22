@@ -49,6 +49,7 @@ public class PersonaBean {
 	private String rutaIMG;
 	protected boolean mostrar = false;
 	private String motivoRechazo;
+	private StreamedContent graphicText;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 
 	@Inject
@@ -56,8 +57,6 @@ public class PersonaBean {
 
 	@Inject
 	private RegistroNoCorporativo registroNoCorporativo;
-	
-	private StreamedContent graphicText;
 
 	@Inject
 	private RegistroCorporativo registroCorporativo;
@@ -306,7 +305,7 @@ public void upload(FileUploadEvent event) {
 		return listanc;
 	}    
 
-	public String convertirBoolean(char var) {
+	public String convertirValidacion(char var) {
 		if (var == 'P')
 			return "Pendiente de Aprobación";
 		else
@@ -315,6 +314,13 @@ public void upload(FileUploadEvent event) {
 			else
 				return "No Validado";
 		
+	}
+	
+	public String convertirAprobacion(boolean aprobacion) {
+		if (aprobacion == true)
+			return "Finalizada";
+		else
+			return "En curso";
 	}
 
 	public boolean faltaValidar(long id) {
@@ -463,6 +469,7 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 		for (NoCorporativo ncorp : listanc){
 			if (ncorp.getId().equals(idNoCorporativo)) {
 				ncorp.setValidado('R');
+				ncorp.setMensaje(motivoRechazo);
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {

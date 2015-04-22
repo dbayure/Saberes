@@ -15,17 +15,14 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private char validado;
-	
+	private String mensaje;
+
 	@ManyToOne(optional=true) 
     @JoinColumn(name="idOrigen", nullable=true, updatable=false)
 	private Origen origen;
 	
 	public NoCorporativo() {
 		this.validado = 'P';
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
 	}
 
 	public char getValidado() {
@@ -36,6 +33,14 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 		this.validado = validado;
 	}
 
+	public String getMensaje() {
+		return mensaje;
+	}
+
+	public void setMensaje(String mensaje) {
+		this.mensaje = mensaje;
+	}
+
 	public Origen getOrigen() {
 		return origen;
 	}
@@ -44,11 +49,15 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 		this.origen = origen;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = prime * result + ((mensaje == null) ? 0 : mensaje.hashCode());
 		result = prime * result + ((origen == null) ? 0 : origen.hashCode());
 		result = prime * result + validado;
 		return result;
@@ -63,6 +72,11 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		NoCorporativo other = (NoCorporativo) obj;
+		if (mensaje == null) {
+			if (other.mensaje != null)
+				return false;
+		} else if (!mensaje.equals(other.mensaje))
+			return false;
 		if (origen == null) {
 			if (other.origen != null)
 				return false;
@@ -75,11 +89,9 @@ public class NoCorporativo extends SaberPersona implements Serializable{
 
 	@Override
 	public String toString() {
-		return "NoCorporativo [validado=" + validado + ", origen=" + origen
-				+ "]";
+		return "NoCorporativo [validado=" + validado + ", mensaje=" + mensaje
+				+ ", origen=" + origen + "]";
 	}
-
-
 
 	
 }

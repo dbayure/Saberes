@@ -206,7 +206,7 @@
 					<p:column headerText="Aprobación" style="width:25%">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.aprobacion)}" />
+								<h:outputText value="#{personaBean.convertirAprobacion(_noCorporativos.aprobacion)}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_curriculares.aprobacion}">	</p:selectBooleanCheckbox>
@@ -219,7 +219,7 @@
 	           	 </p:column> 
 	
 	           	 <p:column headerText="Validado" style="width:15%">  
-	                   		<h:outputText value="#{personaBean.convertirBoolean(_curriculares.validado)}" />
+	                   		<h:outputText value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
 	           	 </p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">  
@@ -311,7 +311,7 @@
  	           	 </p:column>
 	
 				<p:column headerText="Aprobación" style="width:25%">
-						<h:outputText value="#{personaBean.convertirBoolean(_Corporativos.aprobacion)}" />
+						<h:outputText value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" />
 				</p:column>
 				
 				<p:column headerText="Puntaje" style="width:25%">  
@@ -381,7 +381,7 @@
 					<p:column headerText="Aprobación" style="width:25%">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.aprobacion)}" />
+								<h:outputText value="#{personaBean.convertirAprobacion(_noCorporativos.aprobacion)}" />
 							</f:facet>
 							<f:facet name="input">
 								<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_noCorporativos.aprobacion}">	</p:selectBooleanCheckbox>
@@ -394,7 +394,7 @@
 	           	 </p:column> 
 	
 	           	 <p:column headerText="Validado" style="width:25%">  
-	                   		<h:outputText value="#{personaBean.convertirBoolean(_noCorporativos.validado)}" />
+	                   		<h:outputText value="#{personaBean.convertirValidacion(_noCorporativos.validado)}" />
 	           	 </p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">  
@@ -517,7 +517,7 @@
 	           	 </p:column> 
 	           	 
 	           	 <p:column headerText="Validado" style="width:25%">  
-	                   		<h:outputText value="#{personaBean.convertirBoolean(_cursos.validado)}" />
+	                   		<h:outputText value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 	           	 </p:column> 
 	           	            	 
 	           	 <p:column style="width:3%">           	 
@@ -627,7 +627,7 @@
 	           	 </p:column> 
 	           	 
 	           	 <p:column headerText="Validado" style="width:25%">  
-	                   		<h:outputText value="#{personaBean.convertirBoolean(_cursos.validado)}" />
+	                   		<h:outputText value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 	           	 </p:column> 
 	           	            	 
 	           	 <p:column style="width:3%">           	 
