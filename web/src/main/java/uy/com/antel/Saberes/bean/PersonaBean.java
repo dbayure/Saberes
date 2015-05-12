@@ -49,7 +49,11 @@ public class PersonaBean {
 	private String rutaIMG;
 	protected boolean mostrar = false;
 	private String motivoRechazo;
+	private int btnRechazo = -1;
+	private int btnComentario = -1;
+	private boolean gridRechazo = false;
 	private StreamedContent graphicText;
+	private int idFilaActualizar;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 
 	@Inject
@@ -469,6 +473,7 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 		for (NoCorporativo ncorp : listanc){
 			if (ncorp.getId().equals(idNoCorporativo)) {
 				ncorp.setValidado('R');
+				System.out.println("motivo del rechazo " + motivoRechazo);
 				ncorp.setMensaje(motivoRechazo);
 				try {
 					registroNoCorporativo.modificar(ncorp);
@@ -487,7 +492,27 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 			e.printStackTrace();
 		}
 	}
+	
+	public void mostrarbtnRechazo(){
+		btnRechazo = idFilaActualizar;
+		btnComentario = idFilaActualizar;
+		System.out.println("mostrar boton de rechazo " + btnRechazo);
+		System.out.println("mostrar boton de comentario " + btnComentario);
+	}
 
+	public void mostrarGridRechazo(){
+		gridRechazo = true;
+		System.out.println("Valor del grid motivo rechazo " + gridRechazo);
+
+	}
+	
+	public void motivoRechazoNoCorporativo(long idNoCorporativo){ 
+		NoCorporativo nc = registroNoCorporativo.obtenerPorID(idNoCorporativo);
+		setMotivoRechazo(nc.getMensaje());
+		mostrarGridRechazo();
+		System.out.println("Motivo del rechazo que se debe mostrar al usuario  %%%%%%%%%%%%%%%%%%%" + nc.getMensaje());
+	}
+	
 
 	public String getRutaIMG() {
 		obtenerRuta();
@@ -529,5 +554,37 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 
 	public void setMotivoRechazo(String motivoRechazo) {
 		this.motivoRechazo = motivoRechazo;
+		System.out.println("Motivo guardado en la variable " + this.motivoRechazo);
+	}
+
+	public boolean isGridRechazo() {
+		return gridRechazo;
+	}
+
+	public void setGridRechazo(boolean gridRechazo) {
+		this.gridRechazo = gridRechazo;
+	}
+
+	public int getIdFilaActualizar() {
+		return idFilaActualizar;
+	}
+
+	public void setIdFilaActualizar(int idFilaActualizar) {
+		this.idFilaActualizar = idFilaActualizar;
+	}
+	
+	public int getBtnRechazo() {
+		return btnRechazo;
+	}
+
+	public void setBtnRechazo(int btnRechazo) {
+		this.btnRechazo = btnRechazo;
+	}
+	public int getBtnComentario() {
+		return btnComentario;
+	}
+
+	public void setBtnComentario(int btnComentario) {
+		this.btnComentario = btnComentario;
 	}
 }

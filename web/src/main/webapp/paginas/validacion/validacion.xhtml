@@ -40,9 +40,8 @@
 
 				</h:panelGrid>
 					
-					<p:dataTable id="tablaValidar" var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}" >
+					<p:dataTable id="tablaValidar" var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}"  rowIndexVar="fila">
 									
-
 					<p:column headerText="Nombre">
 						<h:outputText value="#{_nc.saber.nombre}" />
 					</p:column>
@@ -64,36 +63,17 @@
          			</p:column>
 		
 					<p:column headerText="Estado Validacion">
-						<h:outputText value="Pendiente" rendered="#{_nc.validado == 'P'.charAt(0)}" />
-						<h:outputText value="Validado" rendered="#{_nc.validado == 'V'.charAt(0)}" />
-						<h:outputText value="Rechazado" rendered="#{_nc.validado == 'R'.charAt(0)}" />
+						<h:outputText value="#{personaBean.convertirValidacion(_nc.validado)}" />
 					</p:column>
 					
 					<p:column headerText="Validar">
 						<p:commandButton icon="ui-icon-check" action="#{personaBean.validarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
 					</p:column>
 					
-					<p:column headerText="Rechazar">
-						<p:commandButton icon="ui-icon-closethick" onclick="PF('dlgRechazo').show()" action="#{personaBean.rechazarNoCorporativo(_nc.id, _persona.id)}" />
+					<p:column headerText="Rechazar"  >
+						<p:commandButton id="btnComentario" rendered="#{personaBean.btnComentario ne fila}" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" action="#{personaBean.idFilaActualizar(fila)}"/>
+						<p:commandButton id="btnRechazo" rendered="#{personaBean.btnRechazo eq fila}" icon="ui-icon-check" onclick="#{personaBean.rechazarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
 					</p:column>	
-					
-					<p:rowExpansion>
-           			 <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
-           			 
-               				 <f:facet name="header">
-                   			 	<p:graphicImage name="/resources/gfx/mas.png"/>
-               				 </f:facet>
- 
-                <h:outputText value="Id:" />
-                
-                <h:outputText value="Year" />
- 
-                <h:outputText value="Color:" />
-                
-                <h:outputText value="Price" />
-               
-            </p:panelGrid>
-        </p:rowExpansion>
 					
 				</p:dataTable>
 									
@@ -107,10 +87,11 @@
 				<h:panelGrid columns="1" style="horizontal-align:center">
 					<h3>Motivo del rechazo</h3>
 					<p:inputTextarea value="#{personaBean.motivoRechazo}" style="width:200px; height:200px"/>
-					<p:commandButton value="Cerrar" onclick="PF('dlgRechazo').hide()" update=":form"/>
+					<p:commandButton value="Aceptar" oncomplete="PF('dlgRechazo').hide()" action="#{personaBean.mostrarbtnRechazo}" update=":form"/>
 				</h:panelGrid>
 				
-			</p:dialog>			
+			</p:dialog>		
+			
 		</h:form>
 	</ui:define>
 </ui:composition>
