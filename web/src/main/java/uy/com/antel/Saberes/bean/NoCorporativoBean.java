@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
@@ -18,7 +19,7 @@ import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Saber;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class NoCorporativoBean {
 
     private Institucion institucionSeleccionadaCurricular;

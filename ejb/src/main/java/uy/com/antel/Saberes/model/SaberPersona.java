@@ -164,5 +164,7 @@ public class SaberPersona implements Serializable{
 				+ comprobante + ", aprobacion=" + aprobacion + "]";
 	}
 
+
+
 	
 }
