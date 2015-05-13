@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,16 +21,19 @@ import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
+
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
@@ -53,8 +57,10 @@ public class PersonaBean {
 	private int btnComentario = -1;
 	private boolean gridRechazo = false;
 	private StreamedContent graphicText;
+	private StreamedContent streamedContent;
 	private int idFilaActualizar;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
+	private Comprobante comprobCursos;
 
 	@Inject
 	private RegistroPersona registroPersona;
@@ -168,23 +174,25 @@ public class PersonaBean {
 
 	}
 
-public void setPersonaBean(String usr) {
-	registroPersona.setPersonaPorUsr(usr);
-}
+	public void setPersonaBean(String usr) {
+		registroPersona.setPersonaPorUsr(usr);
+	}
 
-public void upload(FileUploadEvent event) {  
-  FacesMessage msg = new FacesMessage("Success! ", event.getFile().getFileName() + " is uploaded.");  
-  FacesContext.getCurrentInstance().addMessage(null, msg);
-  
-   //aca deberia refrescar la imagen
-  
-  try {
-      registroPersona.copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
-  } catch (IOException e) {
-      e.printStackTrace();
-  }
+	public void upload(FileUploadEvent event) {
+		FacesMessage msg = new FacesMessage("Success! ", event.getFile()
+				.getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-}  
+		// aca deberia refrescar la imagen
+
+		try {
+			registroPersona.copyFile(event.getFile().getFileName(), event
+					.getFile().getInputstream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	private String getCi(String ci) {
 		List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g",
@@ -216,7 +224,7 @@ public void upload(FileUploadEvent event) {
 						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
-				if (nc.getValidado()=='P') {
+				if (nc.getValidado() == 'P') {
 					listanc.add(nc);
 				}
 			}
@@ -307,19 +315,18 @@ public void upload(FileUploadEvent event) {
 			}
 		}
 		return listanc;
-	}    
+	}
 
 	public String convertirValidacion(char var) {
 		if (var == 'P')
 			return "Pendiente de Aprobación";
+		else if (var == 'V')
+			return "Validado";
 		else
-			if (var == 'V')
-				return "Validado";
-			else
-				return "No Validado";
-		
+			return "No Validado";
+
 	}
-	
+
 	public String convertirAprobacion(boolean aprobacion) {
 		if (aprobacion == true)
 			return "Finalizada";
@@ -389,54 +396,73 @@ public void upload(FileUploadEvent event) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		//rutaPDF = System.getProperty("urlPDF");
+
+		// rutaPDF = System.getProperty("urlPDF");
 		rutaPDF = p.getProperty("urlPDF");
-		rutaIMG = p.getProperty("urlIMG");		
-		
+		rutaIMG = p.getProperty("urlIMG");
+
 		System.out.println("ruta seleccionada para archivos pdf " + rutaPDF);
 		System.out.println("ruta seleccionada para archivos img " + rutaIMG);
-		//init();
+		// init();
 	}
-	
+
 	public void init() {
 		String userName = SecurityContextAssociation.getPrincipal().getName();
-        try {          
-            
-            BufferedImage bufferedImg = null;
-            String rutaArchivoUsuario = rutaIMG+"/"+userName+".jpeg";
-            try {
-            	bufferedImg = ImageIO.read( new java.io.File(rutaArchivoUsuario));
-            } catch (IOException e) { }
-            
-            if (bufferedImg != null) {
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-            	ImageIO.write(bufferedImg, "jpeg", os);
-            	setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()), "image/jpeg"));
-            }
- 
+		try {
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-	
-public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
-		
+			BufferedImage bufferedImg = null;
+			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpeg";
+			try {
+				bufferedImg = ImageIO
+						.read(new java.io.File(rutaArchivoUsuario));
+			} catch (IOException e) {
+			}
+
+			if (bufferedImg != null) {
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				ImageIO.write(bufferedImg, "jpeg", os);
+				setGraphicText(new DefaultStreamedContent(
+						new ByteArrayInputStream(os.toByteArray()),
+						"image/jpeg"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void abrirPdf(Long idComprob) {
+
+		try {
+			String rutaArchivoPDF = rutaPDF + idComprob + ".pdf";
+
+			FileInputStream fis = new FileInputStream(rutaArchivoPDF);
+			setStreamedContent(new DefaultStreamedContent(fis,
+					"application/pdf"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
+
 		Persona p = registroPersona.encontrarPorId(idPersona);
 		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				System.out.println("Nombre del saber aprobado " + sp.getSaber().getNombre());
-				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				System.out.println("Nombre del saber aprobado "
+						+ sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
+						.getId());
 				listanc.add(nc);
-				}
 			}
-		for (NoCorporativo ncorp : listanc){
+		}
+		for (NoCorporativo ncorp : listanc) {
 			if (ncorp.getId().equals(idNoCorporativo)) {
-				System.out.println("id del saber a evaluar:  " + idNoCorporativo + " valor de validacion " + ncorp.getValidado());
+				System.out.println("id del saber a evaluar:  "
+						+ idNoCorporativo + " valor de validacion "
+						+ ncorp.getValidado());
 				ncorp.setValidado('V');
 				try {
 					registroNoCorporativo.modificar(ncorp);
@@ -444,13 +470,15 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println("valor de la variable asignada " + ncorp.getValidado());
+				System.out.println("valor de la variable asignada "
+						+ ncorp.getValidado());
 			}
 			System.out.println("#############################################");
 			listanc2.add(ncorp);
 		}
 		p.setSaberes(listanc2);
-		System.out.println("cantidad de saberes de la persona " + p.getNombre() + ": " + p.getSaberes().size() );
+		System.out.println("cantidad de saberes de la persona " + p.getNombre()
+				+ ": " + p.getSaberes().size());
 		try {
 			registroPersona.modificar(p);
 		} catch (Exception e) {
@@ -465,12 +493,14 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				System.out.println("Nombre del saber Rechazado " + sp.getSaber().getNombre());
-				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
+				System.out.println("Nombre del saber Rechazado "
+						+ sp.getSaber().getNombre());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
+						.getId());
 				listanc.add(nc);
-				}
 			}
-		for (NoCorporativo ncorp : listanc){
+		}
+		for (NoCorporativo ncorp : listanc) {
 			if (ncorp.getId().equals(idNoCorporativo)) {
 				ncorp.setValidado('R');
 				System.out.println("motivo del rechazo " + motivoRechazo);
@@ -492,27 +522,28 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void mostrarbtnRechazo(){
+
+	public void mostrarbtnRechazo() {
 		btnRechazo = idFilaActualizar;
 		btnComentario = idFilaActualizar;
 		System.out.println("mostrar boton de rechazo " + btnRechazo);
 		System.out.println("mostrar boton de comentario " + btnComentario);
 	}
 
-	public void mostrarGridRechazo(){
+	public void mostrarGridRechazo() {
 		gridRechazo = true;
 		System.out.println("Valor del grid motivo rechazo " + gridRechazo);
 
 	}
-	
-	public void motivoRechazoNoCorporativo(long idNoCorporativo){ 
+
+	public void motivoRechazoNoCorporativo(long idNoCorporativo) {
 		NoCorporativo nc = registroNoCorporativo.obtenerPorID(idNoCorporativo);
 		setMotivoRechazo(nc.getMensaje());
 		mostrarGridRechazo();
-		System.out.println("Motivo del rechazo que se debe mostrar al usuario  %%%%%%%%%%%%%%%%%%%" + nc.getMensaje());
+		System.out
+				.println("Motivo del rechazo que se debe mostrar al usuario  %%%%%%%%%%%%%%%%%%%"
+						+ nc.getMensaje());
 	}
-	
 
 	public String getRutaIMG() {
 		obtenerRuta();
@@ -530,7 +561,7 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 	public void setRutaPDF(String rutaPDF) {
 		this.rutaPDF = rutaPDF;
 	}
-	
+
 	public UploadedFile getFile() {
 		return file;
 	}
@@ -547,14 +578,15 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 	public void setGraphicText(StreamedContent graphicText) {
 		this.graphicText = graphicText;
 	}
-	
+
 	public String getMotivoRechazo() {
 		return motivoRechazo;
 	}
 
 	public void setMotivoRechazo(String motivoRechazo) {
 		this.motivoRechazo = motivoRechazo;
-		System.out.println("Motivo guardado en la variable " + this.motivoRechazo);
+		System.out.println("Motivo guardado en la variable "
+				+ this.motivoRechazo);
 	}
 
 	public boolean isGridRechazo() {
@@ -572,7 +604,7 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 	public void setIdFilaActualizar(int idFilaActualizar) {
 		this.idFilaActualizar = idFilaActualizar;
 	}
-	
+
 	public int getBtnRechazo() {
 		return btnRechazo;
 	}
@@ -580,11 +612,28 @@ public void validarNoCorporativo(long idNoCorporativo, long idPersona) {
 	public void setBtnRechazo(int btnRechazo) {
 		this.btnRechazo = btnRechazo;
 	}
+
 	public int getBtnComentario() {
 		return btnComentario;
 	}
 
 	public void setBtnComentario(int btnComentario) {
 		this.btnComentario = btnComentario;
+	}
+
+	public StreamedContent getStreamedContent() {
+		return streamedContent;
+	}
+
+	public void setStreamedContent(StreamedContent streamedContent) {
+		this.streamedContent = streamedContent;
+	}
+	
+	public Comprobante getComprobCursos() {
+		return comprobCursos;
+	}
+
+	public void setComprobCursos(Comprobante comprobCursos) {
+		this.comprobCursos = comprobCursos;
 	}
 }

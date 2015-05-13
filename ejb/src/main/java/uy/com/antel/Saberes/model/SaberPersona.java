@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -38,7 +40,8 @@ public class SaberPersona implements Serializable{
 	@Temporal(TemporalType.DATE)
 	private Date fechaFin;
 	
-	private ArrayList<String> comprobantes;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Comprobante comprobante;
 	
 	private Boolean aprobacion;
 
@@ -74,14 +77,7 @@ public class SaberPersona implements Serializable{
 		this.fechaFin = fechaFin;
 	}
 
-	public ArrayList<String> getComprobantes() {
-		return comprobantes;
-	}
-
-	public void setComprobantes(ArrayList<String> comprobantes) {
-		this.comprobantes = comprobantes;
-	}
-
+	
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -94,6 +90,14 @@ public class SaberPersona implements Serializable{
 		this.aprobacion = aprobacion;
 	}
 
+	public Comprobante getComprobante() {
+		return comprobante;
+	}
+
+	public void setComprobante(Comprobante comprobante) {
+		this.comprobante = comprobante;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -101,7 +105,7 @@ public class SaberPersona implements Serializable{
 		result = prime * result
 				+ ((aprobacion == null) ? 0 : aprobacion.hashCode());
 		result = prime * result
-				+ ((comprobantes == null) ? 0 : comprobantes.hashCode());
+				+ ((comprobante == null) ? 0 : comprobante.hashCode());
 		result = prime * result
 				+ ((fechaFin == null) ? 0 : fechaFin.hashCode());
 		result = prime * result
@@ -125,10 +129,10 @@ public class SaberPersona implements Serializable{
 				return false;
 		} else if (!aprobacion.equals(other.aprobacion))
 			return false;
-		if (comprobantes == null) {
-			if (other.comprobantes != null)
+		if (comprobante == null) {
+			if (other.comprobante != null)
 				return false;
-		} else if (!comprobantes.equals(other.comprobantes))
+		} else if (!comprobante.equals(other.comprobante))
 			return false;
 		if (fechaFin == null) {
 			if (other.fechaFin != null)
@@ -156,8 +160,8 @@ public class SaberPersona implements Serializable{
 	@Override
 	public String toString() {
 		return "SaberPersona [id=" + id + ", saber=" + saber + ", fechaInicio="
-				+ fechaInicio + ", fechaFin=" + fechaFin + ", comprobantes="
-				+ comprobantes + ", aprobacion=" + aprobacion + "]";
+				+ fechaInicio + ", fechaFin=" + fechaFin + ", comprobante="
+				+ comprobante + ", aprobacion=" + aprobacion + "]";
 	}
 
 	

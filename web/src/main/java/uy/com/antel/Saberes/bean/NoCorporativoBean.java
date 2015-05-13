@@ -8,6 +8,7 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -20,6 +21,13 @@ import uy.com.antel.Saberes.model.Saber;
 @RequestScoped
 public class NoCorporativoBean {
 
+    private Institucion institucionSeleccionadaCurricular;
+    private Institucion institucionSeleccionada;
+    private Institucion institucionSeleccionadaCurso;
+    private UploadedFile inputComprobante;
+       
+    private ArrayList<Saber> saberPorInst;
+    
 	@Inject
 	private RegistroNoCorporativo registroNoCorporativo;
 	
@@ -30,35 +38,15 @@ public class NoCorporativoBean {
 	
     @Inject
 	private SaberBean saberBean;
-	
-    private Institucion institucionSeleccionadaCurricular;
-    private Institucion institucionSeleccionada;
-    private Institucion institucionSeleccionadaCurso;
-   
-    private UploadedFile file;
-    
-    private ArrayList<Saber> saberPorInst;
-    
 
-	public UploadedFile getFile() {
-        return file;
-    }
- 
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
-     
-    public void upload() {
-        if(file != null) {
-            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
+    public void upload(FileUploadEvent event) {
+    	inputComprobante = event.getFile();
     }
 	
 	public void registrar() {
 		try {
 			String usuario = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-			registroNoCorporativo.registro(usuario);
+			registroNoCorporativo.registro(usuario,inputComprobante.getFileName(),inputComprobante.getInputstream());
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}

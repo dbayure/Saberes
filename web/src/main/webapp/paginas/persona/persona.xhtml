@@ -37,7 +37,7 @@
 					<h:form enctype="multipart/form-data">
 						<p:growl id="messages" showDetail="true" />
 
-						
+
 						<p:fileUpload fileUploadListener="#{personaBean.upload}"
 							allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 							invalidFileMessage="Formato Incorrecto" cancelLabel="Cancelar"
@@ -46,7 +46,7 @@
 							fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
 							description="Selecciona Imagen" />
 
-						
+
 					</h:form>
 				</h:panelGrid>
 
@@ -502,22 +502,28 @@
 				</p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">
-					<p:commandButton onclick="PF('dlgPDF').show()"
-						icon="ui-icon-document" style="horizontal-align: center" />
-				</p:column>
+					<p:commandButton onclick="PF('dlgComprobCurNC').show()"
+						action="#{personaBean.abrirPdf(_noCorporativos.comprobante.id)}"
+						immediate="true" icon="ui-icon-document"
+						style="horizontal-align: center" />
 
-				<p:column style="width:3%">
-					<p:rowEditor />
-				</p:column>
+					<p:column style="width:3%">
+						<p:rowEditor />
+					</p:column>
 
-				<p:column style="width:3%">
-					<p:commandLink id="deleteLink" update="@all" immediate="true"
-						ajax="true" styleClass="ui-icon ui-icon-trash"
-						actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
-					</p:commandLink>
-				</p:column>
-
+					<p:column style="width:3%">
+						<p:commandLink id="deleteLink" update="@all" immediate="true"
+							ajax="true" styleClass="ui-icon ui-icon-trash"
+							actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
+						</p:commandLink>
+					</p:column>
 			</p:dataTable>
+			
+			 <p:dialog widgetVar="dlgComprobCurNC" modal="true" width="100%" height="1024px" position="top">
+				
+<!-- 				        <object type="application/pdf" data="#{personaBean.rutaPDF}/#{personaBean.comprobCursos.id}.pdf?pfdrid_c=true" height="100%" width="100%"/> -->
+				    		<p:media value="#{personaBean.streamedContent}" player="pdf"></p:media>
+			</p:dialog>  
 
 			<br />
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
@@ -570,10 +576,10 @@
 						</p:selectBooleanCheckbox>
 					</p:column>
 
-					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteNoCorporativo"
-							value="#{fileUploadView.file}" mode="advance" auto="true" />
-					</p:column>
+					 <p:column headerText="Comprobantes">  
+<!-- 					<p:fileUpload id="comprobanteNoCorporativo" value="#{newNoCorporativo.comprobante.nombre}" fileUploadListener="#{noCorporativoBean.upload}" filemode="advance" auto="true"  /> -->
+						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
+	           	 </p:column>  
 
 					<p:column headerText="Agregar" style="width:5%">
 						<p:commandButton id="registerNoCorporativo" icon="ui-icon-plus"
