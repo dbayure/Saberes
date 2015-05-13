@@ -21,6 +21,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
+import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.SaberPersona;
@@ -51,8 +52,7 @@ public class RegistroNoCorporativo {
 		return newNoCorporativo;
 	}
 
-	public void registro(String usuario, String nombreArchivo,
-			InputStream inputComprobante) throws Exception {
+	public void registro(String usuario, String nombreArchivo,InputStream inputComprobante) throws Exception {
 		log.info("Registro " + newNoCorporativo.getSaber().getNombre());
 		Persona pe = rp.buscarPersonaPorUsr(usuario);
 		List<SaberPersona> saberes = new ArrayList<SaberPersona>();
@@ -97,6 +97,7 @@ public class RegistroNoCorporativo {
 	@PostConstruct
 	public void initNewNoCorporativo() {
 		newNoCorporativo = new NoCorporativo();
+		newNoCorporativo.setComprobante(new Comprobante());
 	}
 
 	public NoCorporativo obtenerPorID(long id) {

@@ -390,10 +390,8 @@ public class PersonaBean {
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -467,7 +465,6 @@ public class PersonaBean {
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				System.out.println("valor de la variable asignada "
