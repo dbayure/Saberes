@@ -429,14 +429,12 @@ public class PersonaBean {
 		}
 	}
 
-	public void abrirPdf(Long idComprob) {
-
+	public void abrirPdf(long idComprob) {
 		try {
 			String rutaArchivoPDF = rutaPDF + idComprob + ".pdf";
 
 			FileInputStream fis = new FileInputStream(rutaArchivoPDF);
-			setStreamedContent(new DefaultStreamedContent(fis,
-					"application/pdf"));
+			setStreamedContent(new DefaultStreamedContent(fis,"application/pdf"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
