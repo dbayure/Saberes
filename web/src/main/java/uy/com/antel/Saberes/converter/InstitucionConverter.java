@@ -25,7 +25,7 @@ public class InstitucionConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value.trim().equals("")) {
 			value = ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(component.getClientId()+"_input");
-//			return null;
+			return null;
 		}
 		Institucion institucion = null;
 		try {
