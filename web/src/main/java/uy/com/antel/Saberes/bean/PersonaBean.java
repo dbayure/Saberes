@@ -179,6 +179,10 @@ public class PersonaBean {
 	}
 
 	public void upload(FileUploadEvent event) {
+		
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+
+	    String rutaArchivoUsuario = rutaIMG+userName+".jpg";
 		FacesMessage msg = new FacesMessage("Success! ", event.getFile()
 				.getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -186,8 +190,7 @@ public class PersonaBean {
 		// aca deberia refrescar la imagen
 
 		try {
-			registroPersona.copyFile(event.getFile().getFileName(), event
-					.getFile().getInputstream());
+			registroPersona.copyFile(rutaArchivoUsuario, event.getFile().getInputstream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -409,7 +412,7 @@ public class PersonaBean {
 		try {
 
 			BufferedImage bufferedImg = null;
-			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpeg";
+			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpg";
 			try {
 				bufferedImg = ImageIO
 						.read(new java.io.File(rutaArchivoUsuario));
@@ -418,10 +421,10 @@ public class PersonaBean {
 
 			if (bufferedImg != null) {
 				ByteArrayOutputStream os = new ByteArrayOutputStream();
-				ImageIO.write(bufferedImg, "jpeg", os);
+				ImageIO.write(bufferedImg, "jpg", os);
 				setGraphicText(new DefaultStreamedContent(
 						new ByteArrayInputStream(os.toByteArray()),
-						"image/jpeg"));
+						"image/jpg"));
 			}
 
 		} catch (Exception e) {
