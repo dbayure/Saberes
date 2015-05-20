@@ -2,6 +2,7 @@ package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -272,7 +273,11 @@ public class Persona implements Serializable {
 	public void setRegimen(String regimen) {
 		this.regimen = regimen;
 	}
-
+	
+	public void addSaber(SaberPersona saber){
+		this.saberes.add(saber);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

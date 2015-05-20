@@ -58,6 +58,17 @@ public class RegistroSaber {
 		   saberEventSrc.fire(newSaber);
 	   }
 
+		public Saber buscarPorCodGicca(Integer codeCurso) {
+			Query q = em.createQuery("from Saber as saber where saber.codgicca = ?");
+			q.setParameter(1, codeCurso);
+			List <Saber> resultado = q.getResultList();
+			
+			if (resultado.isEmpty())
+				return null;
+			return (Saber) resultado.get(0);
+		}
+	   
+
 	   @PostConstruct
 	   public void initNewSaber() {
 		   newSaber = new Saber();

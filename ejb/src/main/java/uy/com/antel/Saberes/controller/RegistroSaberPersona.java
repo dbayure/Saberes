@@ -50,4 +50,10 @@ public class RegistroSaberPersona {
 		   saberPersonaEventSrc.fire(newSaberPersona);
 	   }
 
+	public void setNewSaberPersona(SaberPersona newSaberPersona) {
+		this.newSaberPersona = newSaberPersona;
+	}
+	   
+	   
+
 }
