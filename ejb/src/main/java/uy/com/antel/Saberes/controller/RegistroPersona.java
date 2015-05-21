@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,7 +18,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
 
 @Stateful
@@ -34,8 +34,6 @@ public class RegistroPersona {
 	   private RegistroRol rol;
 	   
 	   private Persona newPersona;
-	   
-	   //private String destination="/media/ifsRemoto";
 	   
 	   @Produces
 	   @Named
@@ -90,7 +88,15 @@ public class RegistroPersona {
 			Persona p = em.find(Persona.class, idp);
 			return p;
 		}
+		
+		@SuppressWarnings("unchecked")
+		public List <Object []> getAllPersonas(){
+			Query query = em.createNativeQuery("SELECT id,usuario FROM persona p where p.usuario='e138704'");
+			List <Object []> personas = query.getResultList();
+			return personas;
+		}
 
+		@SuppressWarnings("unchecked")
 		public void setPersonaPorUsr(String usr) {
 			Query q = em
 			.createQuery("Select p from Persona p where p.usuario = ?1");
@@ -100,6 +106,7 @@ public class RegistroPersona {
 			this.newPersona = resultado.get(0);
 			}
 		
+		@SuppressWarnings("unchecked")
 		public Persona buscarPersonaPorUsr(String usr) {
 		Query q = em.createQuery("Select p from Persona p where p.usuario = ?1");
 		q.setParameter(1, usr);
@@ -110,8 +117,18 @@ public class RegistroPersona {
 		return resultado.get(0);
 		}
 		
+		public Integer getCI(String usuario){
+			List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g","h", "i", "j", "k");
+			if (usuario.indexOf(0) == 'a') {
+				return Integer.parseInt(usuario.substring(1));
+			} else {
+				int primerDigito = conv.indexOf(usuario.substring(0, 1));
+				return Integer.parseInt(primerDigito + usuario.substring(1));
+			}
+		}
 		
-   public Persona encontrarPorId(long id){
-	   return em.find(Persona.class,id);
-   }
+		
+	   public Persona encontrarPorId(long id){
+		   return em.find(Persona.class,id);
+	   }
 }

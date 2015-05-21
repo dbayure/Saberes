@@ -58,7 +58,7 @@ public class PruebaLDAP {
 	      AppConfigurationEntry[] testLdapExample1()
 	      {
 	         String name = "org.jboss.security.auth.spi.LdapLoginModule";
-	         HashMap options = new HashMap();
+	         HashMap<String, String> options = new HashMap<String, String>();
 	         options.put("java.naming.factory.initial", "com.sun.jndi.ldap.LdapCtxFactory");
 	         options.put("java.naming.security.authentication", "simple");
 	         options.put("java.naming.provider.url", "ldap://net.in.iantel.com.uy:389/");
@@ -88,14 +88,14 @@ public class PruebaLDAP {
 		  
 		  System.out.println("testLdapExample1");
 	      //UsernamePasswordHandler handler = new UsernamePasswordHandler("e102830", "supernegritos12345".toCharArray());
-		  UsernamePasswordHandler handler = new UsernamePasswordHandler("e138704", "".toCharArray());
+		  UsernamePasswordHandler handler = new UsernamePasswordHandler("e138704", "PONER TU CLAVE DE RED ACA".toCharArray());
 	      LoginContext lc = new LoginContext("testLdapExample1", handler);
 	      lc.login();
 
 	      Subject subject = lc.getSubject();
 	      System.out.println("Subject: "+subject);
 
-	      Set groups = subject.getPrincipals(Group.class);
+	      Set<Group> groups = subject.getPrincipals(Group.class);
 	      assertTrue("Principals contains your-uid", subject.getPrincipals().contains(new SimplePrincipal("e138704")));
 	      Group roles = (Group) groups.iterator().next();
 	      assertTrue("your-uid-role is a role", roles.isMember(new SimplePrincipal("e138704")));

@@ -7,6 +7,7 @@
 
 package WebServices.sgp.antel.com;
 
+@SuppressWarnings("all")
 public class DatoPer  implements java.io.Serializable {
     private java.util.Calendar FIngre;
 

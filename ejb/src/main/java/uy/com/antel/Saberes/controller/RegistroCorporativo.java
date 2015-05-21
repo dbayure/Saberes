@@ -39,9 +39,8 @@ public class RegistroCorporativo {
 
 	   private Corporativo newCorporativo;
 	   
-	   private static String SELECT_CORPORATIVOS = "select cedula, gpacurre.cod_curso,gpacurso.nombre,f_com_efec,f_fin_efec, aprobacion,puntaje,cant_asistencia,rol from gpaparev inner join gpacurre on (gpaparev.id_evento = gpacurre.id_evento) inner join gpacurso on (gpacurso.cod_curso=gpacurre.cod_curso) where cedula=? and aprobacion='S'";
+	   private static String SELECT_CORPORATIVOS = "select cedula, gpacurre.cod_curso,f_com_efec,f_fin_efec, puntaje,cant_asistencia,rol,libreta,cod_area,cant_horas from gpaparev inner join gpacurre on (gpaparev.id_evento = gpacurre.id_evento) inner join gpacurso on (gpacurso.cod_curso=gpacurre.cod_curso) where cedula=? and aprobacion='S'";
 
-	   
 	   @Produces
 	   @Named
 	   public Corporativo getNewCorporativo() {
@@ -59,8 +58,13 @@ public class RegistroCorporativo {
 	      initNewCorporativo();
 	   }
 	   
+	   public String getDescripcion(String cod){
+		   Query q = em.createQuery("select p from Gpatabla where p.codtab=?");
+		   q.setParameter(1,cod);
+		   return String.valueOf(q.getFirstResult());
+	   }
+	   
 	   public void registro(Long id) throws Exception {
-//		      log.info("Registro " + newCorporativo.getSaber().getNombre());
 		      Persona p = rp.buscarPersona(id);
 		      List<SaberPersona> saberes = new ArrayList<SaberPersona>();
 		      saberes.add(newCorporativo);
@@ -95,7 +99,7 @@ public class RegistroCorporativo {
 			this.newCorporativo = newCorporativo;
 		}
 
-	@PostConstruct
+	   @PostConstruct
 	   public void initNewCorporativo() {
 		   newCorporativo = new Corporativo();
 	   }

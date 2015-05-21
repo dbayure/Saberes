@@ -7,6 +7,7 @@
 
 package uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer;
 
+@SuppressWarnings("all")
 public class WSDatoPerSoapBindingStub extends org.apache.axis.client.Stub implements uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer {
     private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();

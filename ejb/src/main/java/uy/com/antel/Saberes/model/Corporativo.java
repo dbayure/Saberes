@@ -3,11 +3,6 @@ package uy.com.antel.Saberes.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,13 +16,12 @@ public class Corporativo extends SaberPersona implements Serializable{
 	//Quitar el campo de aprobación.
 	//private boolean aprobo;
 	private Integer puntaje;
-	private String duracion;
+	private Integer duracion;
 	private String libreta;
 	private String rolSaber;
-	private String clase;
-	private String internoExterno;
 	private Integer idEventoGicca;
 	private Integer asistencia;
+	private String cod_area;
 
 	public Corporativo() {
 		super();
@@ -39,10 +33,10 @@ public class Corporativo extends SaberPersona implements Serializable{
 	public void setPuntaje(Integer puntaje) {
 		this.puntaje = puntaje;
 	}
-	public String getDuracion() {
+	public Integer getDuracion() {
 		return duracion;
 	}
-	public void setDuracion(String duracion) {
+	public void setDuracion(Integer duracion) {
 		this.duracion = duracion;
 	}
 	public String getLibreta() {
@@ -52,23 +46,14 @@ public class Corporativo extends SaberPersona implements Serializable{
 		this.libreta = libreta;
 	}
 	public String getRolSaber() {
-		return rolSaber;
+		if (rolSaber.equals("A"))
+			return "Asistente";
+		return "Instructor";
 	}
 	public void setRolSaber(String rolSaber) {
 		this.rolSaber = rolSaber;
 	}
-	public String getClase() {
-		return clase;
-	}
-	public void setClase(String clase) {
-		this.clase = clase;
-	}
-	public String getInternoExterno() {
-		return internoExterno;
-	}
-	public void setInternoExterno(String internoExterno) {
-		this.internoExterno = internoExterno;
-	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -89,19 +74,26 @@ public class Corporativo extends SaberPersona implements Serializable{
 		this.asistencia = asistencia;
 	}
 
+	public String getCod_area() {
+		return cod_area;
+	}
+
+	public void setCod_area(String cod_area) {
+		this.cod_area = cod_area;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = prime * result
 				+ ((asistencia == null) ? 0 : asistencia.hashCode());
-		result = prime * result + ((clase == null) ? 0 : clase.hashCode());
+		result = prime * result
+				+ ((cod_area == null) ? 0 : cod_area.hashCode());
 		result = prime * result
 				+ ((duracion == null) ? 0 : duracion.hashCode());
 		result = prime * result
 				+ ((idEventoGicca == null) ? 0 : idEventoGicca.hashCode());
-		result = prime * result
-				+ ((internoExterno == null) ? 0 : internoExterno.hashCode());
 		result = prime * result + ((libreta == null) ? 0 : libreta.hashCode());
 		result = prime * result + ((puntaje == null) ? 0 : puntaje.hashCode());
 		result = prime * result
@@ -123,10 +115,10 @@ public class Corporativo extends SaberPersona implements Serializable{
 				return false;
 		} else if (!asistencia.equals(other.asistencia))
 			return false;
-		if (clase == null) {
-			if (other.clase != null)
+		if (cod_area == null) {
+			if (other.cod_area != null)
 				return false;
-		} else if (!clase.equals(other.clase))
+		} else if (!cod_area.equals(other.cod_area))
 			return false;
 		if (duracion == null) {
 			if (other.duracion != null)
@@ -137,11 +129,6 @@ public class Corporativo extends SaberPersona implements Serializable{
 			if (other.idEventoGicca != null)
 				return false;
 		} else if (!idEventoGicca.equals(other.idEventoGicca))
-			return false;
-		if (internoExterno == null) {
-			if (other.internoExterno != null)
-				return false;
-		} else if (!internoExterno.equals(other.internoExterno))
 			return false;
 		if (libreta == null) {
 			if (other.libreta != null)
@@ -160,8 +147,7 @@ public class Corporativo extends SaberPersona implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
+
+
 	
 }

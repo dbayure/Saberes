@@ -7,6 +7,7 @@
 
 package uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer;
 
+@SuppressWarnings("all")
 public class WsDatosPerServiceLocator extends org.apache.axis.client.Service implements uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService {
 
     public WsDatosPerServiceLocator() {
