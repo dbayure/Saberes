@@ -142,9 +142,9 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>apache-discovery</groupId>
+		<groupId>commons-discovery</groupId>
 			<artifactId>commons-discovery</artifactId>
-			<version>0.4-brew</version>
+			<version>0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>axis</groupId>

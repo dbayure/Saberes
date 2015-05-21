@@ -364,6 +364,11 @@ public class PersonaBean {
 		this.idPersona = idPersona;
 	}
 
+	public void asignarId(long id) {
+		this.idPersona = id;
+		obtenerRuta();
+	}
+
 	public boolean isMostrar() {
 		return mostrar;
 	}

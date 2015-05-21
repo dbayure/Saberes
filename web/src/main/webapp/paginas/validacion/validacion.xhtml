@@ -15,13 +15,13 @@
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 				
-			<p:dataScroller id="personasValidar" value="#{personas}" var="_persona" chunkSize="5">
+			<p:dataScroller id="personasValidar" value="#{personaBean.listaPersonasPorValidar()}" var="_persona" chunkSize="5">
 
-				<h:panelGrid columns="3" style="width:100%"	rendered="#{personaBean.faltaValidar(_persona.id) eq true}">
+				<h:panelGrid columns="3" style="width:100%"	>
 					
 					<h:panelGrid style="width:30%">
-						<h:graphicImage value="#{personaBean.rutaIMG}/foto.jpeg"
-							style="height: 60px; width: 60px;" />
+						<p:graphicImage value="#{personaBean.cargarImagenes(_persona.usuario)}" style="height: 70px; width: 60px;" />
+							
 					</h:panelGrid>
 
 					<h:panelGrid columns="4" style="width:70%;">
