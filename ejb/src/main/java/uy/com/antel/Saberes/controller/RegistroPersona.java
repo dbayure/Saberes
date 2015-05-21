@@ -35,7 +35,7 @@ public class RegistroPersona {
 	   
 	   private Persona newPersona;
 	   
-	   private String destination="/media/ifsRemoto";
+	   //private String destination="/media/ifsRemoto";
 	   
 	   @Produces
 	   @Named
@@ -62,7 +62,7 @@ public class RegistroPersona {
 	          
 	          
 	            // write the inputStream to a FileOutputStream
-	            OutputStream out = new FileOutputStream(new File(destination + fileName));
+	            OutputStream out = new FileOutputStream(new File(fileName));
 	          
 	            int read = 0;
 	            byte[] bytes = new byte[1024];

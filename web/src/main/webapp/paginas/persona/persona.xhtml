@@ -39,8 +39,8 @@
 
 
 						<p:fileUpload fileUploadListener="#{personaBean.upload}"
-							allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-							invalidFileMessage="Formato Incorrecto" cancelLabel="Cancelar"
+							allowTypes="/(\.|\/)(jpg|JPG)$/"
+							invalidFileMessage="Formato Incorrecto, el archivo debe ser jpg" cancelLabel="Cancelar"
 							uploadLabel="Subir" label="Nueva" sizeLimit="102400"
 							invalidSizeMessage="No se puede subir imágenes de tamaño mayor 100 kb"
 							fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
@@ -502,12 +502,14 @@
 				</p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">
-					<p:commandButton onclick="PF('dlgComprobCurNC').show()"
-						action="#{personaBean.abrirPdf(_noCorporativos.comprobante.id)}"
-						immediate="true" icon="ui-icon-document"
-						style="horizontal-align: center" />
 				</p:column>
 				
+						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true"
+							actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
+							<p:fileDownload value="#{mediaBean.download}" />
+						</p:commandButton>
+						
+				</p:column>
 					<p:column style="width:3%">
 						<p:rowEditor />
 					</p:column>
@@ -518,13 +520,7 @@
 							actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
 						</p:commandLink>
 					</p:column>
-			</p:dataTable>
-			
-			 <p:dialog widgetVar="dlgComprobCurNC" modal="true" width="100%" height="1024px" position="top">
-				
-<!-- 				        <object type="application/pdf" data="#{personaBean.rutaPDF}/#{personaBean.comprobCursos.id}.pdf?pfdrid_c=true" height="100%" width="100%"/> -->
-				    		<p:media value="#{personaBean.streamedContent}" player="pdf"></p:media>
-			</p:dialog>  
+			</p:dataTable> 
 
 			<br />
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
@@ -871,12 +867,5 @@
 		</h:form>
 
 		<p:separator />
-
-		<p:dialog widgetVar="dlgPDF" modal="true" width="100%" height="1024px"
-			position="top">
-			<object type="application/pdf"
-				data="/Saberes-web/resources/gfx/1.pdf?pfdrid_c=true" height="100%"
-				width="100%" />
-		</p:dialog>
 	</ui:define>
 </ui:composition>

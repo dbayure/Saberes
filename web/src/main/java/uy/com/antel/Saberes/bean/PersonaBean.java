@@ -180,13 +180,16 @@ public class PersonaBean {
 	}
 
 	public void upload(FileUploadEvent event) {
+		
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+
+	    String rutaArchivoUsuario = rutaIMG+userName+".jpg";
 		FacesMessage msg = new FacesMessage("Success! ", event.getFile()
 				.getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		try {
-			registroPersona.copyFile(event.getFile().getFileName(), event
-					.getFile().getInputstream());
+			registroPersona.copyFile(rutaArchivoUsuario, event.getFile().getInputstream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -415,15 +418,14 @@ public class PersonaBean {
 			e.printStackTrace();
 		}
 	}
-	
-	public void abrirPdf(Long idComprob) {
+
+	public void abrirPdf(long idComprob) {
 
 		try {
 			String rutaArchivoPDF = rutaPDF + idComprob + ".pdf";
 
 			FileInputStream fis = new FileInputStream(rutaArchivoPDF);
-			setStreamedContent(new DefaultStreamedContent(fis,
-					"application/pdf"));
+			setStreamedContent(new DefaultStreamedContent(fis,"application/pdf"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
