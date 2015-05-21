@@ -31,7 +31,7 @@
 			<h:panelGrid columns="2">
 
 				<h:panelGrid columns="2">
-					<p:graphicImage value="#{personaBean.graphicText}" />
+					<p:graphicImage value="#{personaBean.cargarImagenes(personaBean.usrImg)}"  style="height: 170px; width: 160px;" />
 					<h3 style="margin-top: 0"></h3>
 
 					<h:form enctype="multipart/form-data">
@@ -506,7 +506,8 @@
 						action="#{personaBean.abrirPdf(_noCorporativos.comprobante.id)}"
 						immediate="true" icon="ui-icon-document"
 						style="horizontal-align: center" />
-
+				</p:column>
+				
 					<p:column style="width:3%">
 						<p:rowEditor />
 					</p:column>

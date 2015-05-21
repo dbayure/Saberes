@@ -12,7 +12,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,18 +20,17 @@ import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
-
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.data.PersonaListProducer;
 import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
@@ -48,6 +46,7 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocat
 public class PersonaBean {
 
 	private String usuario;
+	private String usrImg;
 	private long idPersona;
 	private String rutaPDF;
 	private String rutaIMG;
@@ -70,6 +69,11 @@ public class PersonaBean {
 
 	@Inject
 	private RegistroCorporativo registroCorporativo;
+	
+	@Inject
+	private PersonaListProducer personas;
+	
+	List<Persona> listPersonas;
 
 	private UploadedFile file;
 
@@ -136,9 +140,6 @@ public class PersonaBean {
 
 			this.setPersonaBean(this.usuario);
 
-			// msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-			// "Se registró ", "con éxito!");
-			// FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
 		catch (Exception e) {
@@ -183,8 +184,6 @@ public class PersonaBean {
 				.getFileName() + " is uploaded.");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		// aca deberia refrescar la imagen
-
 		try {
 			registroPersona.copyFile(event.getFile().getFileName(), event
 					.getFile().getInputstream());
@@ -220,8 +219,6 @@ public class PersonaBean {
 		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				if (nc.getValidado() == 'P') {
@@ -239,8 +236,6 @@ public class PersonaBean {
 		for (SaberPersona sp : p.getSaberes()) {
 			String ts = sp.getSaber().getTipoSaber().getNombre();
 			if (ts.contains("Formal No Corporativo")) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -256,8 +251,6 @@ public class PersonaBean {
 		for (SaberPersona sp : p.getSaberes()) {
 			String ts = sp.getSaber().getTipoSaber().getNombre();
 			if (ts.contains("Formal Corporativo")) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				Corporativo nc = registroCorporativo.obtenerCorpPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -273,8 +266,6 @@ public class PersonaBean {
 		for (SaberPersona sp : p.getSaberes()) {
 			String ts = sp.getSaber().getTipoSaber().getNombre();
 			if (ts.contains("Formal Curricular")) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -290,8 +281,6 @@ public class PersonaBean {
 		for (SaberPersona sp : p.getSaberes()) {
 			String ts = sp.getSaber().getTipoSaber().getNombre();
 			if (ts.contains("No Formal Cursos")) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -307,14 +296,25 @@ public class PersonaBean {
 		for (SaberPersona sp : p.getSaberes()) {
 			String ts = sp.getSaber().getTipoSaber().getNombre();
 			if (ts.contains("No Formal Conocimientos")) {
-				System.out.println("Nombre del saber seleccionado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
 			}
 		}
 		return listanc;
+	}
+	
+	public List<Persona> listaPersonasPorValidar(){
+		List<Persona> listPersonasValidar = personas.getPersonas();
+		List<Persona> listPersonasPronta = new ArrayList<Persona>();
+		System.out.println("cantidd de personas a revisar " + listPersonasValidar.size());
+		for (Persona per : listPersonasValidar) {
+			if(faltaValidar(per.getId()) == true){
+				listPersonasPronta.add(per);
+				System.out.println("Persona a validar " + per.getNombre() + "falta validar " + faltaValidar(per.getId()));
+				}
+		}
+		return listPersonasPronta;
 	}
 
 	public String convertirValidacion(char var) {
@@ -367,11 +367,6 @@ public class PersonaBean {
 		this.idPersona = idPersona;
 	}
 
-	public void asignarId(long id) {
-		this.idPersona = id;
-		obtenerRuta();
-	}
-
 	public boolean isMostrar() {
 		return mostrar;
 	}
@@ -385,8 +380,6 @@ public class PersonaBean {
 		Properties p = new Properties();
 		String archivoPropiedades = System.getProperty("user.dir")
 				+ "/Conf/app-properties/saberes.properties";
-		System.out.println("valor del archivo de propiedades **************"
-				+ archivoPropiedades);
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {
@@ -395,21 +388,15 @@ public class PersonaBean {
 			e.printStackTrace();
 		}
 
-		// rutaPDF = System.getProperty("urlPDF");
 		rutaPDF = p.getProperty("urlPDF");
 		rutaIMG = p.getProperty("urlIMG");
-
-		System.out.println("ruta seleccionada para archivos pdf " + rutaPDF);
-		System.out.println("ruta seleccionada para archivos img " + rutaIMG);
-		// init();
 	}
 
-	public void init() {
-		String userName = SecurityContextAssociation.getPrincipal().getName();
+	public void init(String userName) {
 		try {
 
 			BufferedImage bufferedImg = null;
-			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpeg";
+			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpg";
 			try {
 				bufferedImg = ImageIO
 						.read(new java.io.File(rutaArchivoUsuario));
@@ -418,17 +405,17 @@ public class PersonaBean {
 
 			if (bufferedImg != null) {
 				ByteArrayOutputStream os = new ByteArrayOutputStream();
-				ImageIO.write(bufferedImg, "jpeg", os);
+				ImageIO.write(bufferedImg, "jpg", os);
 				setGraphicText(new DefaultStreamedContent(
 						new ByteArrayInputStream(os.toByteArray()),
-						"image/jpeg"));
+						"image/jpg"));
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public void abrirPdf(Long idComprob) {
 
 		try {
@@ -449,8 +436,6 @@ public class PersonaBean {
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				System.out.println("Nombre del saber aprobado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -458,24 +443,16 @@ public class PersonaBean {
 		}
 		for (NoCorporativo ncorp : listanc) {
 			if (ncorp.getId().equals(idNoCorporativo)) {
-				System.out.println("id del saber a evaluar:  "
-						+ idNoCorporativo + " valor de validacion "
-						+ ncorp.getValidado());
 				ncorp.setValidado('V');
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println("valor de la variable asignada "
-						+ ncorp.getValidado());
 			}
-			System.out.println("#############################################");
 			listanc2.add(ncorp);
 		}
 		p.setSaberes(listanc2);
-		System.out.println("cantidad de saberes de la persona " + p.getNombre()
-				+ ": " + p.getSaberes().size());
 		try {
 			registroPersona.modificar(p);
 		} catch (Exception e) {
@@ -490,8 +467,6 @@ public class PersonaBean {
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				System.out.println("Nombre del saber Rechazado "
-						+ sp.getSaber().getNombre());
 				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
 						.getId());
 				listanc.add(nc);
@@ -500,8 +475,6 @@ public class PersonaBean {
 		for (NoCorporativo ncorp : listanc) {
 			if (ncorp.getId().equals(idNoCorporativo)) {
 				ncorp.setValidado('R');
-				System.out.println("motivo del rechazo " + motivoRechazo);
-				ncorp.setMensaje(motivoRechazo);
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {
@@ -523,23 +496,16 @@ public class PersonaBean {
 	public void mostrarbtnRechazo() {
 		btnRechazo = idFilaActualizar;
 		btnComentario = idFilaActualizar;
-		System.out.println("mostrar boton de rechazo " + btnRechazo);
-		System.out.println("mostrar boton de comentario " + btnComentario);
 	}
 
 	public void mostrarGridRechazo() {
 		gridRechazo = true;
-		System.out.println("Valor del grid motivo rechazo " + gridRechazo);
-
 	}
 
 	public void motivoRechazoNoCorporativo(long idNoCorporativo) {
 		NoCorporativo nc = registroNoCorporativo.obtenerPorID(idNoCorporativo);
 		setMotivoRechazo(nc.getMensaje());
 		mostrarGridRechazo();
-		System.out
-				.println("Motivo del rechazo que se debe mostrar al usuario  %%%%%%%%%%%%%%%%%%%"
-						+ nc.getMensaje());
 	}
 
 	public String getRutaIMG() {
@@ -568,7 +534,29 @@ public class PersonaBean {
 	}
 
 	public StreamedContent getGraphicText() {
-		init();
+		return graphicText;
+	}
+	
+	public StreamedContent cargarImagenes(String userName) {
+		try {
+
+			BufferedImage bufferedImg = null;
+			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpg";
+			try {
+				bufferedImg = ImageIO.read(new java.io.File(rutaArchivoUsuario));
+			} catch (IOException e) {
+			}
+
+			if (bufferedImg != null) {
+				ByteArrayOutputStream os = new ByteArrayOutputStream();
+				ImageIO.write(bufferedImg, "jpg", os);
+				setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()),"image/jpg"));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return graphicText;
 	}
 
@@ -582,8 +570,6 @@ public class PersonaBean {
 
 	public void setMotivoRechazo(String motivoRechazo) {
 		this.motivoRechazo = motivoRechazo;
-		System.out.println("Motivo guardado en la variable "
-				+ this.motivoRechazo);
 	}
 
 	public boolean isGridRechazo() {
@@ -633,4 +619,21 @@ public class PersonaBean {
 	public void setComprobCursos(Comprobante comprobCursos) {
 		this.comprobCursos = comprobCursos;
 	}
+
+	public String getUsrImg() {
+		return SecurityContextAssociation.getPrincipal().getName();
+	}
+
+	public void setUsrImg(String usrImg) {
+		this.usrImg = usrImg;
+	}
+	
+	public List<Persona> getListPersonas() {
+		return this.listPersonas;
+	}
+
+	public void setListPersonas(List<Persona> listPersonas) {
+		this.listPersonas = listPersonas;
+	}
+	
 }
