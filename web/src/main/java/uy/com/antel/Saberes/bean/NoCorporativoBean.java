@@ -47,7 +47,10 @@ public class NoCorporativoBean {
 	public void registrar() {
 		try {
 			String usuario = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-			registroNoCorporativo.registro(usuario,inputComprobante.getFileName(),inputComprobante.getInputstream());
+			if (inputComprobante != null)
+				registroNoCorporativo.registro(usuario,inputComprobante.getFileName(),inputComprobante.getInputstream());
+			else
+				registroNoCorporativo.registro(usuario);
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}

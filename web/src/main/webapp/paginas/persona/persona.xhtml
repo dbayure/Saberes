@@ -30,24 +30,15 @@
 
 			<h:panelGrid columns="2">
 
-				<h:panelGrid columns="2">
-					<p:graphicImage value="#{personaBean.cargarImagenes(personaBean.usrImg)}"  style="height: 170px; width: 160px;" />
-					<h3 style="margin-top: 0"></h3>
-
-					<h:form enctype="multipart/form-data">
-						<p:growl id="messages" showDetail="true" />
-
-
-						<p:fileUpload fileUploadListener="#{personaBean.upload}"
+				<h:panelGrid columnClasses="col">
+		    		<p:graphicImage value="#{personaBean.cargarImagenes(personaBean.usrImg)}"  style="height: 220px; width: 180px;" />
+					<p:fileUpload fileUploadListener="#{personaBean.upload}"
 							allowTypes="/(\.|\/)(jpg|JPG)$/"
 							invalidFileMessage="Formato Incorrecto, el archivo debe ser jpg" cancelLabel="Cancelar"
 							uploadLabel="Subir" label="Nueva" sizeLimit="102400"
 							invalidSizeMessage="No se puede subir imágenes de tamaño mayor 100 kb"
 							fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
 							description="Selecciona Imagen" />
-
-
-					</h:form>
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
@@ -494,14 +485,12 @@
 				</p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">
-				</p:column>
-				
 						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true"
 							actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
 							<p:fileDownload value="#{mediaBean.download}" />
 						</p:commandButton>
-						
 				</p:column>
+										
 					<p:column style="width:3%">
 						<p:rowEditor />
 					</p:column>

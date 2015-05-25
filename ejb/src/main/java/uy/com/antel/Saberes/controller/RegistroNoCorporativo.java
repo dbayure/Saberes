@@ -52,6 +52,18 @@ public class RegistroNoCorporativo {
 		return newNoCorporativo;
 	}
 
+	
+	public void registro(String usuario) throws Exception {
+		log.info("Registro " + newNoCorporativo.getSaber().getNombre());
+		Persona pe = rp.buscarPersonaPorUsr(usuario);
+		List<SaberPersona> saberes = new ArrayList<SaberPersona>();
+		saberes.add(newNoCorporativo);
+		pe.setSaberes(saberes);
+		em.persist(newNoCorporativo);
+		noCorporativoEventSrc.fire(newNoCorporativo);
+		initNewNoCorporativo();
+	}
+	
 	public void registro(String usuario, String nombreArchivo,InputStream inputComprobante) throws Exception {
 		log.info("Registro " + newNoCorporativo.getSaber().getNombre());
 		Persona pe = rp.buscarPersonaPorUsr(usuario);
