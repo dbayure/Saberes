@@ -69,9 +69,9 @@ public class SaberBean implements Serializable {
 		  
 	}
 	
-	public ArrayList<Saber> buscarPorInstitucion(Institucion institucion){
+	public ArrayList<Saber> buscarPorInstitucion(Institucion institucion, Long tipo){
 		try {
-			return registroSaber.buscarPorInstitucion(institucion.getId());
+			return registroSaber.buscarPorInstitucion(institucion.getId(),tipo);
 		}
 		catch(Exception e) {
 			FacesMessage msg = new FacesMessage("No se encontraron saberes para ", institucion.getNombre());  

@@ -84,13 +84,11 @@
 
 										<h:graphicImage
 											value="/resources/gfx/glyphicons-443-earphone.png" />
-										<p:outputLabel id="telDirecto"
-											value="#{newPersona.telDirecto}" />
+										<p:outputLabel id="telDirecto" value="#{newPersona.telDirecto}" />
 
 										<h:graphicImage
 											value="/resources/gfx/glyphicons-164-iphone.png" />
-										<p:outputLabel id="telCelular"
-											value="#{newPersona.telCelular}" />
+										<p:outputLabel id="telCelular" value="#{newPersona.telCelular}" />
 
 										<h:graphicImage
 											value="/resources/gfx/glyphicons-11-envelope.png" />
@@ -212,7 +210,7 @@
 					<h:outputText value="#{_curriculares.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:25%">
+				<p:column headerText="F.Inicio" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_curriculares.fechaInicio}">
@@ -227,7 +225,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:25%">
+				<p:column headerText="F.Fin" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_curriculares.fechaFin}">
@@ -245,13 +243,10 @@
 				<p:column headerText="Aprobación" style="width:25%">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText
-								value="#{personaBean.convertirAprobacion(_noCorporativos.aprobacion)}" />
+							<h:outputText value="#{personaBean.convertirAprobacion(_curriculares.aprobacion)}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectBooleanCheckbox id="idEditaprobacion"
-								value="#{_curriculares.aprobacion}">
-							</p:selectBooleanCheckbox>
+							<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_curriculares.aprobacion}"></p:selectBooleanCheckbox>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -260,7 +255,7 @@
 					<h:outputText value="#{_curriculares.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Validado" style="width:45%; height:auto;">
+				<p:column headerText="Validado" style="width:25%">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
 					<p:spacer width="10px"></p:spacer>
@@ -275,8 +270,9 @@
 				</p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">
-					<p:commandButton onclick="PF('dlgPDF').show()"
-						icon="ui-icon-document" style="horizontal-align: center" />
+						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_curriculares.comprobante.id)}">
+							<p:fileDownload value="#{mediaBean.download}" />
+						</p:commandButton>
 				</p:column>
 
 				<p:column style="width:3%">
@@ -326,13 +322,13 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio">
+					<p:column headerText="F.Inicio" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputCurricular" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin">
+					<p:column headerText="F.Fin" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputCurricular" mode="popup"
 							navigator="true" size="9" />
@@ -345,8 +341,7 @@
 					</p:column>
 
 					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobante" value="#{fileUploadView.file}"
-							mode="advance" auto="true" />
+						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
 					</p:column>
 
 					<p:column headerText="Agregar" style="width:5%">
@@ -431,7 +426,7 @@
 					<h:outputText value="#{_noCorporativos.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:25%">
+				<p:column headerText="F.Inicio" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_noCorporativos.fechaInicio}">
@@ -446,7 +441,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:25%">
+				<p:column headerText="F.Fin" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_noCorporativos.fechaFin}">
@@ -485,8 +480,7 @@
 				</p:column>
 
 				<p:column headerText="Comprobantes" style="width:30%">
-						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true"
-							actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
+						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
 							<p:fileDownload value="#{mediaBean.download}" />
 						</p:commandButton>
 				</p:column>
@@ -536,13 +530,13 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio">
+					<p:column headerText="F.Inicio" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputNoCorporativo"
 							mode="popup" navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin">
+					<p:column headerText="F.Fin" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputNoCorporativo" mode="popup"
 							navigator="true" size="9" />
@@ -555,9 +549,8 @@
 					</p:column>
 
 					 <p:column headerText="Comprobantes">  
-<!-- 					<p:fileUpload id="comprobanteNoCorporativo" value="#{newNoCorporativo.comprobante.nombre}" fileUploadListener="#{noCorporativoBean.upload}" filemode="advance" auto="true"  /> -->
 						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
-	           	 </p:column>  
+	           		 </p:column>  
 
 					<p:column headerText="Agregar" style="width:5%">
 						<p:commandButton id="registerNoCorporativo" icon="ui-icon-plus"
@@ -598,7 +591,7 @@
 					<h:outputText value="#{_cursos.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:25%">
+				<p:column headerText="F.Inicio" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaInicio}">
@@ -612,7 +605,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:25%">
+				<p:column headerText="F.Fin" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaFin}">
@@ -630,15 +623,16 @@
 					<h:outputText value="#{_cursos.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Comprobantes" style="width:25%">
-					<p:commandButton onclick="PF('dlgPDF').show()"
-						icon="ui-icon-document" style="horizontal-align: center" />
-				</p:column>
-
 				<p:column headerText="Validado" style="width:25%">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 				</p:column>
+				
+				<p:column headerText="Comprobantes" style="width:30%">
+						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
+							<p:fileDownload value="#{mediaBean.download}" />
+						</p:commandButton>
+				</p:column>		
 
 				<p:column style="width:3%">
 					<p:rowEditor />
@@ -663,11 +657,9 @@
 
 					<p:column headerText="Institución:">
 						<p:selectOneMenu id="idCursosInstitucion"
-							value="#{noCorporativoBean.institucionSeleccionadaCurso}"
-							style="width:100%">
+							value="#{noCorporativoBean.institucionSeleccionadaCurso}" style="width:100%">
 							<p:ajax
-								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"
-								update="saberCurso" />
+								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"	update="saberCurso" />
 							<f:converter converterId="institucionConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
@@ -686,21 +678,20 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio">
+					<p:column headerText="F.Inicio" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputCurso" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin">
+					<p:column headerText="F.Fin" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputCurso" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
 					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteCursos"
-							value="#{fileUploadView.file}" mode="advance" auto="true" />
+						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
 					</p:column>
 
 					<p:column headerText="Agregar" style="width:5%">
@@ -736,11 +727,7 @@
 					<h:outputText value="#{_cursos.origen.descripcion}" />
 				</p:column>
 
-				<p:column headerText="Duración" style="width:25%">
-					<h:outputText value="#{_cursos.saber.duracion} Años" />
-				</p:column>
-
-				<p:column headerText="F.Inicio" style="width:25%">
+				<p:column headerText="F.Inicio" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaInicio}">
@@ -754,7 +741,7 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:25%">
+				<p:column headerText="F.Fin" style="width:30%">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaFin}">
@@ -768,10 +755,11 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Comprobantes" style="width:25%">
-					<p:commandButton onclick="PF('dlgPDF').show()"
-						icon="ui-icon-document" style="horizontal-align: center" />
-				</p:column>
+				<p:column headerText="Comprobantes" style="width:30%">
+						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
+							<p:fileDownload value="#{mediaBean.download}" />
+						</p:commandButton>
+				</p:column>		
 
 				<p:column headerText="Validado" style="width:25%">
 					<h:outputText
@@ -820,21 +808,20 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio">
+					<p:column headerText="F.Inicio" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputConocimiento"
 							mode="popup" navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin">
+					<p:column headerText="F.Fin" style="width:12%">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputConocimiento" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
 					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteConocimiento"
-							value="#{fileUploadView.file}" mode="advance" auto="true" />
+						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
 					</p:column>
 
 					<p:column headerText="Agregar" style="width:5%">

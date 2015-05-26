@@ -14,7 +14,6 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import uy.com.antel.Saberes.model.Persona;
 import uy.com.antel.Saberes.model.Saber;
 
 
@@ -74,9 +73,10 @@ public class RegistroSaber {
 		   newSaber = new Saber();
 	   }
 
-	public ArrayList<Saber> buscarPorInstitucion(Long idInstitucion) {
-		Query q = em.createQuery("from Saber as saber where saber.institucion.id = ?");
+	public ArrayList<Saber> buscarPorInstitucion(Long idInstitucion, Long tipo) {
+		Query q = em.createQuery("from Saber as saber where saber.institucion.id = ? and saber.tipoSaber.id = ?");
 		q.setParameter(1, idInstitucion);
+		q.setParameter(2, tipo);
 		List <Saber> resultado = q.getResultList();
 		
 		if (resultado.isEmpty())

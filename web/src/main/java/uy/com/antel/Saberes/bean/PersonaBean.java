@@ -6,12 +6,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -20,12 +22,14 @@ import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
+
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
@@ -46,7 +50,6 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocat
 public class PersonaBean {
 
 	private String usuario;
-	private String usrImg;
 	private long idPersona;
 	private String rutaPDF;
 	private String rutaIMG;
@@ -90,8 +93,7 @@ public class PersonaBean {
 
 			DatoPer datos = obtenerDatosPersona(this.getUsuario());
 
-			String apellido = datos.getPriape().trim() + " "
-					+ datos.getSegape().trim();
+			String apellido = datos.getPriape().trim() + " "+ datos.getSegape().trim();
 			String nombre = datos.getNombre().trim();
 			Calendar fNacim = datos.getFNacim();
 			Calendar fIngreso = datos.getFIngre();
@@ -108,9 +110,13 @@ public class PersonaBean {
 			String direccion = datos.getDescEdificio().trim();
 			String localidad = datos.getDescLocalidad().trim();
 			String regimen = datos.getDescRegimen().trim();
-			String fax = datos.getFaxUnidad();
-			String piso = datos.getPlanta();
-			String email = datos.getEmail();
+			String fax = datos.getFaxUnidad().trim();
+			String piso = datos.getPlanta().trim();
+			String email = datos.getEmail().trim();
+			String profesion = datos.getDescProfesion().trim();
+			String sexo = datos.getSexo().trim();
+			String jornada = datos.getDescJornada().trim();
+			
 			aPersona.setApellido(apellido);
 			aPersona.setNombre(nombre);
 			aPersona.setFechaIngreso(fIngreso.getTime());
@@ -131,6 +137,9 @@ public class PersonaBean {
 			aPersona.setFax(fax);
 			aPersona.setPiso(piso);
 			aPersona.setCorreo(email);
+			aPersona.setSexo(sexo);
+			aPersona.setProfesion(profesion);
+			aPersona.setJornadaLaboral(jornada);
 			aPersona.setUsuario(this.usuario);
 
 			if (personaRegistrada())
@@ -193,12 +202,10 @@ public class PersonaBean {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	private String getCi(String ci) {
-		List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g",
-				"h", "i", "j", "k");
+		List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g","h", "i", "j", "k");
 		if (ci.length() < 7) {
 			return "a" + ci.substring(1);
 		} else {
@@ -457,7 +464,6 @@ public class PersonaBean {
 		try {
 			registroPersona.modificar(p);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -479,7 +485,6 @@ public class PersonaBean {
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -489,7 +494,6 @@ public class PersonaBean {
 		try {
 			registroPersona.modificar(p);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -546,6 +550,9 @@ public class PersonaBean {
 			try {
 				bufferedImg = ImageIO.read(new java.io.File(rutaArchivoUsuario));
 			} catch (IOException e) {
+				String cod_foto = String.valueOf((registroPersona.getCI(userName)*7+327));
+				URL url = new URL("http://sgp.in.iantel.com.uy/fotos/"+cod_foto+".JPG");
+				bufferedImg = ImageIO.read(url);
 			}
 
 			if (bufferedImg != null) {
@@ -626,7 +633,6 @@ public class PersonaBean {
 	}
 
 	public void setUsrImg(String usrImg) {
-		this.usrImg = usrImg;
 	}
 	
 	public List<Persona> getListPersonas() {

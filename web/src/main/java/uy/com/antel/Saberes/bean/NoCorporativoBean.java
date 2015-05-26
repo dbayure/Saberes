@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -92,21 +91,21 @@ public class NoCorporativoBean {
 	}
 	
 	public void saberesNoCorporativosPorTipo(Long tipo){
-		ArrayList<Saber> resultado = new ArrayList<Saber>();
+//		ArrayList<Saber> resultado = null;
 		
 		if (tipo.longValue() == 2){
-			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionada);
+			saberPorInst = this.saberBean.buscarPorInstitucion(this.institucionSeleccionada,tipo);
 		}else if (tipo.longValue() == 1){
-			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurricular);
+			saberPorInst = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurricular,tipo);
 		} else if (tipo.longValue() == 5){
-			resultado = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurso);
+			saberPorInst = this.saberBean.buscarPorInstitucion(this.institucionSeleccionadaCurso,tipo);
 		} 
-		ArrayList <Saber> cursos = new ArrayList<Saber>();
-		for (Saber s: resultado){ 
-			if (s.getTipoSaber().getId() == tipo.longValue())
-				cursos.add(s);
-		}
-      	saberPorInst = cursos;
+//		ArrayList <Saber> cursos = new ArrayList<Saber>();
+//		for (Saber s: resultado){ 
+//			if (s.getTipoSaber().getId() == tipo.longValue())
+//				cursos.add(s);
+//		}
+//      	saberPorInst = cursos;
 	}
 
     public ArrayList<Saber> getSaberPorInst() {

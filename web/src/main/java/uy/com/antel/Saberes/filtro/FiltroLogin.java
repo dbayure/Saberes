@@ -42,14 +42,12 @@ public class FiltroLogin implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		String userName = SecurityContextAssociation.getPrincipal().getName();
-		String userBean = persona.getUsuario();
 
 		persona.setUsuario(userName);
 
 		persona.registrar();
 
-		System.out.println("Yeeey! Get me here and find me in the database: "
-				+ userName);
+		System.out.println("Yeeey! Get me here and find me in the database: "+ userName);
 		chain.doFilter(request, response);
 	}
 

@@ -1,7 +1,5 @@
 package uy.com.antel.Saberes.bean;
 
-import java.util.ArrayList;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -12,7 +10,6 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
 
 import uy.com.antel.Saberes.controller.RegistroSaberPersona;
-import uy.com.antel.Saberes.model.Saber;
 import uy.com.antel.Saberes.model.SaberPersona;
 
 @ManagedBean

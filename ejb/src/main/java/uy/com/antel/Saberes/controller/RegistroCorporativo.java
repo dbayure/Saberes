@@ -1,7 +1,6 @@
 package uy.com.antel.Saberes.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,7 +16,6 @@ import javax.persistence.Query;
 
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.Persona;
-import uy.com.antel.Saberes.model.Saber;
 import uy.com.antel.Saberes.model.SaberPersona;
 
 
