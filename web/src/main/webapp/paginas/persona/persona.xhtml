@@ -29,7 +29,6 @@
 			<br />
 
 			<h:panelGrid columns="2">
-
 				<h:panelGrid columnClasses="col">
 		    		<p:graphicImage value="#{personaBean.cargarImagenes(personaBean.usrImg)}"  style="height: 220px; width: 180px;" />
 					<p:fileUpload fileUploadListener="#{personaBean.upload}"
@@ -40,34 +39,31 @@
 							fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
 							description="Selecciona Imagen" />
 				</h:panelGrid>
-
+			
 				<h:panelGrid columns="2">
 
-					<h:graphicImage
-						value="/resources/gfx/glyphicons-89-address-book.png" />
+					<h:graphicImage value="/resources/gfx/glyphicons-89-address-book.png" />
 					<p:outputLabel id="direccion" value="#{newPersona.direccion}" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" />
-					<p:outputLabel id="telDirecto" value="#{newPersona.telDirecto}" />
+					<p:outputLabel  id="telDirecto" value="#{newPersona.telDirecto}" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
-					<p:outputLabel id="telCelular" value="#{newPersona.telCelular}" />
+					<p:outputLabel  id="telCelular" value="#{newPersona.telCelular} editar" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
-					<p:outputLabel id="correo" value="#{newPersona.correo}" />
+					<p:outputLabel  id="correo" value="#{newPersona.correo}" />
 
-					<h:graphicImage
-						value="/resources/gfx/glyphicons-279-birthday-cake.png" />
-					<p:outputLabel id="fnac" value="#{newPersona.fechaNacimiento}" />
+					<h:graphicImage	value="/resources/gfx/glyphicons-279-birthday-cake.png" />
+					<p:outputLabel  id="fnac" value="#{newPersona.fechaNacimiento}" />
 
-					<h:graphicImage
-						value="/resources/gfx/glyphicons-196-circle-info.png" />
-
+					<h:graphicImage	value="/resources/gfx/glyphicons-196-circle-info.png" />
+						<p:commandLink id="ajax" update="growl" onclick="PF('dlg').show()" >
+							<h:outputText value="Mas info" />
+						</p:commandLink>
+				</h:panelGrid>
+					
 					<p:growl id="growl" life="2000" />
-
-					<p:commandLink id="ajax" update="growl" onclick="PF('dlg').show()">
-						<h:outputText value="Mas info" />
-					</p:commandLink>
 
 					<p:dialog header="Mas informacion" widgetVar="dlg"
 						resizable="false">
@@ -75,29 +71,21 @@
 							<h:panelGrid columns="2" style="margin-bottom:10px">
 
 								<h:panelGrid columns="2">
-
 									<h:panelGrid columns="2">
-
-										<h:graphicImage
-											value="/resources/gfx/glyphicons-89-address-book.png" />
+										<h:graphicImage	value="/resources/gfx/glyphicons-89-address-book.png" />
 										<p:outputLabel id="direccion" value="#{newPersona.direccion}" />
 
-										<h:graphicImage
-											value="/resources/gfx/glyphicons-443-earphone.png" />
-										<p:outputLabel id="telDirecto" value="#{newPersona.telDirecto}" />
+										<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" />
+										<p:outputLabel  id="telDirecto" value="#{newPersona.telDirecto}" />
 
-										<h:graphicImage
-											value="/resources/gfx/glyphicons-164-iphone.png" />
-										<p:outputLabel id="telCelular" value="#{newPersona.telCelular}" />
+										<h:graphicImage	value="/resources/gfx/glyphicons-164-iphone.png" />
+										<p:outputLabel  id="telCelular" value="#{newPersona.telCelular}" />
 
-										<h:graphicImage
-											value="/resources/gfx/glyphicons-11-envelope.png" />
-										<p:outputLabel id="correo" value="#{newPersona.correo}" />
+										<h:graphicImage	value="/resources/gfx/glyphicons-11-envelope.png" />
+										<p:outputLabel  id="correo" value="#{newPersona.correo}" />
 
-										<h:graphicImage
-											value="/resources/gfx/glyphicons-279-birthday-cake.png" />
-										<p:outputLabel id="fnac" value="#{newPersona.fechaNacimiento}" />
-
+										<h:graphicImage	value="/resources/gfx/glyphicons-279-birthday-cake.png" />
+										<p:outputLabel  id="fnac" value="#{newPersona.fechaNacimiento}" />
 									</h:panelGrid>
 								</h:panelGrid>
 
@@ -112,8 +100,7 @@
 								<br />
 								<br />
 								<h2>
-									<p:outputLabel value="DATOS PERSONALES"
-										style="font-weight:bold" />
+								<p:outputLabel value="DATOS PERSONALES"	style="font-weight:bold" />
 								</h2>
 								<br />
 								<br />
@@ -168,23 +155,21 @@
 									<p:outputLabel value="#{newPersona.telDirecto}" />
 
 									<p:outputLabel value="Celular: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.telCelular}" />
+									<p:inputText value="#{newPersona.telCelular}" maxlength="13" size="13"/> 
 
 									<p:outputLabel value="Fax: " style="font-weight:bold" />
 									<p:outputLabel value="#{newPersona.fax}" />
 
+
 								</h:panelGrid>
 
 							</h:panelGrid>
-							<p:commandButton id="submitButton" value="Cerrar"
-								onclick="PF('dlg').hide();" />
+							<p:commandButton id="submitButton" value="Guardar"	onclick="PF('dlg').hide();" action="#{personaBean.Edit}"/>
 						</h:form>
 					</p:dialog>
 
 
 				</h:panelGrid>
-
-			</h:panelGrid>
 
 
 			<h1>SABER FORMAL</h1>

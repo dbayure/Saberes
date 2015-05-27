@@ -6,19 +6,27 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/defaultLogin.xhtml">
 	<ui:define name="content">
-		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false">
-			<h1 style="text-align: center;">Acceso al Sistema</h1>
-
+		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false" >
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 
-			<h:panelGrid columns="2" style="margin-left:300px">
-				<p:outputLabel for="j_username" value="Usuario" />
-				<p:inputText id="j_username" name="j_username" required="true" />
-				<p:outputLabel for="j_password" value="Contraseña" />
-				<p:password id="j_password" name="j_password" required="true" />
-				<p:commandButton id="submit" value="Login" ajax="false" />
+			<h:panelGrid  style="margin-left:300px">
+					<p:row>
+						<p:column ><label for="j_username"  >Usuario: *</label></p:column>
+						<br />
+						<p:column style="text-align: right"><input id="j_username" name="j_username" required="required" class="ui-inputfield ui-inputtext" ></input></p:column>
+					</p:row>
+					<p:row>
+						<p:column width="15"><label for="j_password"  >Contraseña: *</label></p:column>
+						<br />
+						<p:column style="text-align: right"><input id="j_password" type="password" name="j_password" required="required"  class="ui-inputfield ui-inputtext"></input></p:column>
+					</p:row>
+					<p:row >
+					<p:column></p:column>
+					<p:column >
+						<p:commandButton style="margin-left:137px" id="submit" value="Login" ajax="false" />
+					</p:column>
+					</p:row>
 			</h:panelGrid>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

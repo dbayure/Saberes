@@ -88,7 +88,7 @@
            	 
            	 <p:column headerText="Tipo de Saber" style="width:25%">  
                <p:cellEditor>  
-               		<f:facet name="output"><h:outputText value="#{_saber.tipoSaber.nombre}" /></f:facet> 
+               	   <f:facet name="output"><h:outputText value="#{_saber.tipoSaber.nombre}" /></f:facet> 
                    <f:facet name="input">
                			<p:selectOneMenu value="#{_saber.tipoSaber}" converter="tipoSaberConverter">			
 							<f:selectItems value="#{tipoSaberes}" var="tipoSaber" itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}"  />

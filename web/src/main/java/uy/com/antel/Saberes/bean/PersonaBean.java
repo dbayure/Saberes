@@ -39,7 +39,6 @@ import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
-import uy.com.antel.Saberes.model.Rol;
 import uy.com.antel.Saberes.model.SaberPersona;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService;
@@ -215,11 +214,23 @@ public class PersonaBean {
 	}
 
 	public void onCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Se canceló modificar ",
-				((Rol) event.getObject()).getRol());
+		FacesMessage msg = new FacesMessage("Se canceló modificar ",((Persona) event.getObject()).getNombre() + " "+((Persona) event.getObject()).getApellido());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
-
+	
+	public void onEdit(RowEditEvent event) {  
+		Persona persona = ((Persona) event.getObject());
+           
+            try {
+            	registroPersona.modificar(persona);
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", persona.getNombre()+" "+persona.getApellido());  
+	            FacesContext.getCurrentInstance().addMessage(null, msg); 
+			} catch (Exception e) {
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", persona.getNombre()+" "+persona.getApellido());  
+	            FacesContext.getCurrentInstance().addMessage(null, msg); 
+			}
+    }
+	
 	public String getUsuario() {
 		return usuario;
 	}
@@ -642,5 +653,11 @@ public class PersonaBean {
 	public void setListPersonas(List<Persona> listPersonas) {
 		this.listPersonas = listPersonas;
 	}
+	
+	public Persona getPersona(){
+		String userName = SecurityContextAssociation.getPrincipal().getName();
+		return registroPersona.buscarPersonaPorUsr(userName);
+	}
+
 	
 }
