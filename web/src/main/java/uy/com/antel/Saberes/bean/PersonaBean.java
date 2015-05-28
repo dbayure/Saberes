@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -23,16 +22,13 @@ import javax.faces.event.ValueChangeEvent;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
-
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import WebServices.sgp.antel.com.DatoPer;
-import sun.tools.tree.FieldExpression;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
