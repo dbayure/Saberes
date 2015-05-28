@@ -49,7 +49,9 @@
 					<p:outputLabel  id="telDirecto" value="#{newPersona.telDirecto}" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
-					<p:outputLabel  id="telCelular" value="#{newPersona.telCelular} editar" />
+						<p:inplace editor="true" onEditUpdate="msgs" >  
+                			<h:inputText value="#{newPersona.telCelular}" label="Celular" valueChangeListener="#{personaBean.onEditField}"/>  
+            			</p:inplace>  
 
 					<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
 					<p:outputLabel  id="correo" value="#{newPersona.correo}" />
@@ -58,15 +60,12 @@
 					<p:outputLabel  id="fnac" value="#{newPersona.fechaNacimiento}" />
 
 					<h:graphicImage	value="/resources/gfx/glyphicons-196-circle-info.png" />
-						<p:commandLink id="ajax" update="growl" onclick="PF('dlg').show()" >
+						<p:commandLink id="ajax" update="formDialog:telCelular formDialog:telCelular2" onclick="PF('dlg').show()" >
 							<h:outputText value="Mas info" />
 						</p:commandLink>
 				</h:panelGrid>
 					
-					<p:growl id="growl" life="2000" />
-
-					<p:dialog header="Mas informacion" widgetVar="dlg"
-						resizable="false">
+					<p:dialog header="Mas informacion" id="dlgInfo" widgetVar="dlg" resizable="false">
 						<h:form id="formDialog">
 							<h:panelGrid columns="2" style="margin-bottom:10px">
 
@@ -155,7 +154,7 @@
 									<p:outputLabel value="#{newPersona.telDirecto}" />
 
 									<p:outputLabel value="Celular: " style="font-weight:bold" />
-									<p:inputText value="#{newPersona.telCelular}" maxlength="13" size="13"/> 
+									<p:outputLabel value="#{newPersona.telCelular}" id="telCelular2" /> 
 
 									<p:outputLabel value="Fax: " style="font-weight:bold" />
 									<p:outputLabel value="#{newPersona.fax}" />
@@ -164,7 +163,6 @@
 								</h:panelGrid>
 
 							</h:panelGrid>
-							<p:commandButton id="submitButton" value="Guardar"	onclick="PF('dlg').hide();" action="#{personaBean.Edit}"/>
 						</h:form>
 					</p:dialog>
 
@@ -279,9 +277,8 @@
 			collapsed="true">
 			<p:ajax event="toggle" />
 			<h:form id="formAltaCurricular" prependId="false">
-				<p:dataTable id="curricularIngreso" value="" editable="true">
+				<p:dataTable id="curricularIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
 					<f:facet name="header">Formación curricular</f:facet>
-
 					<p:column headerText="Institución">
 						<p:selectOneMenu id="idInstitucion"
 							value="#{noCorporativoBean.institucionSeleccionadaCurricular}"
@@ -342,11 +339,10 @@
 		<br />
 		<p:separator />
 
-			<p:dataTable id="Corporativos" var="_Corporativos" value="#{personaBean.obtenerCorporativos()}" editable="true">
+			<p:dataTable id="Corporativos" var="_Corporativos" value="#{personaBean.obtenerCorporativos()}" editable="true" emptyMessage="No existen datos a mostrar.">
 	       		<f:facet name="header">  
 	            	Saber Corporativo 
 	        	</f:facet>
-	        	
 	        	<p:ajax event="rowEdit" listener="#{CorporativoBean.onEdit}" update=":form:messages" />  
 	        	<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}" update=":form:messages" />
 					
@@ -396,7 +392,7 @@
 				<f:facet name="header">  
 	            	Saber No Corporativo 
 	        	</f:facet>
-
+				<em>No hay datos para mostrar.</em>
 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel"
@@ -488,7 +484,7 @@
 				<p:ajax event="toggle" />
 				<p:dataTable id="noCorporativoIngreso" value="" editable="true">
 					<f:facet name="header">Cursos no corporativos</f:facet>
-
+					<em>No hay datos para mostrar.</em>
 					<p:column headerText="Institución">
 						<p:selectOneMenu id="idNoCorporativoInstitucion"
 							value="#{noCorporativoBean.institucionSeleccionada}"
@@ -561,7 +557,7 @@
 				<f:facet name="header">  
 	            	Cursos
 	        	</f:facet>
-
+				<em>No hay datos para mostrar.</em>
 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel"
@@ -637,9 +633,8 @@
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
-				<p:dataTable id="cursosIngreso" value="" editable="true">
+				<p:dataTable id="cursosIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
 					<f:facet name="header">Cursos</f:facet>
-
 					<p:column headerText="Institución:">
 						<p:selectOneMenu id="idCursosInstitucion"
 							value="#{noCorporativoBean.institucionSeleccionadaCurso}" style="width:100%">
@@ -693,12 +688,11 @@
 		<p:separator />
 
 		<h:form id="form4" prependId="false">
-			<p:dataTable id="conocimientos" var="_cursos"
+			<p:dataTable id="conocimientos" var="_cursos" emptyMessage="No existen datos a mostrar."
 				value="#{personaBean.obtenerConocimientos()}" editable="true">
 				<f:facet name="header">  
 	            	Conocimientos
 	        	</f:facet>
-
 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel"
@@ -768,9 +762,9 @@
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
-				<p:dataTable id="conocimientosIngreso" value="" editable="true">
+				<p:dataTable id="conocimientosIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
 					<f:facet name="header">Conocimientos</f:facet>
-
+					
 					<p:column headerText="Saber">
 						<p:selectOneMenu id="saberConocimiento"
 							value="#{newNoCorporativo.saber}" required="true"
