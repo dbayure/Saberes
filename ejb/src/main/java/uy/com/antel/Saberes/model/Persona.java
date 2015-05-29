@@ -1,6 +1,7 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,14 +125,17 @@ public class Persona implements Serializable {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+	public String getFechaNacimiento() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return formatter.format(fechaNacimiento);
 	}
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public String getSexo() {
-		return sexo;
+		if (sexo.equals("M"))
+			return "Masculino";
+		return "Femenino";
 	}
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
@@ -198,7 +202,7 @@ public class Persona implements Serializable {
 		this.oficina = oficina;
 	}
 	public String getTelDirecto() {
-		return telDirecto;
+		return telDirecto.substring(telDirecto.length()-8,telDirecto.length());
 	}
 	public void setTelDirecto(String telDirecto) {
 		this.telDirecto = telDirecto;
@@ -210,6 +214,8 @@ public class Persona implements Serializable {
 		this.telInterno = telInterno;
 	}
 	public String getTelCelular() {
+		if (telCelular.equals("") || telCelular == null)
+			return "Agregar";
 		return telCelular;
 	}
 	public void setTelCelular(String telCelular) {
