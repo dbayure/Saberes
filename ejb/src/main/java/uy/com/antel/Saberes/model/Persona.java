@@ -214,7 +214,7 @@ public class Persona implements Serializable {
 		this.telInterno = telInterno;
 	}
 	public String getTelCelular() {
-		if (telCelular.equals("") || telCelular == null)
+		if (telCelular == null || telCelular.equals(""))
 			return "Agregar";
 		return telCelular;
 	}
