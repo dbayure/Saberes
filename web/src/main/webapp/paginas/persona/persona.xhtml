@@ -174,7 +174,9 @@
 
 			<p:separator />
 			<p:dataTable id="curriculares" var="_curriculares"
-				value="#{personaBean.obtenerCurriculares()}" editable="true">
+				value="#{personaBean.obtenerCurriculares()}" editable="true"
+				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+				
 				<f:facet name="header">  
 	            	Formación Curricular
 	        	</f:facet>
@@ -339,27 +341,31 @@
 		<br />
 		<p:separator />
 
-			<p:dataTable id="Corporativos" var="_Corporativos" value="#{personaBean.obtenerCorporativos()}" editable="true" emptyMessage="No existen datos a mostrar.">
+			<p:dataTable id="Corporativos" var="_Corporativos"
+						 sortBy="#{_Corporativos.fechaInicio}" sortOrder="descending" 
+						 value="#{personaBean.obtenerCorporativos()}" editable="true"
+						 emptyMessage="No existen datos a mostrar." 
+						 rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 	       		<f:facet name="header">  
 	            	Saber Corporativo 
 	        	</f:facet>
 	        	<p:ajax event="rowEdit" listener="#{CorporativoBean.onEdit}" update=":form:messages" />  
 	        	<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}" update=":form:messages" />
 					
-				<p:column headerText="Curso" style="width:55%">
+				<p:column headerText="Curso" style="width:55%" sortBy="#{_Corporativos.saber.nombre}">
 					<h:outputText value="#{_Corporativos.saber.nombre}" />
 				</p:column>	
 	
-	           	 <p:column headerText="F.Inicio" style="width:30%">  
+	           	 <p:column headerText="F.Inicio" style="width:30%" sortBy="#{_Corporativos.fechaInicio}">  
 	                   	<h:outputText value="#{_Corporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
 	           	 </p:column> 
 	
-	           	 <p:column headerText="F.Fin" style="width:30%">  
+	           	 <p:column headerText="F.Fin" style="width:30%" sortBy="#{_Corporativos.fechaFin}">  
 	                   	<h:outputText value="#{_Corporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
  	           	 </p:column>
 	
 				<p:column headerText="Aprobación" style="width:35%">
-						<h:outputText value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" />
+						<div align="center"><h:outputText value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" /></div>
 				</p:column>
 				
 				<p:column headerText="Puntaje" style="width:25%">  
@@ -367,7 +373,7 @@
 	           	</p:column>
 	
 				<p:column headerText="Duración" style="width:25%">  
-	                  		<h:outputText value="#{_Corporativos.duracion}" />
+	                  		<div align="center"><h:outputText value="#{_Corporativos.duracionStr}" /></div>
 	           	 </p:column> 
 	
 				<p:column headerText="Libreta" style="width:25%">  
@@ -388,6 +394,7 @@
 
 		<h:form id="form2" prependId="false">
 			<p:dataTable id="noCorporativos" var="_noCorporativos"
+				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				value="#{personaBean.obtenerNoCorporativos()}" editable="true">
 				<f:facet name="header">  
 	            	Saber No Corporativo 
@@ -553,6 +560,7 @@
 		<h1>SABER NO FORMAL</h1>
 		<h:form id="form3" prependId="false">
 			<p:dataTable id="cursos" var="_cursos"
+				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"			
 				value="#{personaBean.obtenerCursos()}" editable="true">
 				<f:facet name="header">  
 	            	Cursos
@@ -689,6 +697,7 @@
 
 		<h:form id="form4" prependId="false">
 			<p:dataTable id="conocimientos" var="_cursos" emptyMessage="No existen datos a mostrar."
+				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				value="#{personaBean.obtenerConocimientos()}" editable="true">
 				<f:facet name="header">  
 	            	Conocimientos

@@ -41,7 +41,7 @@ public class CargaCorporativos {
         // TODO Auto-generated constructor stub
     }
 	
-	@Schedule(minute="21", hour="13", dayOfWeek="Mon-Fri", dayOfMonth="*", month="*", year="*", info="TimerCargaExpediente")
+	@Schedule(minute="53", hour="13", dayOfWeek="Mon-Fri", dayOfMonth="*", month="*", year="*", info="TimerCargaExpediente")
     private void scheduledTimeout(final Timer t) throws Exception {
         System.out.println("Ejecutando el timer: " + new java.util.Date());
 		List <Object[]> usuarios = controladorPersona.getAllPersonas();
@@ -50,7 +50,7 @@ public class CargaCorporativos {
 		for (Object[] p : usuarios) {
 			Long id = ((BigInteger)(p[0])).longValue();
 			String usuario = ((String)(p[1]));
-			List <Object[]> cursos = controladorCorporativo.getCursosCorporativosPersonas((controladorPersona.getCI(usuario)));
+			List <Object[]> cursos = controladorCorporativo.getCursosCorporativosPersonasGicca((controladorPersona.getCI(usuario)));
 			System.out.println("Usuario: "+usuario);
 			for (Object[] obj : cursos) {
 				i++;

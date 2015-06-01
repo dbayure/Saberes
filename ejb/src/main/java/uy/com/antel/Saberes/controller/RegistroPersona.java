@@ -91,7 +91,8 @@ public class RegistroPersona {
 		
 		@SuppressWarnings("unchecked")
 		public List <Object []> getAllPersonas(){
-			Query query = em.createNativeQuery("SELECT id,usuario FROM persona p where p.usuario='e138704'");
+			//Query query = em.createNativeQuery("SELECT id,usuario FROM persona p where p.usuario='e138704'");
+			Query query = em.createNativeQuery("SELECT id,usuario FROM persona");
 			List <Object []> personas = query.getResultList();
 			return personas;
 		}

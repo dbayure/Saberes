@@ -60,6 +60,7 @@ public class PersonaBean {
 	private int idFilaActualizar;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 	private Comprobante comprobCursos;
+	List<Corporativo> listacorp;
 
 	@Inject
 	private RegistroPersona registroPersona;
@@ -279,15 +280,17 @@ public class PersonaBean {
 	public List<Corporativo> obtenerCorporativos() {
 		String userName = SecurityContextAssociation.getPrincipal().getName();
 		Persona p = registroPersona.buscarPersonaPorUsr(userName);
-		List<Corporativo> listanc = new ArrayList<Corporativo>();
-		for (SaberPersona sp : p.getSaberes()) {
-			String ts = sp.getSaber().getTipoSaber().getNombre();
-			if (ts.contains("Formal Corporativo")) {
-				Corporativo nc = registroCorporativo.obtenerCorpPorID(sp.getId());
-				listanc.add(nc);
+		if (this.listacorp == null){
+			this.listacorp = new ArrayList<Corporativo>();
+			for (SaberPersona sp : p.getSaberes()) {
+				String ts = sp.getSaber().getTipoSaber().getNombre();
+				if (ts.contains("Formal Corporativo")) {
+					Corporativo nc = registroCorporativo.obtenerCorpPorID(sp.getId());
+					this.listacorp.add(nc);
+				}
 			}
 		}
-		return listanc;
+		return listacorp;
 	}
 
 	public List<NoCorporativo> obtenerCurriculares() {

@@ -45,9 +45,16 @@ public class Saber implements Serializable {
 		public void setId(Long id) {
 			this.id = id;
 		}
+		
+		public String formatearNombre(String p){
+			if (p == null)
+				return null;
+			else
+				return p.substring(0, 1).toUpperCase() + p.substring(1);
+		}
 
 		public String getNombre() {
-			return nombre;
+			return formatearNombre(this.nombre);
 		}
 
 		public void setNombre(String nombre) {
@@ -85,7 +92,7 @@ public class Saber implements Serializable {
 		public Integer getDuracion() {
 			return duracion;
 		}
-
+		
 		public void setDuracion(Integer duracion) {
 			this.duracion = duracion;
 		}

@@ -85,11 +85,12 @@ public class RegistroCorporativo {
 	   }
 	   
 	   /*Metodo que se encarga de obtener los nuevos cursos corporativos desde la tabla GPACURSO, GPAPAREV y GPACURRE*/
-		public  List<Object[]> getCursosCorporativosPersonas(Integer cedula){
+		public  List<Object[]> getCursosCorporativosPersonasGicca(Integer cedula){
 			Query q = em.createNativeQuery(SELECT_CORPORATIVOS);
 			q.setParameter(1,cedula);
 			return q.getResultList();
 		}
+		
 		
 		
 

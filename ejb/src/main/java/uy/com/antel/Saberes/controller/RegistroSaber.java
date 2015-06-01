@@ -38,6 +38,11 @@ public class RegistroSaber {
 	      return newSaber;
 	   }
 
+	   @PostConstruct
+	   public void initNewSaber() {
+		   newSaber = new Saber();
+	   }
+
 	   public void registro() throws Exception {
 	      log.info("Registro " + newSaber.getNombre());
 	      em.persist(newSaber);
@@ -67,12 +72,6 @@ public class RegistroSaber {
 			return (Saber) resultado.get(0);
 		}
 	   
-
-	   @PostConstruct
-	   public void initNewSaber() {
-		   newSaber = new Saber();
-	   }
-
 	public ArrayList<Saber> buscarPorInstitucion(Long idInstitucion, Long tipo) {
 		Query q = em.createQuery("from Saber as saber where saber.institucion.id = ? and saber.tipoSaber.id = ?");
 		q.setParameter(1, idInstitucion);
@@ -83,5 +82,4 @@ public class RegistroSaber {
 			return null;
 		return (ArrayList<Saber>) resultado;
 	}
-	  
 }

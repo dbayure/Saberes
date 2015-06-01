@@ -36,6 +36,13 @@ public class Corporativo extends SaberPersona implements Serializable{
 	public Integer getDuracion() {
 		return duracion;
 	}
+	
+	public String getDuracionStr() {
+		String duracionFormat = String.valueOf(duracion);
+		return duracionFormat.substring(0,duracionFormat.length()-2)+":"+duracionFormat.substring(duracionFormat.length()-2); 
+	}
+
+	
 	public void setDuracion(Integer duracion) {
 		this.duracion = duracion;
 	}
