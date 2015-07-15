@@ -248,7 +248,7 @@
 						rendered="#{_curriculares.validado == 'R'.charAt(0)}"
 						icon="ui-icon-comment"
 						action="#{personaBean.motivoRechazoNoCorporativo(_curriculares.id)}"
-						update="@all" />
+						update="@form" />
 					<p:spacer width="10px"></p:spacer>
 					<p:outputLabel value="#{personaBean.motivoRechazo}"
 						rendered="#{personaBean.gridRechazo}" />
@@ -775,14 +775,8 @@
 					<f:facet name="header">Conocimientos</f:facet>
 					
 					<p:column headerText="Saber">
-						<p:selectOneMenu id="saberConocimiento"
-							value="#{newNoCorporativo.saber}" required="true"
-							style="width:100%">
-							<f:converter converterId="saberConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{conocimientos}" var="_conocimiento"
-								itemLabel="#{_conocimiento.nombre}" itemValue="#{_conocimiento}" />
-						</p:selectOneMenu>
+        				<p:autoComplete id="saberConocimiento" value="#{newNoCorporativo.saber}" completeMethod="#{personaBean.completeTheme}"	
+                        var="_conocimiento" itemLabel="#{_conocimiento.nombre}" equired="true" itemValue="#{_conocimiento}" converter="saberConverter" forceSelection="true" minQueryLength="2" maxResults="10"/>
 					</p:column>
 
 					<p:column headerText="Origen:">

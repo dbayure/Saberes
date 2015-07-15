@@ -51,7 +51,7 @@ public class CargaCorporativos {
 			Long id = ((BigInteger)(p[0])).longValue();
 			String usuario = ((String)(p[1]));
 			List <Object[]> cursos = controladorCorporativo.getCursosCorporativosPersonasGicca((controladorPersona.getCI(usuario)));
-			System.out.println("Usuario: "+usuario);
+			//System.out.println("Usuario: "+usuario);
 			for (Object[] obj : cursos) {
 				i++;
 				ut.begin();

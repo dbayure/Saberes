@@ -118,14 +118,28 @@ public class RegistroPersona {
 		return resultado.get(0);
 		}
 		
+		@SuppressWarnings("unchecked")
+		public List<Persona> buscarPersonaPendienteValidar() {
+		Query q = em.createQuery("Select distinct p from Persona p right join p.saberes as s where s.validado = ?1");
+		q.setParameter(1, 'P');
+		List<Persona> resultado = q.getResultList();
+		
+		if (resultado.isEmpty())
+			return null;
+		return resultado;
+		}
+		
 		public Integer getCI(String usuario){
 			List<String> conv = Arrays.asList("a", "b", "c", "d", "e", "f", "g","h", "i", "j", "k");
-			if (usuario.indexOf(0) == 'a') {
-				return Integer.parseInt(usuario.substring(1));
-			} else {
-				int primerDigito = conv.indexOf(usuario.substring(0, 1));
-				return Integer.parseInt(primerDigito + usuario.substring(1));
+			if (usuario != null && !usuario.equals("")){
+				if (usuario.indexOf(0) == 'a') {
+					return Integer.parseInt(usuario.substring(1));
+				} else {
+					int primerDigito = conv.indexOf(usuario.substring(0, 1));
+					return Integer.parseInt(primerDigito + usuario.substring(1));
+				}
 			}
+			return 0;
 		}
 		
 		

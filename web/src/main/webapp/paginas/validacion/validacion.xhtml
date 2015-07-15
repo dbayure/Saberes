@@ -20,7 +20,7 @@
 				<h:panelGrid columns="3" style="width:100%"	>
 					
 					<h:panelGrid style="width:30%">
-						<p:graphicImage value="#{personaBean.cargarImagenes(_persona.usuario)}" style="height: 70px; width: 60px;" />
+<!-- 						<p:graphicImage value="#{personaBean.cargarImagenes(_persona.usuario)}" style="height: 70px; width: 60px;" /> -->
 							
 					</h:panelGrid>
 
@@ -71,7 +71,7 @@
 					</p:column>
 					
 					<p:column headerText="Rechazar"  >
-						<p:commandButton id="btnComentario" rendered="#{personaBean.btnComentario ne fila}" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" action="#{personaBean.idFilaActualizar(fila)}"/>
+						<p:commandButton id="btnComentario" rendered="#{personaBean.btnComentario ne fila}" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" action="#{personaBean.setIdFilaActualizar(fila)}"/>
 						<p:commandButton id="btnRechazo" rendered="#{personaBean.btnRechazo eq fila}" icon="ui-icon-check" onclick="#{personaBean.rechazarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
 					</p:column>	
 					

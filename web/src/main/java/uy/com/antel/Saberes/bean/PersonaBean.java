@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -22,21 +23,26 @@ import javax.faces.event.ValueChangeEvent;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
+
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.data.ConocimientosListProducer;
 import uy.com.antel.Saberes.data.PersonaListProducer;
+import uy.com.antel.Saberes.data.SaberListProducer;
 import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
+import uy.com.antel.Saberes.model.Saber;
 import uy.com.antel.Saberes.model.SaberPersona;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService;
@@ -61,7 +67,10 @@ public class PersonaBean {
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 	private Comprobante comprobCursos;
 	List<Corporativo> listacorp;
-
+	
+	@Inject
+	private ConocimientosListProducer listaConocimientos;
+	
 	@Inject
 	private RegistroPersona registroPersona;
 
@@ -75,6 +84,8 @@ public class PersonaBean {
 	private PersonaListProducer personas;
 	
 	List<Persona> listPersonas;
+	
+	private List<Saber> allSaberes;
 
 	private UploadedFile file;
 
@@ -336,15 +347,14 @@ public class PersonaBean {
 	}
 	
 	public List<Persona> listaPersonasPorValidar(){
-		List<Persona> listPersonasValidar = personas.getPersonas();
-		List<Persona> listPersonasPronta = new ArrayList<Persona>();
-		System.out.println("cantidd de personas a revisar " + listPersonasValidar.size());
-		for (Persona per : listPersonasValidar) {
-			if(faltaValidar(per.getId()) == true){
-				listPersonasPronta.add(per);
-				System.out.println("Persona a validar " + per.getNombre() + "falta validar " + faltaValidar(per.getId()));
-				}
-		}
+		List<Persona> listPersonasPronta = registroPersona.buscarPersonaPendienteValidar();
+//		List<Persona> listPersonasPronta = new ArrayList<Persona>();
+//		System.out.println("cantidd de personas a revisar " + listPersonasValidar.size());
+//		for (Persona per : listPersonasValidar) {
+//			if(faltaValidar(per.getId()) == true){
+//				listPersonasPronta.add(per);
+//				}
+//		}
 		return listPersonasPronta;
 	}
 
@@ -426,31 +436,9 @@ public class PersonaBean {
 
 		rutaPDF = p.getProperty("urlPDF");
 		rutaIMG = p.getProperty("urlIMG");
+		
 	}
 
-	public void init(String userName) {
-		try {
-
-			BufferedImage bufferedImg = null;
-			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpg";
-			try {
-				bufferedImg = ImageIO
-						.read(new java.io.File(rutaArchivoUsuario));
-			} catch (IOException e) {
-			}
-
-			if (bufferedImg != null) {
-				ByteArrayOutputStream os = new ByteArrayOutputStream();
-				ImageIO.write(bufferedImg, "jpg", os);
-				setGraphicText(new DefaultStreamedContent(
-						new ByteArrayInputStream(os.toByteArray()),
-						"image/jpg"));
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void abrirPdf(long idComprob) {
 
@@ -618,7 +606,7 @@ public class PersonaBean {
 	public int getIdFilaActualizar() {
 		return idFilaActualizar;
 	}
-
+	
 	public void setIdFilaActualizar(int idFilaActualizar) {
 		this.idFilaActualizar = idFilaActualizar;
 	}
@@ -675,5 +663,21 @@ public class PersonaBean {
 		return registroPersona.buscarPersonaPorUsr(userName);
 	}
 
+    public List<Saber> completeTheme(String query) {
+    	if (this.allSaberes == null)
+    		this.allSaberes = listaConocimientos.getConocimientos();
+        List<Saber> filteredSaber = new ArrayList<Saber>();
+         
+        for (Saber saber : this.allSaberes) {
+        	String nombre = saber.getNombre();
+        	if ((nombre != null) && (!nombre.equals(""))){
+        	 if(nombre.toLowerCase().startsWith(query)) {
+                 filteredSaber.add(saber);
+             }
+        	}        	
+		}
+         
+        return filteredSaber;
+    }
 	
 }

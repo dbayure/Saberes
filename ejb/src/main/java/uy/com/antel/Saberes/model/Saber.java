@@ -47,10 +47,13 @@ public class Saber implements Serializable {
 		}
 		
 		public String formatearNombre(String p){
-			if (p == null)
-				return null;
-			else
-				return p.substring(0, 1).toUpperCase() + p.substring(1);
+			if (p != null && !p.equals("")){
+				if (p.length() == 1)
+					return p.substring(0, 1).toUpperCase();
+				else
+					return p.substring(0, 1).toUpperCase() + p.substring(1);
+			}
+			return p;
 		}
 
 		public String getNombre() {
