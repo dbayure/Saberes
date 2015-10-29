@@ -30,153 +30,167 @@
 
 			<h:panelGrid columns="2">
 				<h:panelGrid columnClasses="col">
-		    		<p:graphicImage value="#{personaBean.cargarImagenes(personaBean.usrImg)}"  style="height: 220px; width: 180px;" />
+					<p:graphicImage value="#{personaBean.fotoUsuario}"
+						style="height: 220px; width: 180px; margin-left: 20%;" />
 					<p:fileUpload fileUploadListener="#{personaBean.upload}"
-							allowTypes="/(\.|\/)(jpg|JPG)$/"
-							invalidFileMessage="Formato Incorrecto, el archivo debe ser jpg" cancelLabel="Cancelar"
-							uploadLabel="Subir" label="Nueva" sizeLimit="102400"
-							invalidSizeMessage="No se puede subir imágenes de tamaño mayor 100 kb"
-							fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
-							description="Selecciona Imagen" />
+						allowTypes="/(\.|\/)(jpg|JPG)$/"
+						invalidFileMessage="Formato Incorrecto, el archivo debe ser jpg"
+						cancelLabel="Cancelar" uploadLabel="Subir Imagen" label="Nueva"
+						sizeLimit="102400"
+						invalidSizeMessage="No se puede subir imágenes de tamaño mayor 100 kb"
+						fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
+						description="Selecciona Imagen" />
 				</h:panelGrid>
-			
+
 				<h:panelGrid columns="2">
 
-					<h:graphicImage value="/resources/gfx/glyphicons-89-address-book.png" />
+					<h:graphicImage
+						value="/resources/gfx/glyphicons-89-address-book.png" />
 					<p:outputLabel id="direccion" value="#{newPersona.direccion}" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" />
-					<p:outputLabel  id="telDirecto" value="#{newPersona.telDirecto}" />
+					<p:outputLabel id="telDirecto" value="#{newPersona.telDirecto}" />
 
 					<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
-					<p:inplace editor="true" onEditUpdate="msgs" >  
-               			<h:inputText value="#{newPersona.telCelular}" label="Celular" valueChangeListener="#{personaBean.onEditField}"/>  
-           			</p:inplace>  
+					<p:inplace editor="true" onEditUpdate="msgs">
+						<h:inputText value="#{newPersona.telCelular}" label="Celular"
+							valueChangeListener="#{personaBean.onEditField}" />
+					</p:inplace>
 
 					<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
-					<p:outputLabel  id="correo" value="#{newPersona.correo}" />
+					<p:outputLabel id="correo" value="#{newPersona.correo}" />
 
-					<h:graphicImage	value="/resources/gfx/glyphicons-279-birthday-cake.png" />
-					<p:outputLabel  id="fnac" value="#{newPersona.fechaNacimiento}" />
+					<h:graphicImage
+						value="/resources/gfx/glyphicons-279-birthday-cake.png" />
+					<p:outputLabel id="fnac" value="#{newPersona.fechaNacimiento}" />
 
-					<h:graphicImage	value="/resources/gfx/glyphicons-196-circle-info.png" />
-						<p:commandLink id="ajax" update="formDialog:telCelular formDialog:telCelular2" onclick="PF('dlg').show()" >
-							<h:outputText value="Mas info" />
-						</p:commandLink>
+					<h:graphicImage
+						value="/resources/gfx/glyphicons-196-circle-info.png" />
+					<p:commandLink id="ajax"
+						update="formDialog:telCelular formDialog:telCelular2"
+						onclick="PF('dlg').show()">
+						<h:outputText value="Mas info" />
+					</p:commandLink>
 				</h:panelGrid>
-					
-					<p:dialog header="Mas informacion" id="dlgInfo" widgetVar="dlg" resizable="false">
-						<h:form id="formDialog">
-							<h:panelGrid columns="2" style="margin-bottom:10px">
 
+				<p:dialog header="Mas informacion" id="dlgInfo" widgetVar="dlg"
+					resizable="false">
+					<h:form id="formDialog">
+						<h:panelGrid columns="2" style="margin-bottom:10px">
+
+							<h:panelGrid columns="2">
 								<h:panelGrid columns="2">
-									<h:panelGrid columns="2">
-										<h:graphicImage	value="/resources/gfx/glyphicons-89-address-book.png" />
-										<p:outputLabel id="direccion" value="#{newPersona.direccion}" />
+									<h:graphicImage
+										value="/resources/gfx/glyphicons-89-address-book.png" />
+									<p:outputLabel id="direccion" value="#{newPersona.direccion}" />
 
-										<h:graphicImage value="/resources/gfx/glyphicons-443-earphone.png" />
-										<p:outputLabel  id="telDirecto" value="#{newPersona.telDirecto}" />
+									<h:graphicImage
+										value="/resources/gfx/glyphicons-443-earphone.png" />
+									<p:outputLabel id="telDirecto" value="#{newPersona.telDirecto}" />
 
-										<h:graphicImage	value="/resources/gfx/glyphicons-164-iphone.png" />
-										<p:outputLabel  id="telCelular" value="#{newPersona.telCelular}" />
+									<h:graphicImage
+										value="/resources/gfx/glyphicons-164-iphone.png" />
+									<p:outputLabel id="telCelular" value="#{newPersona.telCelular}" />
 
-										<h:graphicImage	value="/resources/gfx/glyphicons-11-envelope.png" />
-										<p:outputLabel  id="correo" value="#{newPersona.correo}" />
+									<h:graphicImage
+										value="/resources/gfx/glyphicons-11-envelope.png" />
+									<p:outputLabel id="correo" value="#{newPersona.correo}" />
 
-										<h:graphicImage	value="/resources/gfx/glyphicons-279-birthday-cake.png" />
-										<p:outputLabel  id="fnac" value="#{newPersona.fechaNacimiento}" />
-									</h:panelGrid>
+									<h:graphicImage
+										value="/resources/gfx/glyphicons-279-birthday-cake.png" />
+									<p:outputLabel id="fnac" value="#{newPersona.fechaNacimiento}" />
 								</h:panelGrid>
+							</h:panelGrid>
 
 
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<br />
-								<h2>
-								<p:outputLabel value="DATOS PERSONALES"	style="font-weight:bold" />
-								</h2>
-								<br />
-								<br />
-								<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<h2>
+								<p:outputLabel value="DATOS PERSONALES" style="font-weight:bold" />
+							</h2>
+							<br />
+							<br />
+							<br />
 
-								<h:panelGrid columns="6">
-									<p:outputLabel value="Nombre: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.nombre}" />
+							<h:panelGrid columns="6">
+								<p:outputLabel value="Nombre: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.nombre}" />
 
-									<p:outputLabel value="Apellido: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.apellido}" />
+								<p:outputLabel value="Apellido: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.apellido}" />
 
-									<p:outputLabel value="Jornada Laboral: "
-										style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.jornadaLaboral}" />
+								<p:outputLabel value="Jornada Laboral: "
+									style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.jornadaLaboral}" />
 
-									<p:outputLabel value="Clase: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.clase}" />
+								<p:outputLabel value="Clase: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.clase}" />
 
-									<p:outputLabel value="Sexo: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.sexo}" />
+								<p:outputLabel value="Sexo: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.sexo}" />
 
-									<p:outputLabel value="Departamento: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.departamento}" />
+								<p:outputLabel value="Departamento: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.departamento}" />
 
-									<p:outputLabel value="Localidad: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.localidad}" />
+								<p:outputLabel value="Localidad: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.localidad}" />
 
-									<p:outputLabel value="Profesion: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.profesion}" />
+								<p:outputLabel value="Profesion: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.profesion}" />
 
-									<p:outputLabel value="Situación Laboral: "
-										style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.situacion}" />
+								<p:outputLabel value="Situación Laboral: "
+									style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.situacion}" />
 
-									<p:outputLabel value="Division: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.division}" />
+								<p:outputLabel value="Division: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.division} #{newPersona.descDivision}" />
 
-									<p:outputLabel value="Unidad: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.unidad}" />
+								<p:outputLabel value="Unidad: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.unidad}" />
 
-									<p:outputLabel value="E-Mail: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.correo}" />
+								<p:outputLabel value="E-Mail: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.correo}" />
 
-									<p:outputLabel value="Piso: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.piso}" />
+								<p:outputLabel value="Piso: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.piso}" />
 
-									<p:outputLabel value="Oficina: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.oficina}" />
+								<p:outputLabel value="Oficina: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.oficina}" />
 
-									<p:outputLabel value="Tel Directo: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.telDirecto}" />
+								<p:outputLabel value="Tel Directo: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.telDirecto}" />
 
-									<p:outputLabel value="Celular: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.telCelular}" id="telCelular2" /> 
+								<p:outputLabel value="Celular: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.telCelular}" id="telCelular2" />
 
-									<p:outputLabel value="Fax: " style="font-weight:bold" />
-									<p:outputLabel value="#{newPersona.fax}" />
+								<p:outputLabel value="Fax: " style="font-weight:bold" />
+								<p:outputLabel value="#{newPersona.fax}" />
 
-
-								</h:panelGrid>
 
 							</h:panelGrid>
-						</h:form>
-					</p:dialog>
 
+						</h:panelGrid>
+					</h:form>
+				</p:dialog>
 
-				</h:panelGrid>
-
+			</h:panelGrid>
 
 			<h1>SABER FORMAL</h1>
 
-			<p:separator />
-			<p:dataTable id="curriculares" var="_curriculares"
-				value="#{personaBean.obtenerCurriculares()}" editable="true"
-				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-				
+			<br />
+			<p:dataTable id="curriculares" var="_curriculares" value="#{personaBean.obtenerCurriculares()}" 
+				emptyMessage="No existen datos a mostrar." rows="10"
+				paginator="true" editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
 				<f:facet name="header">  
 	            	Formación Curricular
 	        	</f:facet>
@@ -187,15 +201,18 @@
 					listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
 
 
-				<p:column headerText="Institución" style="width:25%">
+				<p:column headerText="Institución"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_curriculares.saber.institucion.nombre}" />
 				</p:column>
 
-				<p:column headerText="Curso" style="width:25%">
+				<p:column headerText="Saber"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_curriculares.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:30%">
+				<p:column headerText="F.Inicio"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_curriculares.fechaInicio}">
@@ -210,7 +227,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:30%">
+				<p:column headerText="F.Fin"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_curriculares.fechaFin}">
@@ -225,39 +243,37 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Aprobación" style="width:25%">
+				<p:column headerText="Aprobación" style="width:20%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
-							<h:outputText value="#{personaBean.convertirAprobacion(_curriculares.aprobacion)}" />
+							<h:outputText
+								value="#{personaBean.convertirAprobacion(_curriculares.aprobacion)}" />
 						</f:facet>
 						<f:facet name="input">
-							<p:selectBooleanCheckbox id="idEditaprobacion" value="#{_curriculares.aprobacion}"></p:selectBooleanCheckbox>
+							<p:selectBooleanCheckbox id="idEditaprobacion"
+								value="#{_curriculares.aprobacion}"></p:selectBooleanCheckbox>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Duración" style="width:25%">
+				<p:column headerText="Duración"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_curriculares.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Validado" style="width:25%">
-					<h:outputText
-						value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
+				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
+					<h:outputText value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
 					<p:spacer width="10px"></p:spacer>
-					<p:commandButton id="btnMensaje"
-						rendered="#{_curriculares.validado == 'R'.charAt(0)}"
-						icon="ui-icon-comment"
-						action="#{personaBean.motivoRechazoNoCorporativo(_curriculares.id)}"
-						update="@form" />
-					<p:spacer width="10px"></p:spacer>
-					<p:outputLabel value="#{personaBean.motivoRechazo}"
-						rendered="#{personaBean.gridRechazo}" />
+					<p:commandButton id="btnMensaje" rendered="#{_curriculares.validado == 'R'.charAt(0)}"
+						icon="ui-icon-comment" action="#{personaBean.motivoRechazoNoCorporativo(_curriculares.id)}" oncomplete="PF('dlgMotivoRechazo').show()"/>
 				</p:column>
 
-				<p:column headerText="Comprobantes" style="width:30%">
-						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_curriculares.comprobante.id)}">
-							<p:fileDownload value="#{mediaBean.download}" />
-						</p:commandButton>
+				<p:column headerText="Comprobantes"
+					style="width:20%; text-align: center; font-weight:bold">
+					<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true"
+						actionListener="#{mediaBean.prepDownload(_curriculares.comprobante.id)}">
+						<p:fileDownload value="#{mediaBean.download}" />
+					</p:commandButton>
 				</p:column>
 
 				<p:column style="width:3%">
@@ -272,19 +288,25 @@
 				</p:column>
 
 			</p:dataTable>
+			<br />
 		</h:form>
-
-		<br />
+			<p:dialog widgetVar="dlgMotivoRechazo" modal="true" width="170px" height="200px" position="center">
+				<h:panelGrid columns="1" style="horizontal-align:center">
+					<h3>Motivo del rechazo</h3>
+					<p:outputLabel value="#{personaBean.motivoRechazo}" style="width:70px; height:70px"/>
+				</h:panelGrid>
+				
+			</p:dialog>	
 		<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 			collapsed="true">
 			<p:ajax event="toggle" />
 			<h:form id="formAltaCurricular" prependId="false">
-				<p:dataTable id="curricularIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
-					<f:facet name="header">Formación curricular</f:facet>
-					<p:column headerText="Institución">
+				<p:dataTable id="curricularIngreso" value="" editable="true">
+					<p:column headerText="Institución"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="idInstitucion"
 							value="#{noCorporativoBean.institucionSeleccionadaCurricular}"
-							style="width:100%">
+							style="width:80%">
 							<p:ajax
 								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(1)}"
 								update="saber" />
@@ -296,9 +318,10 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="Educación">
+					<p:column headerText="Saber"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="saber" value="#{newNoCorporativo.saber}"
-							required="true" style="width:100%">
+							required="true" style="width:80%">
 							<f:converter converterId="saberConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{noCorporativoBean.saberPorInst}"
@@ -306,115 +329,133 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio" style="width:12%">
+					<p:column headerText="F.Inicio"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputCurricular" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin" style="width:12%">
+					<p:column headerText="F.Fin"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputCurricular" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="Aprobación" style="width:10%">
+					<p:column headerText="Aprobación"
+						style="width:10%; text-align: center; font-weight:bold">
 						<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}"
 							id="aprobacion">
 						</p:selectBooleanCheckbox>
 					</p:column>
 
-					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
+					<p:column headerText="Comprobantes" style="width:20%; text-align: center; font-weight:bold">
+						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.inputComprobante}" mode="simple"
+							skinSimple="true" auto="true" label="Cargar" />
 					</p:column>
 
-					<p:column headerText="Agregar" style="width:5%">
-						<p:commandButton id="register" icon="ui-icon-plus"
-							action="#{noCorporativoBean.registrar}" title="Registrar"
-							update=":form:curriculares" />
+					<p:column headerText="Agregar"
+						style="width: 10%; text-align: center; font-weight:bold">
+						<p:commandButton id="register" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar"
+							update="@all" />
 					</p:column>
 
 				</p:dataTable>
+
 			</h:form>
 		</p:fieldset>
-
 		<br />
-		<p:separator />
-
-			<p:dataTable id="Corporativos" var="_Corporativos"
-						 sortBy="#{_Corporativos.fechaInicio}" sortOrder="descending" 
-						 value="#{personaBean.obtenerCorporativos()}" editable="true"
-						 emptyMessage="No existen datos a mostrar." 
-						 rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
-	       		<f:facet name="header">  
+		<p:dataTable id="Corporativos" var="_Corporativos"
+			sortBy="#{_Corporativos.fechaInicio}" sortOrder="descending"
+			value="#{personaBean.obtenerCorporativos()}" editable="true"
+			emptyMessage="No existen datos a mostrar." rows="10" paginator="true"
+			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+			{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+			<f:facet name="header">  
 	            	Saber Corporativo 
 	        	</f:facet>
-	        	<p:ajax event="rowEdit" listener="#{CorporativoBean.onEdit}" update=":form:messages" />  
-	        	<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}" update=":form:messages" />
-					
-				<p:column headerText="Curso" style="width:55%" sortBy="#{_Corporativos.saber.nombre}">
-					<h:outputText value="#{_Corporativos.saber.nombre}" />
-				</p:column>	
-	
-	           	 <p:column headerText="F.Inicio" style="width:30%" sortBy="#{_Corporativos.fechaInicio}">  
-	                   	<h:outputText value="#{_Corporativos.fechaInicio}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
-	           	 </p:column> 
-	
-	           	 <p:column headerText="F.Fin" style="width:30%" sortBy="#{_Corporativos.fechaFin}">  
-	                   	<h:outputText value="#{_Corporativos.fechaFin}" > <f:convertDateTime pattern="dd/MM/yyyy"/> </h:outputText>
- 	           	 </p:column>
-	
-				<p:column headerText="Aprobación" style="width:35%">
-						<div align="center"><h:outputText value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" /></div>
-				</p:column>
-				
-				<p:column headerText="Puntaje" style="width:25%">  
-	                  		<div align="center"><h:outputText  value="#{_Corporativos.puntaje}" /></div>
-	           	</p:column>
-	
-				<p:column headerText="Duración" style="width:25%">  
-	                  		<div align="center"><h:outputText value="#{_Corporativos.duracionStr}" /></div>
-	           	 </p:column> 
-	
-				<p:column headerText="Libreta" style="width:25%">  
-	                  		<h:outputText value="#{_Corporativos.libreta}" />
-	           	 </p:column> 
-	           	 
-	           	 <p:column headerText="Rol" style="width:25%">  
-	                   		<h:outputText value="#{_Corporativos.rolSaber}" />
-	           	 </p:column> 
-	           	 
-	           	 <p:column headerText="Clase" style="width:25%">  
-	                   		<h:outputText value="#{_Corporativos.cod_area}" />
-	           	 </p:column>
-	       </p:dataTable>
+			<p:ajax event="rowEdit" listener="#{CorporativoBean.onEdit}"
+				update=":form:messages" />
+			<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}"
+				update=":form:messages" />
 
+			<p:column headerText="Saber" style="width:25%; text-align: center; " sortBy="#{_Corporativos.saber.nombre}">
+				<h:outputText value="#{_Corporativos.saber.nombre}" />
+			</p:column>
+
+			<p:column headerText="F.Inicio"	style="width:25%; text-align: center; "	sortBy="#{_Corporativos.fechaInicio}">
+				<h:outputText value="#{_Corporativos.fechaInicio}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="F.Fin" style="width:25%; text-align:center; " sortBy="#{_Corporativos.fechaFin}">
+				<h:outputText value="#{_Corporativos.fechaFin}">
+					<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+
+			<p:column headerText="Aprobación" style="width:15%; text-align: center; ">
+				<div align="center">
+					<h:outputText
+						value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" />
+				</div>
+			</p:column>
+
+			<p:column headerText="Puntaje" style="width:15%; text-align: center; ">
+				<div align="center">
+					<h:outputText value="#{_Corporativos.puntaje}" />
+				</div>
+			</p:column>
+
+			<p:column headerText="Duración"	style="width:15%; text-align: center; ">
+				<div align="center">
+					<h:outputText value="#{_Corporativos.duracionStr}" />
+				</div>
+			</p:column>
+
+			<p:column headerText="Libreta" style="width:15%; text-align: center; ">
+				<h:outputText value="#{_Corporativos.libreta}" />
+			</p:column>
+
+			<p:column headerText="Rol" style="width:15%; text-align: center; ">
+				<h:outputText value="#{_Corporativos.rolSaber}" />
+			</p:column>
+
+			<p:column headerText="Clase" style="width:15%; text-align: center;">
+				<h:outputText value="#{_Corporativos.cod_area}" />
+			</p:column>
+		</p:dataTable>
 		<br />
-		<p:separator />
-
 		<h:form id="form2" prependId="false">
-			<p:dataTable id="noCorporativos" var="_noCorporativos"
-				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				value="#{personaBean.obtenerNoCorporativos()}" editable="true">
+			<p:dataTable id="noCorporativos" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" 
+				emptyMessage="No existen datos a mostrar." rows="10"
+				paginator="true" editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 				<f:facet name="header">  
 	            	Saber No Corporativo 
 	        	</f:facet>
-				<em>No hay datos para mostrar.</em>
+				<!-- 				<em>No hay datos para mostrar.</em> -->
 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel"
 					listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
 
 
-				<p:column headerText="Institución" style="width:25%">
+				<p:column headerText="Institución"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_noCorporativos.saber.institucion.nombre}" />
 				</p:column>
 
-				<p:column headerText="Curso" style="width:25%">
+				<p:column headerText="Saber"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_noCorporativos.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:30%">
+				<p:column headerText="F.Inicio"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_noCorporativos.fechaInicio}">
@@ -429,7 +470,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:30%">
+				<p:column headerText="F.Fin"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_noCorporativos.fechaFin}">
@@ -444,7 +486,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Aprobación" style="width:25%">
+				<p:column headerText="Aprobación"
+					style="width:25%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText
@@ -458,44 +501,49 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Duración" style="width:25%">
+				<p:column headerText="Duración"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Validado" style="width:25%">
+				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_noCorporativos.validado)}" />
 				</p:column>
 
-				<p:column headerText="Comprobantes" style="width:30%">
-						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
-							<p:fileDownload value="#{mediaBean.download}" />
-						</p:commandButton>
+				<p:column headerText="Comprobantes"
+					style="width:20%; text-align: center; font-weight:bold">
+					<p:commandButton id="downloadLink" value="Ver" ajax="false"
+						immediate="true"
+						actionListener="#{mediaBean.prepDownload(_noCorporativos.comprobante.id)}">
+						<p:fileDownload value="#{mediaBean.download}" />
+					</p:commandButton>
 				</p:column>
-										
-					<p:column style="width:3%">
-						<p:rowEditor />
-					</p:column>
 
-					<p:column style="width:3%">
-						<p:commandLink id="deleteLink" update="@all" immediate="true"
-							ajax="true" styleClass="ui-icon ui-icon-trash"
-							actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
-						</p:commandLink>
-					</p:column>
-			</p:dataTable> 
+				<p:column style="width:3%">
+					<p:rowEditor />
+				</p:column>
+
+				<p:column style="width:3%">
+					<p:commandLink id="deleteLink" update="@all" immediate="true"
+						ajax="true" styleClass="ui-icon ui-icon-trash"
+						actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
+					</p:commandLink>
+				</p:column>
+			</p:dataTable>
 
 			<br />
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
 				<p:dataTable id="noCorporativoIngreso" value="" editable="true">
-					<f:facet name="header">Cursos no corporativos</f:facet>
-					<em>No hay datos para mostrar.</em>
-					<p:column headerText="Institución">
+					<!-- 					<f:facet name="header">Cursos no corporativos</f:facet> -->
+					<!-- 					<em>No hay datos para mostrar.</em> -->
+					<p:column headerText="Institución"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="idNoCorporativoInstitucion"
 							value="#{noCorporativoBean.institucionSeleccionada}"
-							style="width:100%">
+							style="width:80%;">
 							<p:ajax
 								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(2)}"
 								update="saberNoCorporativo" />
@@ -507,10 +555,10 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="Curso">
+					<p:column headerText="Saber" style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="saberNoCorporativo"
 							value="#{newNoCorporativo.saber}" required="true"
-							style="width:100%">
+							style="width:80%">
 							<f:converter converterId="saberConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{noCorporativoBean.saberPorInst}"
@@ -518,69 +566,74 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio" style="width:12%">
+					<p:column headerText="F.Inicio"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputNoCorporativo"
 							mode="popup" navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin" style="width:12%">
+					<p:column headerText="F.Fin" style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputNoCorporativo" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="Aprobación" style="width:10%">
+					<p:column headerText="Aprobación"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:selectBooleanCheckbox value="#{newNoCorporativo.aprobacion}"
 							id="aprobacionNoCorporativo">
 						</p:selectBooleanCheckbox>
 					</p:column>
 
-					 <p:column headerText="Comprobantes">  
-						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
-	           		 </p:column>  
+					<p:column headerText="Comprobantes"
+						style="width:20%; text-align: center; font-weight:bold">
+						<p:fileUpload id="comprobanteNoCorporativo"
+							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
+							skinSimple="true" auto="true" />
+					</p:column>
 
-					<p:column headerText="Agregar" style="width:5%">
+					<p:column headerText="Agregar"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:commandButton id="registerNoCorporativo" icon="ui-icon-plus"
 							action="#{noCorporativoBean.registrar}" title="Registrar"
 							update=":form2:noCorporativos" />
 					</p:column>
 
 				</p:dataTable>
-				<p:separator />
+
 			</p:fieldset>
 		</h:form>
 
-
-		<br />
-		<p:separator />
-		<p:separator />
-
-
 		<h1>SABER NO FORMAL</h1>
 		<h:form id="form3" prependId="false">
-			<p:dataTable id="cursos" var="_cursos"
-				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"			
-				value="#{personaBean.obtenerCursos()}" editable="true">
+			<p:dataTable id="cursos" var="_cursos" value="#{personaBean.obtenerCursos()}"
+				emptyMessage="No existen datos a mostrar." rows="10"
+				paginator="true" editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 				<f:facet name="header">  
 	            	Cursos
 	        	</f:facet>
-				<em>No hay datos para mostrar.</em>
+				<!-- 				<em>No hay datos para mostrar.</em> -->
 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}"
 					update=":form:messages" />
 				<p:ajax event="rowEditCancel"
 					listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
 
 
-				<p:column headerText="Institución" style="width:25%">
+				<p:column headerText="Institución"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_cursos.saber.institucion.nombre}" />
 				</p:column>
 
-				<p:column headerText="Curso" style="width:25%">
+				<p:column headerText="Saber"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_cursos.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:30%">
+				<p:column headerText="F.Inicio"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaInicio}">
@@ -594,7 +647,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:30%">
+				<p:column headerText="F.Fin"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaFin}">
@@ -608,20 +662,24 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Duración" style="width:25%">
+				<p:column headerText="Duración"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_cursos.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Validado" style="width:25%">
+				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 				</p:column>
-				
-				<p:column headerText="Comprobantes" style="width:30%">
-						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
-							<p:fileDownload value="#{mediaBean.download}" />
-						</p:commandButton>
-				</p:column>		
+
+				<p:column headerText="Comprobantes"
+					style="width:20%; text-align: center; font-weight:bold">
+					<p:commandButton id="downloadLink" value="Ver" ajax="false"
+						immediate="true"
+						actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
+						<p:fileDownload value="#{mediaBean.download}" />
+					</p:commandButton>
+				</p:column>
 
 				<p:column style="width:3%">
 					<p:rowEditor />
@@ -635,19 +693,19 @@
 				</p:column>
 
 			</p:dataTable>
-
 			<br />
-
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
-				<p:dataTable id="cursosIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
-					<f:facet name="header">Cursos</f:facet>
-					<p:column headerText="Institución:">
+				<p:dataTable id="cursosIngreso" value="" editable="true">
+					<p:column headerText="Institución:"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="idCursosInstitucion"
-							value="#{noCorporativoBean.institucionSeleccionadaCurso}" style="width:100%">
+							value="#{noCorporativoBean.institucionSeleccionadaCurso}"
+							style="width:80%">
 							<p:ajax
-								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"	update="saberCurso" />
+								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"
+								update="saberCurso" />
 							<f:converter converterId="institucionConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
@@ -656,9 +714,10 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="Curso">
+					<p:column headerText="Saber"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="saberCurso" value="#{newNoCorporativo.saber}"
-							required="true" style="width:100%">
+							required="true" style="width:80%">
 							<f:converter converterId="saberConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{noCorporativoBean.saberPorInst}"
@@ -666,39 +725,45 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio" style="width:12%">
+					<p:column headerText="F.Inicio"
+						style="width:15%; text-align: center;">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputCurso" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin" style="width:12%">
+					<p:column headerText="F.Fin"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputCurso" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
+					<p:column headerText="Comprobantes"
+						style="width:20%; text-align: center; font-weight:bold">
+						<p:fileUpload id="comprobanteNoCorporativo"
+							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
+							skinSimple="true" auto="true" />
 					</p:column>
 
-					<p:column headerText="Agregar" style="width:5%">
+					<p:column headerText="Agregar"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:commandButton id="registerCursos" icon="ui-icon-plus"
 							action="#{noCorporativoBean.registrar}" title="Registrar"
 							update=":form3:cursos" />
 					</p:column>
 
 				</p:dataTable>
-				<p:separator />
+
 			</p:fieldset>
 		</h:form>
-
-		<p:separator />
-
+		<br />
 		<h:form id="form4" prependId="false">
-			<p:dataTable id="conocimientos" var="_cursos" emptyMessage="No existen datos a mostrar."
-				rows="10" paginator="true" paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				value="#{personaBean.obtenerConocimientos()}" editable="true">
+			<p:dataTable id="conocimientos" var="_cursos" value="#{personaBean.obtenerConocimientos()}"
+				emptyMessage="No existen datos a mostrar." rows="10"
+				paginator="true" editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
+				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 				<f:facet name="header">  
 	            	Conocimientos
 	        	</f:facet>
@@ -707,15 +772,18 @@
 				<p:ajax event="rowEditCancel"
 					listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
 
-				<p:column headerText="Saber" style="width:25%">
+				<p:column headerText="Saber"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_cursos.saber.nombre}" />
 				</p:column>
 
-				<p:column headerText="Origen" style="width:25%">
+				<p:column headerText="Origen"
+					style="width:25%; text-align: center; font-weight:bold">
 					<h:outputText value="#{_cursos.origen.descripcion}" />
 				</p:column>
 
-				<p:column headerText="F.Inicio" style="width:30%">
+				<p:column headerText="F.Inicio"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaInicio}">
@@ -729,7 +797,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="F.Fin" style="width:30%">
+				<p:column headerText="F.Fin"
+					style="width:15%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText value="#{_cursos.fechaFin}">
@@ -743,13 +812,17 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Comprobantes" style="width:30%">
-						<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true" actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
-							<p:fileDownload value="#{mediaBean.download}" />
-						</p:commandButton>
-				</p:column>		
+				<p:column headerText="Comprobantes"
+					style="width:20%; text-align: center; font-weight:bold">
+					<p:commandButton id="downloadLink" value="Ver" ajax="false"
+						immediate="true"
+						actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}">
+						<p:fileDownload value="#{mediaBean.download}" />
+					</p:commandButton>
+				</p:column>
 
-				<p:column headerText="Validado" style="width:25%">
+				<p:column headerText="Estado"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 				</p:column>
@@ -771,17 +844,22 @@
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
-				<p:dataTable id="conocimientosIngreso" value="" editable="true" emptyMessage="No existen datos a mostrar.">
-					<f:facet name="header">Conocimientos</f:facet>
-					
-					<p:column headerText="Saber">
-        				<p:autoComplete id="saberConocimiento" value="#{newNoCorporativo.saber}" completeMethod="#{personaBean.completeTheme}"	
-                        var="_conocimiento" itemLabel="#{_conocimiento.nombre}" equired="true" itemValue="#{_conocimiento}" converter="saberConverter" forceSelection="true" minQueryLength="2" maxResults="10"/>
+				<p:dataTable id="conocimientosIngreso" value="" editable="true" styleClass="textoCentrado">
+
+					<p:column headerText="Saber"
+						style="width:25%; text-align: center; font-weight:bold">
+						<p:autoComplete id="saberConocimiento"
+							value="#{newNoCorporativo.saber}"
+							completeMethod="#{personaBean.completeTheme}" var="_conocimiento"
+							itemLabel="#{_conocimiento.nombre}" equired="true"
+							itemValue="#{_conocimiento}" converter="saberConverter"
+							forceSelection="true" minQueryLength="2" maxResults="10" />
 					</p:column>
 
-					<p:column headerText="Origen:">
+					<p:column headerText="Origen:"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="idConocimientoOrigen"
-							value="#{newNoCorporativo.origen}" style="width:100%">
+							value="#{newNoCorporativo.origen}" style="width:80%">
 							<f:converter converterId="origenConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue=""
 								noSelectionOption="true" />
@@ -790,32 +868,36 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="F.Inicio" style="width:12%">
+					<p:column headerText="F.Inicio"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaInicio}"
 							pattern="dd/MM/yyyy" id="fechaInicioInputConocimiento"
 							mode="popup" navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin" style="width:12%">
+					<p:column headerText="F.Fin"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputConocimiento" mode="popup"
 							navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="Comprobantes">
-						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.upload}" mode="advanced" auto="true"/>
+					<p:column headerText="Comprobantes"
+						style="width:20%; text-align: center; font-weight:bold">
+						<p:fileUpload id="comprobanteNoCorporativo"
+							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
+							skinSimple="true" auto="true" />
 					</p:column>
 
-					<p:column headerText="Agregar" style="width:5%">
+					<p:column headerText="Agregar"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:commandButton id="registerCursos" icon="ui-icon-plus"
 							action="#{noCorporativoBean.registrar}" title="Registrar"
 							update=":form4:conocimientos" />
 					</p:column>
 				</p:dataTable>
 			</p:fieldset>
-
 		</h:form>
 
-		<p:separator />
 	</ui:define>
 </ui:composition>

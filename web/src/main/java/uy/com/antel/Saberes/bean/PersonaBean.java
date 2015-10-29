@@ -13,35 +13,32 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
-
 import org.jboss.security.SecurityContextAssociation;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
 import WebServices.sgp.antel.com.DatoPer;
 import uy.com.antel.Saberes.controller.RegistroCorporativo;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
 import uy.com.antel.Saberes.controller.RegistroPersona;
+import uy.com.antel.Saberes.controller.RegistroRol;
 import uy.com.antel.Saberes.data.ConocimientosListProducer;
-import uy.com.antel.Saberes.data.PersonaListProducer;
-import uy.com.antel.Saberes.data.SaberListProducer;
 import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.Corporativo;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
+import uy.com.antel.Saberes.model.Rol;
 import uy.com.antel.Saberes.model.Saber;
 import uy.com.antel.Saberes.model.SaberPersona;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPer;
@@ -49,7 +46,7 @@ import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerService;
 import uy.com.iantel.in.wsi_prod.WSsgp.services.WSDatoPer.WsDatosPerServiceLocator;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class PersonaBean {
 
 	private String usuario;
@@ -61,12 +58,15 @@ public class PersonaBean {
 	private int btnRechazo = -1;
 	private int btnComentario = -1;
 	private boolean gridRechazo = false;
-	private StreamedContent graphicText;
+	private StreamedContent fotoUsuario;
 	private StreamedContent streamedContent;
 	private int idFilaActualizar;
 	private List<NoCorporativo> listaNoCorporativoPersona = new ArrayList<NoCorporativo>();
 	private Comprobante comprobCursos;
 	List<Corporativo> listacorp;
+	private List<Persona> listaPersonas = new ArrayList<Persona>();
+	private Rol rol = null;
+	private int timeout;
 	
 	@Inject
 	private ConocimientosListProducer listaConocimientos;
@@ -81,13 +81,21 @@ public class PersonaBean {
 	private RegistroCorporativo registroCorporativo;
 	
 	@Inject
-	private PersonaListProducer personas;
+	private RegistroRol registroRol;
 	
 	List<Persona> listPersonas;
 	
 	private List<Saber> allSaberes;
 
 	private UploadedFile file;
+    
+    public int getTimeout() {
+        return timeout;
+    }
+ 
+    public void increment() {
+        timeout++;
+    }
 
 	public void registrar() {
 		FacesMessage msg;
@@ -107,11 +115,12 @@ public class PersonaBean {
 			Calendar fNacim = datos.getFNacim();
 			Calendar fIngreso = datos.getFIngre();
 			String tel = datos.getTDirecPer().trim();
-			String telOf = datos.getOficina();
+			String Of = datos.getOficina();
 			String interno = datos.getTInterPer().trim();
 			String clase = datos.getClasePago().trim();
 			String descClase = datos.getDescClasePago().trim();
 			String division = datos.getDivision();
+			String descdivision = datos.getDescDivision();			
 			String area = datos.getDescArea().trim();
 			String unidad = datos.getDescUnidad().trim();
 			String situacion = datos.getDescCsilac().trim();
@@ -131,11 +140,12 @@ public class PersonaBean {
 			aPersona.setFechaIngreso(fIngreso.getTime());
 			aPersona.setFechaNacimiento(fNacim.getTime());
 			aPersona.setTelDirecto(tel);
-			aPersona.setOficina(telOf);
+			aPersona.setOficina(Of);
 			aPersona.setTelInterno(interno);
 			aPersona.setClase(clase);
 			aPersona.setDescClase(descClase);
 			aPersona.setDivision(division);
+			aPersona.setDescDivision(descdivision);
 			aPersona.setArea(area);
 			aPersona.setUnidad(unidad);
 			aPersona.setSituacion(situacion);
@@ -151,11 +161,13 @@ public class PersonaBean {
 			aPersona.setJornadaLaboral(jornada);
 			aPersona.setUsuario(this.usuario);
 
-			if (personaRegistrada())
+			if (personaRegistrada()){
 				registroPersona.modificar(aPersona);
-			else
+				System.out.println("valor de la division" + aPersona.getDescDivision());
+			}
+			else{
 				registroPersona.registro();
-
+			}
 			this.setPersonaBean(this.usuario);
 
 		}
@@ -181,9 +193,9 @@ public class PersonaBean {
 			String sCedula = getCi(usuario);
 			String sAppl = "SABERES";
 			String sPass = "SABERES";
-
-			return llamada.getDatosPer(sCedula, sAppl, sPass);
-
+			DatoPer dp = llamada.getDatosPer(sCedula, sAppl, sPass);
+			System.out.println("valor que viene del ws para descdivision " + dp.getDescDivision());
+			return dp;
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		} catch (RemoteException e) {
@@ -230,13 +242,17 @@ public class PersonaBean {
 	
 	public void onEdit(RowEditEvent event) {  
 		Persona persona = ((Persona) event.getObject());
-           
             try {
-            	registroPersona.modificar(persona);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", persona.getNombre()+" "+persona.getApellido());  
+            	if (rol == null){
+            		registroPersona.modificar(persona);
+            	}
+            	else{
+            		registroPersona.modificarRol(persona, rol);
+            	}
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó el rol al usuario ", persona.getNombre()+" "+persona.getApellido());  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", persona.getNombre()+" "+persona.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar el rol del usuario ", persona.getNombre()+" "+persona.getApellido());  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }
@@ -256,10 +272,6 @@ public class PersonaBean {
 			}
     }
 	
-	public String getUsuario() {
-		return usuario;
-	}
-
 	public List<NoCorporativo> obtenerSaberesPersona(long id) {
 		Persona p = registroPersona.encontrarPorId(id);
 		List<NoCorporativo> listanc = new ArrayList<NoCorporativo>();
@@ -346,6 +358,17 @@ public class PersonaBean {
 		return listanc;
 	}
 	
+	public void obtenerRolUsuarioLogueado(){
+		String userName = null;
+		try {
+			userName = SecurityContextAssociation.getPrincipal().getName();
+			Persona p = registroPersona.buscarPersonaPorUsr(userName);
+			setRol(p.getRol());
+		} catch (NullPointerException e) {
+			setRol(null);
+		}
+	}
+	
 	public List<Persona> listaPersonasPorValidar(){
 		List<Persona> listPersonasPronta = registroPersona.buscarPersonaPendienteValidar();
 //		List<Persona> listPersonasPronta = new ArrayList<Persona>();
@@ -360,7 +383,7 @@ public class PersonaBean {
 
 	public String convertirValidacion(char var) {
 		if (var == 'P')
-			return "Pendiente de Aprobación";
+			return "Pendiente de Validación";
 		else if (var == 'V')
 			return "Validado";
 		else
@@ -389,6 +412,10 @@ public class PersonaBean {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+	
+	public String getUsuario() {
+		return usuario;
 	}
 
 	public List<NoCorporativo> getListaNoCorporativoPersona() {
@@ -424,8 +451,7 @@ public class PersonaBean {
 	@PostConstruct
 	public void obtenerRuta() {
 		Properties p = new Properties();
-		String archivoPropiedades = System.getProperty("user.dir")
-				+ "/Conf/app-properties/saberes.properties";
+		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {
@@ -459,8 +485,7 @@ public class PersonaBean {
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
-						.getId());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
 				listanc.add(nc);
 			}
 		}
@@ -489,14 +514,14 @@ public class PersonaBean {
 		List<SaberPersona> listanc2 = new ArrayList<SaberPersona>();
 		for (SaberPersona sp : p.getSaberes()) {
 			if (sp instanceof NoCorporativo) {
-				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp
-						.getId());
+				NoCorporativo nc = registroNoCorporativo.obtenerPorID(sp.getId());
 				listanc.add(nc);
 			}
 		}
 		for (NoCorporativo ncorp : listanc) {
 			if (ncorp.getId().equals(idNoCorporativo)) {
 				ncorp.setValidado('R');
+				ncorp.setMensaje(motivoRechazo);
 				try {
 					registroNoCorporativo.modificar(ncorp);
 				} catch (Exception e) {
@@ -523,8 +548,10 @@ public class PersonaBean {
 	}
 
 	public void motivoRechazoNoCorporativo(long idNoCorporativo) {
+		System.out.println("Id no corporativo a buscar en la base: " + idNoCorporativo);
 		NoCorporativo nc = registroNoCorporativo.obtenerPorID(idNoCorporativo);
 		setMotivoRechazo(nc.getMensaje());
+		System.out.println("motivo de rechazo seteado actualmente: " + nc.getMensaje());
 		mostrarGridRechazo();
 	}
 
@@ -553,15 +580,16 @@ public class PersonaBean {
 		this.file = file;
 	}
 
-	public StreamedContent getGraphicText() {
-		return graphicText;
+	public void setFotoUsuario(StreamedContent foto) {
+		this.fotoUsuario = foto;
 	}
 	
-	public StreamedContent cargarImagenes(String userName) {
+	public StreamedContent getFotoUsuario() {
+		String userName = SecurityContextAssociation.getPrincipal().getName();
 		try {
 
 			BufferedImage bufferedImg = null;
-			String rutaArchivoUsuario = rutaIMG + "/" + userName + ".jpg";
+			String rutaArchivoUsuario = rutaIMG + userName + ".jpg";
 			try {
 				bufferedImg = ImageIO.read(new java.io.File(rutaArchivoUsuario));
 			} catch (IOException e) {
@@ -573,18 +601,13 @@ public class PersonaBean {
 			if (bufferedImg != null) {
 				ByteArrayOutputStream os = new ByteArrayOutputStream();
 				ImageIO.write(bufferedImg, "jpg", os);
-				setGraphicText(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()),"image/jpg"));
+				setFotoUsuario(new DefaultStreamedContent(new ByteArrayInputStream(os.toByteArray()),"image/jpg"));
 			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		return graphicText;
-	}
-
-	public void setGraphicText(StreamedContent graphicText) {
-		this.graphicText = graphicText;
+		return fotoUsuario;
 	}
 
 	public String getMotivoRechazo() {
@@ -663,7 +686,7 @@ public class PersonaBean {
 		return registroPersona.buscarPersonaPorUsr(userName);
 	}
 
-    public List<Saber> completeTheme(String query) {
+	public List<Saber> completeTheme(String query) {
     	if (this.allSaberes == null)
     		this.allSaberes = listaConocimientos.getConocimientos();
         List<Saber> filteredSaber = new ArrayList<Saber>();
@@ -679,5 +702,55 @@ public class PersonaBean {
          
         return filteredSaber;
     }
+    
+	public List<Persona> buscarPersonaPorUsuario(){
+		System.out.println("Contenido del string de usuario a buscar: " + this.getUsuario());
+		Persona p = registroPersona.buscarPersonaPorUsr(usuario);
+		if (p == null){
+			System.out.println("Persona no encontrada");
+			return null;
+		}
+		else{
+		System.out.println("Nombre de la persona que encontro: " + p.getNombre());
+		List<Persona> lp = new ArrayList<Persona>();
+		lp.add(p);
+		System.out.println("Cantidad de personas a mostrar " + lp.size());
+		setListaPersonas(lp);
+		return lp;
+		}
+	}
+
+	public List<Persona> getListaPersonas() {
+		return listaPersonas;
+	}
+
+	public void setListaPersonas(List<Persona> listaPersonas) {
+		this.listaPersonas = listaPersonas;
+	}
+	
+	public RegistroRol getRegistroRol() {
+		return registroRol;
+	}
+
+	public void setRegistroRol(RegistroRol registroRol) {
+		this.registroRol = registroRol;
+	}
+
+	public RegistroPersona getRegistroPersona() {
+		return registroPersona;
+	}
+
+	public void setRegistroPersona(RegistroPersona registroPersona) {
+		this.registroPersona = registroPersona;
+	}
+
+	public Rol getRol() {
+		obtenerRolUsuarioLogueado();
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 	
 }

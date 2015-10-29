@@ -2,17 +2,15 @@ package uy.com.antel.Saberes.bean;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-
 import org.primefaces.event.RowEditEvent;
-
 import uy.com.antel.Saberes.controller.RegistroRol;
 import uy.com.antel.Saberes.model.Rol;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class RolBean {
 
 	@Inject

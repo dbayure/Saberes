@@ -65,19 +65,17 @@ public class RegistroNoCorporativo {
 	}
 	
 	public void registro(String usuario, String nombreArchivo,InputStream inputComprobante) throws Exception {
-		log.info("Registro " + newNoCorporativo.getSaber().getNombre());
+		log.info("Registro " + newNoCorporativo.getSaber().getNombre() + "con los valores: " + nombreArchivo + " y con " + inputComprobante);
 		Persona pe = rp.buscarPersonaPorUsr(usuario);
 		List<SaberPersona> saberes = new ArrayList<SaberPersona>();
 		saberes.add(newNoCorporativo);
 		pe.setSaberes(saberes);
 		newNoCorporativo.getComprobante().setNombre(nombreArchivo);
 		em.persist(newNoCorporativo);
-
+		System.out.println("Antes de cargar el doc adjunto");
 		Properties p = new Properties();
-		String archivoPropiedades = System.getProperty("user.dir")
-				+ "/Conf/app-properties/saberes.properties";
-		System.out.println("valor del archivo de propiedades **************"
-				+ archivoPropiedades);
+		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+		System.out.println("valor del archivo de propiedades **************" + archivoPropiedades);
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {

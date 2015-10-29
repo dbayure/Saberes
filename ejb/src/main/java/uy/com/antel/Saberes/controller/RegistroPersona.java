@@ -19,6 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import uy.com.antel.Saberes.model.Persona;
+import uy.com.antel.Saberes.model.Rol;
 
 @Stateful
 @Model
@@ -51,7 +52,11 @@ public class RegistroPersona {
 		}
 	   
 	   public void modificar(Persona persona) throws Exception {
-		   log.info("Modifico " + persona);
+		   em.merge(persona);
+	   }
+	   
+	   public void modificarRol(Persona persona, Rol rol) throws Exception {
+		   persona.setRol(rol);
 		   em.merge(persona);
 	   }
 	   
@@ -88,7 +93,7 @@ public class RegistroPersona {
 			Persona p = em.find(Persona.class, idp);
 			return p;
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		public List <Object []> getAllPersonas(){
 			//Query query = em.createNativeQuery("SELECT id,usuario FROM persona p where p.usuario='e138704'");
@@ -109,12 +114,14 @@ public class RegistroPersona {
 		
 		@SuppressWarnings("unchecked")
 		public Persona buscarPersonaPorUsr(String usr) {
+//		System.out.println("Nombre del usuario a buscar en la bdd: " + usr);
 		Query q = em.createQuery("Select p from Persona p where p.usuario = ?1");
 		q.setParameter(1, usr);
 		List <Persona> resultado = q.getResultList();
 		
 		if (resultado.isEmpty())
 			return null;
+		System.out.println("resultado de la consulta " + resultado.get(0).getNombre());
 		return resultado.get(0);
 		}
 		
@@ -146,4 +153,5 @@ public class RegistroPersona {
 	   public Persona encontrarPorId(long id){
 		   return em.find(Persona.class,id);
 	   }
+
 }

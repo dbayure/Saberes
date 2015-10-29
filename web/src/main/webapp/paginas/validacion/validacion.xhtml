@@ -17,65 +17,56 @@
 				
 			<p:dataScroller id="personasValidar" value="#{personaBean.listaPersonasPorValidar()}" var="_persona" chunkSize="5">
 
-				<h:panelGrid columns="3" style="width:100%"	>
+			<h:panelGrid columns="6" style="width:70%;">
+
+				<h:outputText value="Nombre:" />
+				<h:outputText value="#{_persona.nombre}" style="font-weight: bold" />
+
+				<h:outputText value="Apellido:" />
+				<h:outputText value="#{_persona.apellido}"
+					style="font-weight: bold" />
 					
-					<h:panelGrid style="width:30%">
-<!-- 						<p:graphicImage value="#{personaBean.cargarImagenes(_persona.usuario)}" style="height: 70px; width: 60px;" /> -->
-							
-					</h:panelGrid>
-
-					<h:panelGrid columns="4" style="width:70%;">
-
-						<h:outputText value="Nombre:" />
-						<h:outputText value="#{_persona.nombre}" style="font-weight: bold" />
-
-						<h:outputText value="Apellido:" />
-						<h:outputText value="#{_persona.apellido}"
-							style="font-weight: bold" />
-							
-						<h:outputText value="Usuario:" />
-						<h:outputText value="#{_persona.usuario}"
-							style="font-weight: bold" />
-					</h:panelGrid>
-
-				</h:panelGrid>
+				<h:outputText value="Usuario:" />
+				<h:outputText value="#{_persona.usuario}"
+					style="font-weight: bold" />
+			</h:panelGrid>
 					
-					<p:dataTable id="tablaValidar" var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}"  rowIndexVar="fila">
+			<p:dataTable id="tablaValidar" var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}"  rowIndexVar="fila">
 									
-					<p:column headerText="Nombre">
-						<h:outputText value="#{_nc.saber.nombre}" />
-					</p:column>
+				<p:column headerText="Nombre" style="width:25%; text-align: center; font-weight:bold">
+					<h:outputText value="#{_nc.saber.nombre}" />
+				</p:column>
 
-					<p:column headerText="Institucion">
-						<h:outputText value="#{_nc.saber.institucion.nombre}" />
-					</p:column>
-					
-					<p:column headerText="Fecha inicio">
-						<h:outputText value="#{_nc.fechaInicio}" />
-					</p:column>
+				<p:column headerText="Institucion" style="width:25%; text-align: center; font-weight:bold">
+					<h:outputText value="#{_nc.saber.institucion.nombre}" />
+				</p:column>
+				
+				<p:column headerText="Fecha inicio" style="width:15%; text-align: center; font-weight:bold">
+					<h:outputText value="#{_nc.fechaInicio}" />
+				</p:column>
 
-					<p:column headerText="Fecha fin">
-						<h:outputText value="#{_nc.fechaFin}" />
-					</p:column>
+				<p:column headerText="Fecha fin" style="width:15%; text-align: center; font-weight:bold">
+					<h:outputText value="#{_nc.fechaFin}" />
+				</p:column>
+				
+				<p:column headerText="Comprobantes" style="width:25%; text-align: center; font-weight:bold">            
+           			<p:commandButton id="comprobante" value="Comprobante" onclick="PF('dlgPDF').show()" />
+        			</p:column>
+	
+				<p:column headerText="Estado Validacion" style="width:25%; text-align: center; font-weight:bold">
+					<h:outputText value="#{personaBean.convertirValidacion(_nc.validado)}" />
+				</p:column>
+				
+				<p:column headerText="Validar" style="width:10%; text-align: center; font-weight:bold">
+					<p:commandButton icon="ui-icon-check" action="#{personaBean.validarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
+				</p:column>
+				
+				<p:column headerText="Rechazar" style="width:10%; text-align: center; font-weight:bold" >
+					<p:commandButton id="btnComentario" rendered="#{personaBean.btnComentario ne fila}" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" action="#{personaBean.setIdFilaActualizar(fila)}"/>
+					<p:commandButton id="btnRechazo" rendered="#{personaBean.btnRechazo eq fila}" icon="ui-icon-check" onclick="#{personaBean.rechazarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
+				</p:column>	
 					
-					<p:column headerText="Comprobantes">            
-            			<p:commandButton id="comprobante" value="Comprobante" onclick="PF('dlgPDF').show()" />
-         			</p:column>
-		
-					<p:column headerText="Estado Validacion">
-						<h:outputText value="#{personaBean.convertirValidacion(_nc.validado)}" />
-					</p:column>
-					
-					<p:column headerText="Validar">
-						<p:commandButton icon="ui-icon-check" action="#{personaBean.validarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
-					</p:column>
-					
-					<p:column headerText="Rechazar"  >
-						<p:commandButton id="btnComentario" rendered="#{personaBean.btnComentario ne fila}" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" action="#{personaBean.setIdFilaActualizar(fila)}"/>
-						<p:commandButton id="btnRechazo" rendered="#{personaBean.btnRechazo eq fila}" icon="ui-icon-check" onclick="#{personaBean.rechazarNoCorporativo(_nc.id, _persona.id)}" update=":form"/>
-					</p:column>	
-					
-				</p:dataTable>
+			</p:dataTable>
 									
 			</p:dataScroller>
 			

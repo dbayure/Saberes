@@ -11,6 +11,8 @@
 	<h:outputStylesheet name="css/screen.css" />
 	<h:outputStylesheet name="css/default.css" />
 	<h:outputStylesheet name="css/jsfcrud.css" />
+	<h:outputStylesheet name="css/tablas.css" />
+	<meta http-equiv="refresh" content="300;url=persona.jsf" />
 </h:head>
 <h:body>
 	<div id="container">
@@ -22,6 +24,7 @@
 											
 					<p:submenu label="Administacion" icon="ui-icon-wrench" rendered="#{facesContext.externalContext.isUserInRole('ADMIN')}">
 						<p:menuitem value="Roles" url="/paginas/rol/rol.jsf" icon="ui-icon-document" />
+						<p:menuitem value="Usuarios" url="/paginas/persona/asignaciones.jsf" icon="ui-icon-document" />						
 						<p:menuitem value="Instituciones" url="/paginas/institucion/institucion.jsf" icon="ui-icon-document" />
 						<p:menuitem value="Tipos de Saber" url="/paginas/tiposaber/tiposaber.jsf" icon="ui-icon-document" />
 						<p:menuitem value="Saberes" url="/paginas/saber/saber.jsf" icon="ui-icon-document" />
@@ -37,8 +40,8 @@
 					</p:submenu>
 					
 					<f:facet name="options">
-						<h:outputText value="Usuario: #{request.remoteUser}"
-							style="margin-right: 10px;" />
+						<h:outputText value="Usuario: #{request.remoteUser}" style="margin-right: 10px; font-weight:bold" />
+						<h:outputText value="Rol: #{personaBean.rol.descripcion}" style="margin-right: 10px; font-weight:bold" />
 						<p:commandButton ajax="false" value="Logout"
 							icon="ui-icon-extlink" action="#{sessionBean.logout}" />
 					</f:facet>

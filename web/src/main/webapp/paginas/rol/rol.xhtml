@@ -27,9 +27,6 @@
          <p>            
             <h:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" />
          </p>      
-      <h:panelGroup rendered="#{empty rol}">
-         <em>No hay Rol registrado.</em>
-      </h:panelGroup>
       
        <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true">
        		<f:facet name="header">  
@@ -68,6 +65,7 @@
 	        </p:column>
 	        
        </p:dataTable>       
+        
 		</h:form>     
    </ui:define>
 </ui:composition>

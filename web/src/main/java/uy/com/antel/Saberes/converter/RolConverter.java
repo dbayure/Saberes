@@ -33,7 +33,8 @@ public class RolConverter implements Converter {
 			rol = mapper.readValue(new URL( requestScheme + "://" + requestServerName + ":"  + requestServerPort + requestContextPath + "/rest/roles/" + value), Rol.class);
 		}
 		catch(Exception e) {
-			throw new ConverterException();
+			//throw new ConverterException();
+			e.printStackTrace();
 		}
 		return rol;
 		
@@ -47,14 +48,5 @@ public class RolConverter implements Converter {
         	return  String.valueOf(((Rol)value).getId());
         }		
 	}
-
-//	@Override
-//	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-//		Rol rol = em.find(Rol.class, Long.getLong(value));
-//		return rol;
-//	}
-
-	
-
 	
 }

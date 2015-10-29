@@ -149,5 +149,15 @@ public class NoCorporativoBean {
 			Institucion institucionSeleccionadaCurso) {
 		this.institucionSeleccionadaCurso = institucionSeleccionadaCurso;
 	}
+
+	public UploadedFile getInputComprobante() {
+		return inputComprobante;
+	}
+
+	public void setInputComprobante(UploadedFile inputComprobante) {
+		this.inputComprobante = inputComprobante;
+	}
+	
+	
 }
 

@@ -5,6 +5,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 
 import org.primefaces.event.RowEditEvent;
 
@@ -14,6 +16,8 @@ import uy.com.antel.Saberes.model.Rol;
 
 @ManagedBean
 @RequestScoped
+@ServletSecurity(
+@HttpConstraint(rolesAllowed = {"BASICO"}))
 public class InstitucionBean {
 
 	@Inject

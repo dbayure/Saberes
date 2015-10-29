@@ -6,9 +6,9 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/defaultLogin.xhtml">
 	<ui:define name="content">
-		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false" >
+		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false">
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-
+<!-- 			<p:poll interval="3" update="@all" listener="#{personaBean.increment}"/> -->
 			<h:panelGrid  style="margin-left:300px">
 					<p:row>
 						<p:column ><label for="j_username"  >Usuario: *</label></p:column>
@@ -18,7 +18,7 @@
 					<p:row>
 						<p:column width="15"><label for="j_password"  >Contraseña: *</label></p:column>
 						<br />
-						<p:column style="text-align: right"><input id="j_password" type="password" name="j_password" required="required"  class="ui-inputfield ui-inputtext"></input></p:column>
+						<p:column style="text-align: right"><input id="j_password" type="password" name="j_password" required="required" class="ui-inputfield ui-inputtext"></input></p:column>
 					</p:row>
 					<p:row >
 					<p:column></p:column>

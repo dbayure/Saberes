@@ -49,7 +49,7 @@ public class WorkerTimer {
 			cursoC.setLibreta(libreta);
 			cursoC.setDuracion(duracion);
 			cursoC.setCod_area(cod_area);
-			
+			System.out.println("valores a guardar" + cod + saberCorporativo + f_ini + f_fin + rol + puntaje + asistencia + duracion + cod_area );
 			controladorCorporativo.setNewCorporativo(cursoC);
 			controladorCorporativo.registro(id);
 			}

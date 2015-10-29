@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,8 +32,8 @@ public class Persona implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(optional=false) 
-    @JoinColumn(name="idRol", nullable=false, updatable=false)
+	@OneToOne(optional=false, fetch = FetchType.EAGER, cascade = CascadeType.ALL) 
+    @JoinColumn(name="idRol", nullable=false, updatable=true)
 	private Rol rol;
 	
 	@OneToMany (fetch = FetchType.EAGER)
@@ -58,6 +59,7 @@ public class Persona implements Serializable {
 	private String correo;
 	private String foto;
 	private String division;
+	private String descDivision;
 	private String area;
 	private String unidad;
 	private String piso;
@@ -79,6 +81,15 @@ public class Persona implements Serializable {
 
 	public void setDivision(String division) {
 		this.division = division;
+	}
+
+	
+	public String getDescDivision() {
+		return descDivision;
+	}
+
+	public void setDescDivision(String descDivision) {
+		this.descDivision = descDivision;
 	}
 
 	public String getArea() {
@@ -282,7 +293,7 @@ public class Persona implements Serializable {
 	public void addSaber(SaberPersona saber){
 		this.saberes.add(saber);
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -296,6 +307,8 @@ public class Persona implements Serializable {
 				+ ((departamento == null) ? 0 : departamento.hashCode());
 		result = prime * result
 				+ ((descClase == null) ? 0 : descClase.hashCode());
+		result = prime * result
+				+ ((descDivision == null) ? 0 : descDivision.hashCode());
 		result = prime * result
 				+ ((direccion == null) ? 0 : direccion.hashCode());
 		result = prime * result
@@ -371,6 +384,11 @@ public class Persona implements Serializable {
 			if (other.descClase != null)
 				return false;
 		} else if (!descClase.equals(other.descClase))
+			return false;
+		if (descDivision == null) {
+			if (other.descDivision != null)
+				return false;
+		} else if (!descDivision.equals(other.descDivision))
 			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
@@ -488,9 +506,7 @@ public class Persona implements Serializable {
 		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
-	}	
-	
-	
+	}
 	
 	
 }

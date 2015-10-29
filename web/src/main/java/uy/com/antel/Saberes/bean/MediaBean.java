@@ -8,11 +8,11 @@ import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.model.DefaultStreamedContent;
+
 
 @ManagedBean
 public class MediaBean {
@@ -34,7 +34,7 @@ public class MediaBean {
 	public void obtenerRuta() {
 		Properties p = new Properties();
 		String archivoPropiedades = System.getProperty("user.dir")
-				+ "/Conf/app-properties/saberes.properties";
+				+ "/conf/app-properties/saberes.properties";
 		System.out.println("valor del archivo de propiedades **************"
 				+ archivoPropiedades);
 		try {

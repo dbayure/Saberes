@@ -29,9 +29,6 @@ public class Rol implements Serializable {
 	private String rol;
 	
 	private String descripcion;
-	
-//	@OneToMany(mappedBy="rol")
-//	private List<Persona> persona;
 
 	public Rol() {
 		super();
