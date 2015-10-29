@@ -87,8 +87,7 @@ public class PruebaLDAP {
 	public void test() throws LoginException {
 		  
 		  System.out.println("testLdapExample1");
-	      //UsernamePasswordHandler handler = new UsernamePasswordHandler("e102830", "supernegritos12345".toCharArray());
-		  UsernamePasswordHandler handler = new UsernamePasswordHandler("e138704", "PONER TU CLAVE DE RED ACA".toCharArray());
+	      UsernamePasswordHandler handler = new UsernamePasswordHandler("e102830", "-".toCharArray());
 	      LoginContext lc = new LoginContext("testLdapExample1", handler);
 	      lc.login();
 
