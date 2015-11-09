@@ -226,7 +226,7 @@ public class Persona implements Serializable {
 	}
 	public String getTelCelular() {
 		if (telCelular == null || telCelular.equals(""))
-			return "Agregar";
+			return "Añadir";
 		return telCelular;
 	}
 	public void setTelCelular(String telCelular) {

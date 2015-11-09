@@ -31,6 +31,7 @@
 			<h:panelGrid columns="2">
 				<h:panelGrid columnClasses="col">
 					<p:graphicImage value="#{personaBean.fotoUsuario}"
+						id="fotoPersonal"
 						style="height: 220px; width: 180px; margin-left: 20%;" />
 					<p:fileUpload fileUploadListener="#{personaBean.upload}"
 						allowTypes="/(\.|\/)(jpg|JPG)$/"
@@ -39,7 +40,7 @@
 						sizeLimit="102400"
 						invalidSizeMessage="No se puede subir imágenes de tamaño mayor 100 kb"
 						fileLimit="1" fileLimitMessage="Solo se permite subir una foto"
-						description="Selecciona Imagen" />
+						description="Selecciona Imagen" update="fotoPersonal" />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
@@ -53,8 +54,9 @@
 
 					<h:graphicImage value="/resources/gfx/glyphicons-164-iphone.png" />
 					<p:inplace editor="true" onEditUpdate="msgs">
-						<h:inputText value="#{newPersona.telCelular}" label="Celular"
-							valueChangeListener="#{personaBean.onEditField}" />
+						<p:inputMask value="#{newPersona.telCelular}" label="Celular"
+							valueChangeListener="#{personaBean.onEditField}"
+							mask="(999)-999-999" />
 					</p:inplace>
 
 					<h:graphicImage value="/resources/gfx/glyphicons-11-envelope.png" />
@@ -150,7 +152,8 @@
 								<p:outputLabel value="#{newPersona.situacion}" />
 
 								<p:outputLabel value="Division: " style="font-weight:bold" />
-								<p:outputLabel value="#{newPersona.division} #{newPersona.descDivision}" />
+								<p:outputLabel
+									value="#{newPersona.division} #{newPersona.descDivision}" />
 
 								<p:outputLabel value="Unidad: " style="font-weight:bold" />
 								<p:outputLabel value="#{newPersona.unidad}" />
@@ -185,7 +188,8 @@
 			<h1>SABER FORMAL</h1>
 
 			<br />
-			<p:dataTable id="curriculares" var="_curriculares" value="#{personaBean.obtenerCurriculares()}" 
+			<p:dataTable id="curriculares" var="_curriculares"
+				value="#{personaBean.obtenerCurriculares()}"
 				emptyMessage="No existen datos a mostrar." rows="10"
 				paginator="true" editable="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
@@ -243,7 +247,8 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Aprobación" style="width:20%; text-align: center; font-weight:bold">
+				<p:column headerText="Aprobación"
+					style="width:20%; text-align: center; font-weight:bold">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText
@@ -261,16 +266,22 @@
 					<h:outputText value="#{_curriculares.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
-					<h:outputText value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
+				<p:column headerText="Estado"
+					style="width:15%; text-align: center; font-weight:bold">
+					<h:outputText
+						value="#{personaBean.convertirValidacion(_curriculares.validado)}" />
 					<p:spacer width="10px"></p:spacer>
-					<p:commandButton id="btnMensaje" rendered="#{_curriculares.validado == 'R'.charAt(0)}"
-						icon="ui-icon-comment" action="#{personaBean.motivoRechazoNoCorporativo(_curriculares.id)}" oncomplete="PF('dlgMotivoRechazo').show()"/>
+					<p:commandButton id="btnMensaje"
+						rendered="#{_curriculares.validado == 'R'.charAt(0)}"
+						icon="ui-icon-comment"
+						action="#{personaBean.motivoRechazoNoCorporativo(_curriculares.id)}"
+						oncomplete="PF('dlgMotivoRechazo').show()" />
 				</p:column>
 
 				<p:column headerText="Comprobantes"
 					style="width:20%; text-align: center; font-weight:bold">
-					<p:commandButton id="downloadLink" value="Ver" ajax="false" immediate="true"
+					<p:commandButton id="downloadLink" value="Ver" ajax="false"
+						immediate="true"
 						actionListener="#{mediaBean.prepDownload(_curriculares.comprobante.id)}">
 						<p:fileDownload value="#{mediaBean.download}" />
 					</p:commandButton>
@@ -290,17 +301,20 @@
 			</p:dataTable>
 			<br />
 		</h:form>
-			<p:dialog widgetVar="dlgMotivoRechazo" modal="true" width="170px" height="200px" position="center">
-				<h:panelGrid columns="1" style="horizontal-align:center">
-					<h3>Motivo del rechazo</h3>
-					<p:outputLabel value="#{personaBean.motivoRechazo}" style="width:70px; height:70px"/>
-				</h:panelGrid>
-				
-			</p:dialog>	
+		<p:dialog widgetVar="dlgMotivoRechazo" modal="true" width="170px"
+			height="200px" position="center">
+			<h:panelGrid columns="1" style="horizontal-align:center">
+				<h3>Motivo del rechazo</h3>
+				<p:outputLabel value="#{personaBean.motivoRechazo}"
+					style="width:70px; height:70px" />
+			</h:panelGrid>
+
+		</p:dialog>
 		<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 			collapsed="true">
 			<p:ajax event="toggle" />
-			<h:form id="formAltaCurricular" prependId="false">
+			<h:form id="formAltaCurricular" prependId="false"
+				enctype="multipart/form-data">
 				<p:dataTable id="curricularIngreso" value="" editable="true">
 					<p:column headerText="Institución"
 						style="width:25%; text-align: center; font-weight:bold">
@@ -350,15 +364,18 @@
 						</p:selectBooleanCheckbox>
 					</p:column>
 
-					<p:column headerText="Comprobantes" style="width:20%; text-align: center; font-weight:bold">
-						<p:fileUpload id="comprobanteNoCorporativo" fileUploadListener="#{noCorporativoBean.inputComprobante}" mode="simple"
-							skinSimple="true" auto="true" label="Cargar" />
+					<p:column headerText="Comprobantes"
+						style="width:20%; text-align: center; font-weight:bold">
+						<p:fileUpload id="comprobanteNoCorporativo"
+							value="#{noCorporativoBean.uf}" mode="simple" skinSimple="true"
+							auto="true" label="Cargar" />
 					</p:column>
 
 					<p:column headerText="Agregar"
 						style="width: 10%; text-align: center; font-weight:bold">
-						<p:commandButton id="register" icon="ui-icon-plus" action="#{noCorporativoBean.registrar}" title="Registrar"
-							update="@all" />
+						<p:commandButton id="register" icon="ui-icon-plus"
+							action="#{noCorporativoBean.registrar}" title="Registrar"
+							update="@all" ajax="false" />
 					</p:column>
 
 				</p:dataTable>
@@ -380,42 +397,50 @@
 			<p:ajax event="rowEditCancel" listener="#{CorporativoBean.onCancel}"
 				update=":form:messages" />
 
-			<p:column headerText="Saber" style="width:25%; text-align: center; " sortBy="#{_Corporativos.saber.nombre}">
+			<p:column headerText="Saber" style="width:25%; text-align: center; "
+				sortBy="#{_Corporativos.saber.nombre}">
 				<h:outputText value="#{_Corporativos.saber.nombre}" />
 			</p:column>
 
-			<p:column headerText="F.Inicio"	style="width:25%; text-align: center; "	sortBy="#{_Corporativos.fechaInicio}">
+			<p:column headerText="F.Inicio"
+				style="width:25%; text-align: center; "
+				sortBy="#{_Corporativos.fechaInicio}">
 				<h:outputText value="#{_Corporativos.fechaInicio}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="F.Fin" style="width:25%; text-align:center; " sortBy="#{_Corporativos.fechaFin}">
+			<p:column headerText="F.Fin" style="width:25%; text-align:center; "
+				sortBy="#{_Corporativos.fechaFin}">
 				<h:outputText value="#{_Corporativos.fechaFin}">
 					<f:convertDateTime pattern="dd/MM/yyyy" />
 				</h:outputText>
 			</p:column>
 
-			<p:column headerText="Aprobación" style="width:15%; text-align: center; ">
+			<p:column headerText="Aprobación"
+				style="width:15%; text-align: center; ">
 				<div align="center">
 					<h:outputText
 						value="#{personaBean.convertirAprobacion(_Corporativos.aprobacion)}" />
 				</div>
 			</p:column>
 
-			<p:column headerText="Puntaje" style="width:15%; text-align: center; ">
+			<p:column headerText="Puntaje"
+				style="width:15%; text-align: center; ">
 				<div align="center">
 					<h:outputText value="#{_Corporativos.puntaje}" />
 				</div>
 			</p:column>
 
-			<p:column headerText="Duración"	style="width:15%; text-align: center; ">
+			<p:column headerText="Duración"
+				style="width:15%; text-align: center; ">
 				<div align="center">
 					<h:outputText value="#{_Corporativos.duracionStr}" />
 				</div>
 			</p:column>
 
-			<p:column headerText="Libreta" style="width:15%; text-align: center; ">
+			<p:column headerText="Libreta"
+				style="width:15%; text-align: center; ">
 				<h:outputText value="#{_Corporativos.libreta}" />
 			</p:column>
 
@@ -428,8 +453,9 @@
 			</p:column>
 		</p:dataTable>
 		<br />
-		<h:form id="form2" prependId="false">
-			<p:dataTable id="noCorporativos" var="_noCorporativos" value="#{personaBean.obtenerNoCorporativos()}" 
+		<h:form id="form2" prependId="false" enctype="multipart/form-data">
+			<p:dataTable id="noCorporativos" var="_noCorporativos"
+				value="#{personaBean.obtenerNoCorporativos()}"
 				emptyMessage="No existen datos a mostrar." rows="10"
 				paginator="true" editable="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
@@ -506,7 +532,8 @@
 					<h:outputText value="#{_noCorporativos.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
+				<p:column headerText="Estado"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_noCorporativos.validado)}" />
 				</p:column>
@@ -555,7 +582,8 @@
 						</p:selectOneMenu>
 					</p:column>
 
-					<p:column headerText="Saber" style="width:25%; text-align: center; font-weight:bold">
+					<p:column headerText="Saber"
+						style="width:25%; text-align: center; font-weight:bold">
 						<p:selectOneMenu id="saberNoCorporativo"
 							value="#{newNoCorporativo.saber}" required="true"
 							style="width:80%">
@@ -573,7 +601,8 @@
 							mode="popup" navigator="true" size="9" />
 					</p:column>
 
-					<p:column headerText="F.Fin" style="width:15%; text-align: center; font-weight:bold">
+					<p:column headerText="F.Fin"
+						style="width:15%; text-align: center; font-weight:bold">
 						<p:calendar value="#{newNoCorporativo.fechaFin}"
 							pattern="dd/MM/yyyy" id="fechaFinInputNoCorporativo" mode="popup"
 							navigator="true" size="9" />
@@ -589,15 +618,15 @@
 					<p:column headerText="Comprobantes"
 						style="width:20%; text-align: center; font-weight:bold">
 						<p:fileUpload id="comprobanteNoCorporativo"
-							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
-							skinSimple="true" auto="true" />
+							value="#{noCorporativoBean.uf}" mode="simple" skinSimple="true"
+							auto="true" />
 					</p:column>
 
 					<p:column headerText="Agregar"
 						style="width:15%; text-align: center; font-weight:bold">
 						<p:commandButton id="registerNoCorporativo" icon="ui-icon-plus"
 							action="#{noCorporativoBean.registrar}" title="Registrar"
-							update=":form2:noCorporativos" />
+							update=":form2:noCorporativos" ajax="false" />
 					</p:column>
 
 				</p:dataTable>
@@ -606,8 +635,9 @@
 		</h:form>
 
 		<h1>SABER NO FORMAL</h1>
-		<h:form id="form3" prependId="false">
-			<p:dataTable id="cursos" var="_cursos" value="#{personaBean.obtenerCursos()}"
+		<h:form id="form3" prependId="false" enctype="multipart/form-data">
+			<p:dataTable id="cursos" var="_cursos"
+				value="#{personaBean.obtenerCursos()}"
 				emptyMessage="No existen datos a mostrar." rows="10"
 				paginator="true" editable="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
@@ -667,7 +697,8 @@
 					<h:outputText value="#{_cursos.saber.duracion} Años" />
 				</p:column>
 
-				<p:column headerText="Estado" style="width:15%; text-align: center; font-weight:bold">
+				<p:column headerText="Estado"
+					style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_cursos.validado)}" />
 				</p:column>
@@ -742,7 +773,7 @@
 					<p:column headerText="Comprobantes"
 						style="width:20%; text-align: center; font-weight:bold">
 						<p:fileUpload id="comprobanteNoCorporativo"
-							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
+							fileUploadListener="#{noCorporativoBean.uf}" mode="simple"
 							skinSimple="true" auto="true" />
 					</p:column>
 
@@ -758,8 +789,9 @@
 			</p:fieldset>
 		</h:form>
 		<br />
-		<h:form id="form4" prependId="false">
-			<p:dataTable id="conocimientos" var="_cursos" value="#{personaBean.obtenerConocimientos()}"
+		<h:form id="form4" prependId="false" enctype="multipart/form-data">
+			<p:dataTable id="conocimientos" var="_cursos"
+				value="#{personaBean.obtenerConocimientos()}"
 				emptyMessage="No existen datos a mostrar." rows="10"
 				paginator="true" editable="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
@@ -844,7 +876,8 @@
 			<p:fieldset legend="Agregar" toggleable="true" toggleSpeed="500"
 				collapsed="true">
 				<p:ajax event="toggle" />
-				<p:dataTable id="conocimientosIngreso" value="" editable="true" styleClass="textoCentrado">
+				<p:dataTable id="conocimientosIngreso" value="" editable="true"
+					styleClass="textoCentrado">
 
 					<p:column headerText="Saber"
 						style="width:25%; text-align: center; font-weight:bold">
@@ -885,7 +918,7 @@
 					<p:column headerText="Comprobantes"
 						style="width:20%; text-align: center; font-weight:bold">
 						<p:fileUpload id="comprobanteNoCorporativo"
-							fileUploadListener="#{noCorporativoBean.upload}" mode="simple"
+							fileUploadListener="#{noCorporativoBean.uf}" mode="simple"
 							skinSimple="true" auto="true" />
 					</p:column>
 

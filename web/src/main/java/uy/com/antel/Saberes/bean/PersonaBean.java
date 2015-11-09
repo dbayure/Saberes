@@ -264,10 +264,10 @@ public class PersonaBean {
            
             try {
             	registroPersona.modificar(p);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", p.getNombre()+" "+p.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Los datos del teléfono celular fueron modificados correctamente ","");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", p.getNombre()+" "+p.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar el número de telefono celular", "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }

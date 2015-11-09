@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -21,6 +22,9 @@ public class Comprobante implements Serializable {
 		private Long id;
 		
 		private String nombre;
+		
+		@Transient
+		private byte[] uploadedFile;
 
 		public Long getId() {
 			return id;
@@ -40,6 +44,14 @@ public class Comprobante implements Serializable {
 
 		public static long getSerialversionuid() {
 			return serialVersionUID;
+		}
+
+		public byte[] getUploadedFile() {
+			return uploadedFile;
+		}
+
+		public void setUploadedFile(byte[] uploadedFile) {
+			this.uploadedFile = uploadedFile;
 		}
 
 		@Override
