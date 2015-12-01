@@ -39,7 +39,8 @@ public class RegistroSaberPersona {
 	   }
 	   
 	   public void modificar(SaberPersona saberPersona) throws Exception {
-		   log.info("Modifico " + saberPersona);
+		   //log.info("Modifico " + saberPersona);
+		   log.info("Modifico " + saberPersona.getAprobacion() + " - " + saberPersona.getFechaFin() + " - " + saberPersona.getFechaInicio());
 		   em.merge(saberPersona);
 	   }
 	   

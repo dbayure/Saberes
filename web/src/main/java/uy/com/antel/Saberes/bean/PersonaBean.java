@@ -197,7 +197,8 @@ public class PersonaBean {
 			System.out.println("valor que viene del ws para descdivision " + dp.getDescDivision());
 			return dp;
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error intentando conectarse al dominio ", "");  
+            FacesContext.getCurrentInstance().addMessage(null, msg); 
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -264,10 +265,10 @@ public class PersonaBean {
            
             try {
             	registroPersona.modificar(p);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", p.getNombre()+" "+p.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Los datos del teléfono celular fueron modificados correctamente ","");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", p.getNombre()+" "+p.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar el número de telefono celular", "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }
@@ -548,10 +549,8 @@ public class PersonaBean {
 	}
 
 	public void motivoRechazoNoCorporativo(long idNoCorporativo) {
-		System.out.println("Id no corporativo a buscar en la base: " + idNoCorporativo);
 		NoCorporativo nc = registroNoCorporativo.obtenerPorID(idNoCorporativo);
 		setMotivoRechazo(nc.getMensaje());
-		System.out.println("motivo de rechazo seteado actualmente: " + nc.getMensaje());
 		mostrarGridRechazo();
 	}
 

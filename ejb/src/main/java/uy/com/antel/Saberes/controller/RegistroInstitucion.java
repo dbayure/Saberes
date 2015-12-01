@@ -1,10 +1,7 @@
 package uy.com.antel.Saberes.controller;
 
 import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateful;
 import javax.enterprise.event.Event;
 import javax.enterprise.inject.Model;
@@ -13,16 +10,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-import org.jboss.security.annotation.SecurityDomain;
-
 import uy.com.antel.Saberes.model.Institucion;
 
 
 @Stateful
 @Model
-@SecurityDomain("SABERES")
-@DeclareRoles({"BASICO","ADMIN", "CONSULTA"})
-@RolesAllowed("BASICO")
 public class RegistroInstitucion {
 
 	   @Inject

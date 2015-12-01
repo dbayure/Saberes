@@ -5,13 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.enterprise.event.Event;
@@ -20,7 +18,6 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-
 import uy.com.antel.Saberes.model.Comprobante;
 import uy.com.antel.Saberes.model.NoCorporativo;
 import uy.com.antel.Saberes.model.Persona;
@@ -37,6 +34,9 @@ public class RegistroNoCorporativo {
 
 	@Inject
 	private RegistroPersona rp;
+	
+	@Inject
+	private RegistroComprobante rc;
 
 	@Inject
 	private EntityManager em;
@@ -51,49 +51,40 @@ public class RegistroNoCorporativo {
 	public NoCorporativo getNewNoCorporativo() {
 		return newNoCorporativo;
 	}
-
 	
 	public void registro(String usuario) throws Exception {
-		log.info("Registro " + newNoCorporativo.getSaber().getNombre());
+		log.info("Registro no corporativo " + newNoCorporativo.getSaber().getNombre());
+		log.info("Registro nombre del archivo " + rc.getNewComprobante().getNombre());
+		newNoCorporativo.setComprobante(rc.getNewComprobante());
 		Persona pe = rp.buscarPersonaPorUsr(usuario);
 		List<SaberPersona> saberes = new ArrayList<SaberPersona>();
 		saberes.add(newNoCorporativo);
 		pe.setSaberes(saberes);
 		em.persist(newNoCorporativo);
-		noCorporativoEventSrc.fire(newNoCorporativo);
-		initNewNoCorporativo();
-	}
-	
-	public void registro(String usuario, String nombreArchivo,InputStream inputComprobante) throws Exception {
-		log.info("Registro " + newNoCorporativo.getSaber().getNombre() + "con los valores: " + nombreArchivo + " y con " + inputComprobante);
-		Persona pe = rp.buscarPersonaPorUsr(usuario);
-		List<SaberPersona> saberes = new ArrayList<SaberPersona>();
-		saberes.add(newNoCorporativo);
-		pe.setSaberes(saberes);
-		newNoCorporativo.getComprobante().setNombre(nombreArchivo);
-		em.persist(newNoCorporativo);
-		System.out.println("Antes de cargar el doc adjunto");
-		Properties p = new Properties();
-		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
-		System.out.println("valor del archivo de propiedades **************" + archivoPropiedades);
-		try {
-			p.load(new FileInputStream(archivoPropiedades));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(newNoCorporativo.getSaber().getTipoSaber().getId() != 4 && rc.getNewComprobante() != null){
+			Properties p = new Properties();
+			String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+			try {
+				p.load(new FileInputStream(archivoPropiedades));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String rutaPDF = p.getProperty("urlPDF");
+			System.out.println("Valores del archivo antes de guardar la copia " + rc.getNewComprobante().getUploadedFile().toString());
+			copyFile(Long.valueOf(newNoCorporativo.getComprobante().getId())
+					+ ".pdf", rc.getNewComprobante().getUploadedFile(), rutaPDF);	
 		}
-		String rutaPDF = p.getProperty("urlPDF");
-		copyFile(Long.valueOf(newNoCorporativo.getComprobante().getId())
-				+ ".pdf", inputComprobante, rutaPDF);
+		
 		noCorporativoEventSrc.fire(newNoCorporativo);
 		initNewNoCorporativo();
 	}
 
 	public void modificar(NoCorporativo noCorporativo) throws Exception {
-		log.info("Modifico " + noCorporativo);
+		log.info("Modifico " + noCorporativo.getAprobacion() + " - " + noCorporativo.getFechaFin() + " - " + noCorporativo.getFechaInicio());
 		em.merge(noCorporativo);
 	}
 
@@ -114,21 +105,29 @@ public class RegistroNoCorporativo {
 		return em.find(NoCorporativo.class, id);
 	}
 
-	public void copyFile(String fileName, InputStream in, String destination) {
+	public File obtenerPDFComprobante (String id) throws FileNotFoundException{
+		Properties p = new Properties();
+		System.out.println("valor del id pasado como parametro para leer el archivo " + id);
+		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
 		try {
-
-			// write the inputStream to a FileOutputStream
+			p.load(new FileInputStream(archivoPropiedades));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String rutaPDF = p.getProperty("urlPDF");
+		File pdf = new File(rutaPDF+id+".pdf");
+		return pdf;
+	}
+	
+	public void copyFile(String fileName, byte[] in, String destination) {
+		try {
 			OutputStream out = new FileOutputStream(new File(destination
 					+ fileName));
-
-			int read = 0;
-			byte[] bytes = new byte[1024];
-
-			while ((read = in.read(bytes)) != -1) {
-				out.write(bytes, 0, read);
-			}
-
-			in.close();
+			out.write(in);
 			out.flush();
 			out.close();
 
@@ -136,6 +135,23 @@ public class RegistroNoCorporativo {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public boolean ExisteComprobantePorId(long id){
+		Properties p = new Properties();
+		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+		try {
+			p.load(new FileInputStream(archivoPropiedades));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String rutaPDF = p.getProperty("urlPDF");
+		File fichero = new File(rutaPDF);
+		return fichero.exists();
 	}
 
 }

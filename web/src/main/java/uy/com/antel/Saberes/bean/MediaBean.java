@@ -20,6 +20,7 @@ public class MediaBean {
 	
 	private String rutaPDF;
 	private DefaultStreamedContent download;
+	private boolean mostrarPDF = false;
 
 	public void setDownload(DefaultStreamedContent download) {
 	    this.download = download;
@@ -55,11 +56,22 @@ public class MediaBean {
 		String rutaArchivoPDF = rutaPDF + idComprob + ".pdf";
 		
 	    File file = new File(rutaArchivoPDF);
-	    FileInputStream input = new FileInputStream(file);
+	    if(file.exists()){
+	    	FileInputStream input = new FileInputStream(file);
 	    
-	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-	    setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
-	    System.out.println("PREP = " + download.getName());
+	    	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	    	setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(file.getName()), file.getName()));
+	    	System.out.println("PREP = " + download.getName());
+	    	setMostrarPDF(true);
+	    }
+	}
+
+	public boolean isMostrarPDF() {
+		return mostrarPDF;
+	}
+
+	public void setMostrarPDF(boolean mostrarPDF) {
+		this.mostrarPDF = mostrarPDF;
 	}
 
 

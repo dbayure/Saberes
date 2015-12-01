@@ -50,7 +50,7 @@ public class SaberPersonaBean {
 	
 	public void onEdit(RowEditEvent event) {  
 		SaberPersona saberPersona = ((SaberPersona) event.getObject());
-           
+		System.out.println("valor del saber de la persona :" + saberPersona);           
             try {
             	registroSaberPersona.modificar(saberPersona);
 				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", saberPersona.getSaber().getNombre());  

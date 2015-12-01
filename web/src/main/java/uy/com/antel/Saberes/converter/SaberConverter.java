@@ -5,7 +5,6 @@ import java.net.URL;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.servlet.http.HttpServletRequest;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -31,7 +30,7 @@ public class SaberConverter implements Converter {
 			saber = mapper.readValue(new URL( requestScheme + "://" + requestServerName + ":"  + requestServerPort + requestContextPath + "/rest/saberes/" + value), Saber.class);
 		}
 		catch(Exception e) {
-			throw new ConverterException();
+			e.printStackTrace();
 		}
 		return saber;
 		
