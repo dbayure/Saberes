@@ -12,7 +12,14 @@
 			<p:growl id="msgs" showDetail="false" />
 			<p:messages id="messages" showDetail="false" showSummary="true" autoUpdate="true"
 				closable="true" />
-
+				
+		    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		     <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+		        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		     </h:panelGrid>   
+		    </p:confirmDialog>
+		    
 			<h2>
 				<p:outputLabel value="#{newPersona.nombre} " />
 				<p:outputLabel value="#{newPersona.apellido}" />
@@ -253,8 +260,9 @@
 <!-- 				</p:column> -->
 
 				<p:column style="width:3%">
-					<p:commandLink id="deleteLink" update="@all" immediate="true" action="/Saberes-web/paginas/persona/persona.jsf?faces-redirect=true"
-						ajax="true" styleClass="ui-icon ui-icon-trash" resetValues="true" actionListener="#{noCorporativoBean.eliminar(_curriculares.id)}">
+					<p:commandLink id="borrarCurricular" update="@all" immediate="true" action="/Saberes-web/paginas/persona/persona.jsf?faces-redirect=true"
+						ajax="true" styleClass="ui-icon ui-icon-trash" resetValues="true" actionListener="#{noCorporativoBean.eliminar(_curriculares.id)}" >
+						<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el saber" icon="ui-icon-alert" />
 					</p:commandLink>
 				</p:column>
 
@@ -353,7 +361,7 @@
 				</div>
 			</p:column>
 
-			<p:column headerText="Puntaje" style="width:15%; text-align: center; ">
+			<p:column headerText="Puntaje" style="width:10%; text-align: center; ">
 				<div align="center">
 					<h:outputText value="#{_Corporativos.puntaje}" />
 				</div>
@@ -369,7 +377,7 @@
 				<h:outputText value="#{_Corporativos.libreta}" />
 			</p:column>
 
-			<p:column headerText="Rol" style="width:15%; text-align: center; ">
+			<p:column headerText="Rol" style="width:25%; text-align: center; ">
 				<h:outputText value="#{_Corporativos.rolSaber}" />
 			</p:column>
 
@@ -384,7 +392,7 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} 
 				{PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 				<f:facet name="header">  
-	            	Saber No Corporativo 
+	            	Formación no Currcicular 
 	        	</f:facet>
 <!-- 				<p:ajax event="rowEdit" listener="#{noCorporativoBean.onEdit}" update=":form:messages" /> -->
 				<p:ajax event="rowEditCancel" listener="#{noCorporativoBean.onCancel}" update=":form:messages" />
@@ -457,8 +465,9 @@
 <!-- 				</p:column> -->
 
 				<p:column style="width:3%">
-					<p:commandLink id="deleteLink" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
+					<p:commandLink id="borrarNoCorporativo" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
 						actionListener="#{noCorporativoBean.eliminar(_noCorporativos.id)}">
+					<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el saber" icon="ui-icon-alert" />
 					</p:commandLink>
 				</p:column>
 			</p:dataTable>
@@ -468,7 +477,7 @@
 				<p:ajax event="toggle" />
 				<p:dataTable id="noCorporativoIngreso" value="" editable="true">
 					<p:column headerText="Institución" style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="idNoCorporativoInstitucion" value="#{noCorporativoBean.institucionSeleccionada}" style="width:80%;">
+						<p:selectOneMenu id="idNoCorporativoInstitucion" value="#{noCorporativoBean.institucionSeleccionada}" style="width:80%;" required="true" requiredMessage="Debe ingresar un valor para la institución">
 							<p:ajax	listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(2)}"	update="saberNoCorporativo" />
 							<f:converter converterId="institucionConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
@@ -477,7 +486,7 @@
 					</p:column>
 
 					<p:column headerText="Saber" style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="saberNoCorporativo" value="#{newNoCorporativo.saber}" required="true" style="width:80%">
+						<p:selectOneMenu id="saberNoCorporativo" value="#{newNoCorporativo.saber}" required="true" style="width:80%" requiredMessage="Debe ingresar un valor para el saber">
 							<f:converter converterId="saberConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{noCorporativoBean.saberPorInst}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}" />
@@ -580,8 +589,9 @@
 <!-- 				</p:column> -->
 
 				<p:column style="width:3%">
-					<p:commandLink id="deleteLink" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
+					<p:commandLink id="borrarCurso" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
 						actionListener="#{noCorporativoBean.eliminar(_cursos.id)}">
+					<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el saber" icon="ui-icon-alert" />						
 					</p:commandLink>
 				</p:column>
 
@@ -592,9 +602,8 @@
 				<p:ajax event="toggle" />
 				<p:dataTable id="cursosIngreso" value="" editable="true">
 					<p:column headerText="Institución:"	style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="idCursosInstitucion" value="#{noCorporativoBean.institucionSeleccionadaCurso}"	style="width:80%">
-							<p:ajax
-								listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"	update="saberCurso" />
+						<p:selectOneMenu id="idCursosInstitucion" value="#{noCorporativoBean.institucionSeleccionadaCurso}"	style="width:80%" required="true" requiredMessage="Debe ingresar un valor para la institución">
+							<p:ajax	listener="#{noCorporativoBean.saberesNoCorporativosPorTipo(5)}"	update="saberCurso" />
 							<f:converter converterId="institucionConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
 							<f:selectItems value="#{instituciones}" var="_institucion" itemLabel="#{_institucion.nombre}" itemValue="#{_institucion}" />
@@ -602,7 +611,7 @@
 					</p:column>
 
 					<p:column headerText="Saber" style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="saberCurso" value="#{newNoCorporativo.saber}" required="true" style="width:80%">
+						<p:selectOneMenu id="saberCurso" value="#{newNoCorporativo.saber}" required="true" style="width:80%" requiredMessage="Debe ingresar un valor para el saber">
 							<f:converter converterId="saberConverter" />
 							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{noCorporativoBean.saberPorInst}" var="_saber" itemLabel="#{_saber.nombre}" itemValue="#{_saber}" />
@@ -679,14 +688,7 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-<!-- 				<p:column headerText="Comprobantes"	style="width:20%; text-align: center; font-weight:bold"> -->
-<!-- 					<p:commandButton id="downloadLink" value="VerPDF" ajax="false"	immediate="true" rendered="#{noCorporativoBean.mostrarBtnComprobante}" -->
-<!-- 						actionListener="#{mediaBean.prepDownload(_cursos.comprobante.id)}"> -->
-<!-- 						<p:fileDownload value="#{mediaBean.download}" /> -->
-<!-- 					</p:commandButton> -->
-<!-- 				</p:column> -->
-
+				
 				<p:column headerText="Estado"	style="width:15%; text-align: center; font-weight:bold">
 					<h:outputText
 						value="#{personaBean.convertirValidacion(_cursos.validado)}" />
@@ -697,8 +699,9 @@
 <!-- 				</p:column> -->
 
 				<p:column style="width:3%">
-					<p:commandLink id="deleteLink" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
+					<p:commandLink id="BorrarConocimiento" update="@all" immediate="true" ajax="true" styleClass="ui-icon ui-icon-trash"
 						actionListener="#{noCorporativoBean.eliminar(_cursos.id)}">
+					<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el saber" icon="ui-icon-alert" />						
 					</p:commandLink>
 				</p:column>
 
@@ -710,17 +713,17 @@
 				<p:dataTable id="conocimientosIngreso" value="" editable="true"	styleClass="textoCentrado">
 				
 					<p:column headerText="Saber" style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="idSaberConocimiento" value="#{newNoCorporativo.saber}" style="width:80%">
+						<p:selectOneMenu id="idSaberConocimiento" value="#{newNoCorporativo.saber}" style="width:80%" required="true" requiredMessage="Debe ingresar un valor para el saber">
 							<f:converter converterId="saberConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{conocimientos}" var="_conocimiento" itemLabel="#{_conocimiento.nombre}" itemValue="#{_conocimiento}" />
 						</p:selectOneMenu>
 					</p:column>
 
 					<p:column headerText="Origen:" style="width:25%; text-align: center; font-weight:bold">
-						<p:selectOneMenu id="idConocimientoOrigen"	value="#{newNoCorporativo.origen}" style="width:80%">
+						<p:selectOneMenu id="idConocimientoOrigen"	value="#{newNoCorporativo.origen}" style="width:80%" required="true" requiredMessage="Debe ingresar un valor para el origen">
 							<f:converter converterId="origenConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" noSelectionOption="true" />
+							<f:selectItem itemLabel="Seleccione..." itemValue="" />
 							<f:selectItems value="#{origenes}" var="_origen" itemLabel="#{_origen.descripcion}" itemValue="#{_origen}" />
 						</p:selectOneMenu>
 					</p:column>

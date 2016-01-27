@@ -37,8 +37,8 @@ public class RegistroCorporativo {
 
 	   private Corporativo newCorporativo;
 	   
-	   private static String SELECT_CORPORATIVOS = "select cedula, gpacurre.cod_curso,f_com_efec,f_fin_efec, puntaje,cant_asistencia,rol,libreta,cod_area,cant_horas from gpaparev inner join gpacurre on (gpaparev.id_evento = gpacurre.id_evento) inner join gpacurso on (gpacurso.cod_curso=gpacurre.cod_curso) where cedula=? and aprobacion='S'";
-
+//	   private static String SELECT_CORPORATIVOS = "select cedula, gpacurre.cod_curso,f_com_efec,f_fin_efec, puntaje,cant_asistencia,rol,libreta,cod_area,cant_horas from gpaparev inner join gpacurre on (gpaparev.id_evento = gpacurre.id_evento) inner join gpacurso on (gpacurso.cod_curso=gpacurre.cod_curso) where cedula=? and aprobacion='S'";
+	   private static String SELECT_CORPORATIVOS = "select p.cedula, c.cod_curso, c.f_com_efec, c.f_fin_efec, p.puntaje, p.cant_asistencia, t.dvalor, c.libreta, cu.cod_area, c.cant_horas from gpaparev as p, gpacurre as c, gpacurso as cu, gpatabla as t where p.id_evento = c.id_evento and cu.cod_curso = c.cod_curso and p.rol = t.cvalor and p.cedula=? and p.aprobacion='S'";
 	   @Produces
 	   @Named
 	   public Corporativo getNewCorporativo() {

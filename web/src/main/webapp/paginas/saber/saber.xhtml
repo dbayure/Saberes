@@ -11,32 +11,17 @@
 
       <h:form id="form" prependId="false">
          
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-
-			<h:panelGrid>
-				<h2>Saberes</h2>
-				<p:outputLabel for="nombre" value="Nombre:" />
+         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+         
+         <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="20" >
+         
+        	<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+				
+				<p:outputLabel for="nombre" value="Nombre:" style="font-weight:bold"/>
 				<p:inputText id="nombre" value="#{newSaber.nombre}" label="nombre"
-					required="true" />
+					required="true" requiredMessage="Debe ingresar un valor para el nombre"/>
 
-				<p:outputLabel for="tipoSaber" value="Tipo de saber:" />
-				<p:selectOneMenu id="tipoSaber" value="#{newSaber.tipoSaber}"
-					required="true">
-					<f:converter converterId="tipoSaberConverter" />
-					<f:selectItem itemLabel="Seleccione..." itemValue="" />
-					<f:selectItems value="#{tipoSaberes}" var="tipoSaber"
-						itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}" />
-				</p:selectOneMenu>
-
-				<p:outputLabel for="institucion" value="Institucion:" /> 
-				<p:selectOneMenu id="institucion" value="#{newSaber.institucion}" >
-					<f:converter converterId="institucionConverter" />
-					<f:selectItem itemLabel="Seleccione..." itemValue="" />
-					<f:selectItems value="#{instituciones}" var="institucion"
-						itemLabel="#{institucion.nombre}" itemValue="#{institucion}" />
-				</p:selectOneMenu>
-
-				<p:outputLabel for="duracion" value="Duracion:" />
+				<p:outputLabel for="duracion" value="Duración:" style="font-weight:bold"/>
 				<p:selectOneMenu id="duracion" value="#{newSaber.duracion}"
 					label="duracion">
 					<f:selectItem itemLabel="1 Año" itemValue="1" />
@@ -47,24 +32,43 @@
 					<f:selectItem itemLabel="6 Año" itemValue="6" />
 				</p:selectOneMenu>
 
-				<p:outputLabel for="anoPlan" value="Plan:" />
+				<p:outputLabel for="anoPlan" value="Plan:" style="font-weight:bold" />
 				<p:inputText id="anoPlan" value="#{newSaber.añoPlan}"
 					label="anoPlan" size="4" maxlength="4">
 					<f:validateLength minimum="2" maximum="4" />
 				</p:inputText>
 
 			</h:panelGrid>
+			
+			<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
 
+				<p:outputLabel for="tipoSaber" value="Tipo de saber:" style="font-weight:bold"/>
+				<p:selectOneMenu id="tipoSaber" value="#{newSaber.tipoSaber}"
+					required="true" requiredMessage="Debe ingresar un valor para el tipo de saber">
+					<f:converter converterId="tipoSaberConverter" />
+					<f:selectItem itemLabel="Seleccione..." itemValue="" />
+					<f:selectItems value="#{tipoSaberes}" var="tipoSaber"
+						itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="institucion" value="Institución:" style="font-weight:bold"/> 
+				<p:selectOneMenu id="institucion" value="#{newSaber.institucion}" >
+					<f:converter converterId="institucionConverter" />
+					<f:selectItem itemLabel="Seleccione..." itemValue="" />
+					<f:selectItems value="#{instituciones}" var="institucion"
+						itemLabel="#{institucion.nombre}" itemValue="#{institucion}" />
+				</p:selectOneMenu>
+
+			</h:panelGrid>
+        	 
+         </h:panelGrid>
 			<p>            
-            <h:commandButton id="register" action="#{saberBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{saberBean.registrar}" value="Registrar" style="margin-left: 400px;" update="form" />
          </p>      
-      <h:panelGroup rendered="#{empty saberes}">
-         <em>No hay Saber registrado.</em>
-      </h:panelGroup>
       
-       <p:dataTable id="saberes" var="_saber" value="#{saberes}" sortBy="#{_saber.id}"
+       <p:dataTable id="saberes" var="_saber" value="#{saberes}" sortBy="#{_saber.id}" style="text-align: center;"
        rows="10" paginator="true"  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-       rowsPerPageTemplate="5,10,15" editable="true">
+       rowsPerPageTemplate="5,10,15" editable="true" emptyMessage="No existen datos a mostrar.">
        		<f:facet name="header">  
             	Administrar Saber  
         	</f:facet>
@@ -72,18 +76,18 @@
         	<p:ajax event="rowEdit" listener="#{saberBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{saberBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%" sortBy="#{_saber.id}">
+        	 <p:column headerText="Id" style="width:5%; font-weight:bold" sortBy="#{_saber.id}" >
         	 	<h:outputText value="#{_saber.id}" />
         	 </p:column>
         	 
-        	 <p:column headerText="Nombre" style="width:25%">  
+        	 <p:column headerText="Nombre" style="width:25%; font-weight:bold" >  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_saber.nombre}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputSaber" value="#{_saber.nombre}" style="width:96%" required="true"/></f:facet>  
                </p:cellEditor>  
            	 </p:column>  
            	 
-           	 <p:column headerText="Tipo de Saber" style="width:25%">  
+           	 <p:column headerText="Tipo de Saber" style="width:25%; font-weight:bold" >  
                <p:cellEditor>  
                	   <f:facet name="output"><h:outputText value="#{_saber.tipoSaber.nombre}" /></f:facet> 
                    <f:facet name="input">
@@ -94,7 +98,7 @@
                </p:cellEditor>  
            	 </p:column> 
            	 
-           	 <p:column headerText="Institucion" style="width:25%">  
+           	 <p:column headerText="Institución" style="width:25%; font-weight:bold" >  
                <p:cellEditor>
                    <f:facet name="output">
                    		<h:outputText value="#{_saber.institucion.nombre}" />
@@ -107,7 +111,7 @@
                </p:cellEditor>  
            	 </p:column>
            	 
-			<p:column headerText="Duracion" style="width:25%">  
+			<p:column headerText="Duración" style="width:10%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_saber.duracion}" /></f:facet>  
                    <f:facet name="input">
@@ -123,7 +127,7 @@
                </p:cellEditor>  
            	 </p:column>
 
-			<p:column headerText="Plan" style="width:25%">  
+			<p:column headerText="Plan" style="width:10%; font-weight:bold" >  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_saber.añoPlan}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputAnio" value="#{_saber.añoPlan}" style="width:96%" required="true"/></f:facet>  

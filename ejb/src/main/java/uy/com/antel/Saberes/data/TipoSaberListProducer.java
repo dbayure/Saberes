@@ -41,7 +41,9 @@ public class TipoSaberListProducer {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<TipoSaber> criteria = cb.createQuery(TipoSaber.class);
 		Root<TipoSaber> tipoSaber = criteria.from(TipoSaber.class);
-		criteria.select(tipoSaber).orderBy(cb.asc(tipoSaber.get("nombre")));
+		criteria.select(tipoSaber);
+		criteria.where(cb.notEqual(tipoSaber.get("nombre"),"Formal Corporativo"));
+		criteria.orderBy(cb.asc(tipoSaber.get("nombre")));
 		tipoSaberes = em.createQuery(criteria).getResultList();
 	}
 }

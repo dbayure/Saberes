@@ -1,7 +1,7 @@
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
-
+import java.text.ParseException;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,9 +37,21 @@ public class Corporativo extends SaberPersona implements Serializable{
 		return duracion;
 	}
 	
-	public String getDuracionStr() {
+	public String getDuracionStr() throws ParseException {
 		String duracionFormat = String.valueOf(duracion);
-		return duracionFormat.substring(0,duracionFormat.length()-2)+":"+duracionFormat.substring(duracionFormat.length()-2); 
+		if(duracionFormat.length()>3){
+			String hora = duracionFormat.substring(0, 2);
+			String min = duracionFormat.substring(2);
+			return hora + ":" + min + " Hs";
+		}
+		else{
+			if(duracionFormat.length()==3){
+				String hora = duracionFormat.substring(0, 1);
+				String min = duracionFormat.substring(1);
+				return hora + ":" + min + " Hs";
+			}
+			return duracionFormat.substring(0, 2) + " Min";
+		}
 	}
 
 	
@@ -53,9 +65,7 @@ public class Corporativo extends SaberPersona implements Serializable{
 		this.libreta = libreta;
 	}
 	public String getRolSaber() {
-		if (rolSaber.equals("A"))
-			return "Asistente";
-		return "Instructor";
+		return rolSaber;
 	}
 	public void setRolSaber(String rolSaber) {
 		this.rolSaber = rolSaber;

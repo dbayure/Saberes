@@ -114,14 +114,14 @@ public class RegistroPersona {
 		
 		@SuppressWarnings("unchecked")
 		public Persona buscarPersonaPorUsr(String usr) {
-//		System.out.println("Nombre del usuario a buscar en la bdd: " + usr);
 		Query q = em.createQuery("Select p from Persona p where p.usuario = ?1");
 		q.setParameter(1, usr);
 		List <Persona> resultado = q.getResultList();
 		
 		if (resultado.isEmpty())
 			return null;
-		System.out.println("resultado de la consulta " + resultado.get(0).getNombre());
+//		System.out.println("resultado de la consulta " + resultado.get(0).getNombre());
+		newPersona = resultado.get(0);
 		return resultado.get(0);
 		}
 		

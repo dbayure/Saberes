@@ -28,7 +28,7 @@ public class RegistroRol {
 	   private Event<Rol> rolEventSrc;
 
 	   private Rol newRol;
-
+	   
 	   @Produces
 	   @Named
 	   public Rol getNewRol() {
@@ -63,17 +63,26 @@ public class RegistroRol {
 	   public Rol buscarPerfilBasico() throws Exception{
 		   Query q = em.createQuery("Select r from Rol r where r.descripcion = ?1");
 		   q.setParameter(1,"BASICO");
-		   
 		   Rol rolBasico = (Rol) q.getSingleResult(); 
-		   
 		   return rolBasico;
-
+	   }
+	   
+	   public boolean buscarRolRepetido() {
+		   Query q = em.createQuery("SELECT r FROM Rol r WHERE UPPER(TRANSLATE(r.rol, 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))" + 
+			"LIKE UPPER(TRANSLATE((?1), 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))");
+		   q.setParameter(1,newRol.getRol());
+		   if (q.getResultList().isEmpty()){
+			   return false;
+		   }
+		   else{
+			   return true;
+		   }
 	   }
 	   
 	   @PostConstruct
 	   public void initNewrol() {
 		   newRol = new Rol();
 	   }
-	  
+
 
 }

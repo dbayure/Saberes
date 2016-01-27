@@ -6,44 +6,40 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración Tipo Saber</h1>
+      <h1 style="text-align: center;">Administrar Tipos de Saber</h1>
 	
 
       <h:form id="form" prependId="false">
-         <h2>Registro</h2>
          
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />          
          
-         <h:panelGrid columns="2" >
+         <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
 	
-			<p:outputLabel for="nombre" value="Nombre:" />
-			<p:inputText id="nombre" value="#{newTipoSaber.nombre}" label="nombre" required="true" />
+			<p:outputLabel for="nombre" value="Nombre:" style="font-weight:bold"/>
+			<p:inputText id="nombre" value="#{newTipoSaber.nombre}" label="nombre" required="true" requiredMessage="Debe ingresar un valor para el nombre" />
 			
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{tipoSaberBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{tipoSaberBean.registrar}" value="Registrar" style="margin-left: 400px;" update="form"/>
          </p>      
-      <h:panelGroup rendered="#{empty tipoSaberes}">
-         <em>No hay Tipo de Saber registrado.</em>
-      </h:panelGroup>
       
-       <p:dataTable id="tipoSaberes" var="_tipoSaber" value="#{tipoSaberes}" editable="true">
+       <p:dataTable id="tipoSaberes" var="_tipoSaber" value="#{tipoSaberes}" editable="true" style="text-align:center" emptyMessage="No existen datos a mostrar.">
        		<f:facet name="header">  
-            	Administrar Tipo de Saber
+            	Tipos de saber registrados
         	</f:facet>
         	
         	<p:ajax event="rowEdit" listener="#{tipoSaberBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{tipoSaberBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Código:" style="width:5%">
+        	 <p:column headerText="Código:" style="width:5%; font-weight:bold">
         	    <p:cellEditor> 
 				   <f:facet name="output"><h:outputText value="#{_tipoSaber.id}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="tipoSaberId" value="#{_tipoSaber.id}" style="width:96%" required="true"/></f:facet>  
         	 	</p:cellEditor>
         	 </p:column>
         	 
-        	 <p:column headerText="Nombre" style="width:25%">  
+        	 <p:column headerText="Nombre" style="width:25%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_tipoSaber.nombre}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputTipoSaber" value="#{_tipoSaber.nombre}" style="width:96%" required="true"/></f:facet>  

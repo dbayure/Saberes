@@ -6,41 +6,37 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración Origenes de Conocimientos</h1>
+      <h1 style="text-align: center;">Administrar Origenes de Conocimientos</h1>
 	
 
       <h:form id="form" prependId="false">
-         <h2>Registro</h2>
          
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />          
          
-         <h:panelGrid columns="2" >
+         <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15" >
 
-			<p:outputLabel for="descripcion" value="Descripcion:" />
-			<p:inputText id="descripcion" value="#{newOrigen.descripcion}" label="descripcin" required="true" />
+			<p:outputLabel for="descripcion" value="Descripción:" style="font-weight:bold"/>
+			<p:inputText id="descripcion" value="#{newOrigen.descripcion}" label="descripcin" required="true" requiredMessage="Debe ingresar un valor para la descripción"/>
 			
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{origenBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{origenBean.registrar}" value="Registrar" style="margin-left: 400px;" update="form"/>
          </p>      
-      <h:panelGroup rendered="#{empty origenes}">
-         <em>No hay origenes de Saberes registrados.</em>
-      </h:panelGroup>
       
-       <p:dataTable id="origenes" var="_origen" value="#{origenes}" editable="true">
+       <p:dataTable id="origenes" var="_origen" value="#{origenes}" editable="true" style="text-align:center" emptyMessage="No existen datos a mostrar.">
        		<f:facet name="header">  
-            	Administrar origenes de Conocimientos
+            	Orígenes registrados
         	</f:facet>
         	
         	<p:ajax event="rowEdit" listener="#{origenBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{origenBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
+        	 <p:column headerText="Id" style="width:5%; font-weight:bold">
         	 	<h:outputText value="#{_origen.id}" />
         	 </p:column>
         	 
-        	 <p:column headerText="Descripcion" style="width:25%">  
+        	 <p:column headerText="Descripción" style="width:25%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_origen.descripcion}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputOrigen" value="#{_origen.descripcion}" style="width:96%" required="true"/></f:facet>  

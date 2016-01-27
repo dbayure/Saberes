@@ -37,7 +37,7 @@ public class Persona implements Serializable {
 	private Rol rol;
 	
 	@OneToMany (fetch = FetchType.EAGER)
-	@JoinColumn(name="idSaberPersona", nullable=false, updatable=false)
+	@JoinColumn(name="idPersona", nullable=false, updatable=false)
 	private List<SaberPersona> saberes;
 	
 	private String nombre;

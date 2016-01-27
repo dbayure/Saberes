@@ -63,7 +63,7 @@ public class RegistroNoCorporativo {
 		em.persist(newNoCorporativo);
 		if(newNoCorporativo.getSaber().getTipoSaber().getId() != 4 && rc.getNewComprobante() != null){
 			Properties p = new Properties();
-			String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+			String archivoPropiedades = System.getProperty("user.dir") + "/Conf/app-properties/saberes.properties";	
 			try {
 				p.load(new FileInputStream(archivoPropiedades));
 			} catch (FileNotFoundException e) {
@@ -91,8 +91,27 @@ public class RegistroNoCorporativo {
 	public void eliminar(Long id) throws Exception {
 		log.info("Elimino " + id);
 		NoCorporativo noCorporativo = em.find(NoCorporativo.class, id);
+		long idpdf = noCorporativo.getComprobante().getId();
 		em.remove(noCorporativo);
 		noCorporativoEventSrc.fire(newNoCorporativo);
+		Properties p = new Properties();
+		System.out.println("valor del id pasado como parametro para leer el archivo " + id);
+		String archivoPropiedades = System.getProperty("user.dir") + "/Conf/app-properties/saberes.properties";	
+		try {
+			p.load(new FileInputStream(archivoPropiedades));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String rutaPDF = p.getProperty("urlPDF");
+		File pdf = new File(rutaPDF+idpdf+".pdf");
+		System.out.println("Se va a eliminar el archivo :" + pdf.getName());
+		if(pdf.delete())
+			System.out.println("el archivo fue elimnidado correctametne");
+			
 	}
 
 	@PostConstruct
@@ -108,7 +127,7 @@ public class RegistroNoCorporativo {
 	public File obtenerPDFComprobante (String id) throws FileNotFoundException{
 		Properties p = new Properties();
 		System.out.println("valor del id pasado como parametro para leer el archivo " + id);
-		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+		String archivoPropiedades = System.getProperty("user.dir") + "/Conf/app-properties/saberes.properties";	
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {
@@ -139,7 +158,7 @@ public class RegistroNoCorporativo {
 	
 	public boolean ExisteComprobantePorId(long id){
 		Properties p = new Properties();
-		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";	
+		String archivoPropiedades = System.getProperty("user.dir") + "/Conf/app-properties/saberes.properties";	
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {

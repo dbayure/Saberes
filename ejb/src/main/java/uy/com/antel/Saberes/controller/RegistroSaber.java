@@ -82,4 +82,16 @@ public class RegistroSaber {
 			return null;
 		return (ArrayList<Saber>) resultado;
 	}
+	
+	 public boolean buscarSaberRepetido() {
+		   Query q = em.createQuery("SELECT s FROM Saber s WHERE UPPER(TRANSLATE(s.nombre, 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))" + 
+			"LIKE UPPER(TRANSLATE((?1), 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))");
+		   q.setParameter(1,newSaber.getNombre());
+		   if (q.getResultList().isEmpty()){
+			   return false;
+		   }
+		   else{
+			   return true;
+		   }
+	   }
 }

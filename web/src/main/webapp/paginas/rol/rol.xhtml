@@ -6,48 +6,55 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración Rol</h1>
+      <h1 style="text-align: center;">Administar Roles</h1>
 	
 
       <h:form id="form" prependId="false">
-         <h2>Registro</h2>
          
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
-         
-         <h:panelGrid columns="2" >
+         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />   
 
-			<p:outputLabel for="nombre" value="Nombre:" />
-			<p:inputText id="nombre" value="#{newRol.rol}" label="nombre" required="true" />
-			
-			<p:outputLabel for="desc" value="Descripcion:" />
-			<p:inputText id="desc" value="#{newRol.descripcion}" label="descripcion" required="false" />
-
+		 <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	
+			<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	
+				<p:outputLabel for="nombre" value="Nombre:" style="font-weight:bold"/>
+				<p:inputText id="nombre" value="#{newRol.rol}" label="nombre" required="true" requiredMessage="Debe ingresar un valor para el nombre"/>
+	
+			</h:panelGrid>
+			<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	
+				<p:outputLabel for="desc" value="Descripcion:" style="font-weight:bold"/>
+				<p:inputText id="desc" value="#{newRol.descripcion}" label="descripcion" required="false" />
+	
+			</h:panelGrid>
+	
 		</h:panelGrid>
+	         
          
          <p>            
-            <h:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" update="form"/>
          </p>      
       
-       <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true">
+       <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true" style="text-align:center" emptyMessage="No existen datos a mostrar.">
        		<f:facet name="header">  
-            	Administrar Rol  
+            	Roles creados 
         	</f:facet>
         	
         	<p:ajax event="rowEdit" listener="#{rolBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{rolBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
+        	 <p:column headerText="Id" style="width:5%; font-weight:bold">
         	 	<h:outputText value="#{_rol.id}" />
         	 </p:column>
         	 
-        	 <p:column headerText="Nombre" style="width:25%">  
+        	 <p:column headerText="Nombre" style="width:25%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_rol.rol}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputRol" value="#{_rol.rol}" style="width:96%" required="true"/></f:facet>  
                </p:cellEditor>  
            	 </p:column>  
            	 
-        	 <p:column headerText="Descripcion" style="width:25%">  
+        	 <p:column headerText="Descripción" style="width:25%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_rol.descripcion}" /></f:facet>  
                    <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_rol.descripcion}" style="width:96%" required="true"/></f:facet>  

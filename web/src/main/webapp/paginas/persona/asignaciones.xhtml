@@ -6,41 +6,41 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/templates/default.xhtml">
 	<ui:define id="ui" name="content">
-		<h1 style="text-align: center;">Administrar roles y uausrios</h1>
+		<h1 style="text-align: center;">Administrar Rol de Usuario</h1>
 
 		<h:form id="form" prependId="false">
-			 <h2>Buscar Usuarios</h2>
+			
          
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+         <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />          
          
-         <h:panelGrid columns="2" >
-
-			<p:outputLabel for="usuario" value="Usuario: " />
-			<p:inputText id="usuario" value="#{personaBean.usuario}" label="usurio" required="true" />
-
+         <h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+		 		
+				<p:outputLabel for="usuario" value="Usuario: " style="font-weight:bold" />
+				<p:inputText id="usuario" value="#{personaBean.usuario}" label="usurio" required="true" requiredMessage="Debe ingresar un valor para el usuario"/>
+		
 		</h:panelGrid>
          
          <p>            
-            <h:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario()}" value="Buscar" update="usuarios" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario()}" value="Buscar" update="usuarios" style="margin-left: 400px;" />
          </p>      
       
-       <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" rendered="#{personaBean.usuario != null}">
+       <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" rendered="#{personaBean.usuario != null}" style="text-align:center">
        		<f:facet name="header">  
-            	Administrar Roles de Usuario 
+            	Asignar rol al usuario
         	</f:facet>
         	
         	<p:ajax event="rowEdit" listener="#{personaBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{personaBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
+        	 <p:column headerText="Id" style="width:5%; font-weight:bold">
         	 	<h:outputText value="#{_users.id}" />
         	 </p:column>
         	 
-        	 <p:column headerText="Nombre" style="width:25%">  
+        	 <p:column headerText="Nombre" style="width:25%; font-weight:bold">  
 				<h:outputText value="#{_users.nombre}" />
            	 </p:column>  
            	 
-        	 <p:column headerText="Rol asignado" style="width:25%">  
+        	 <p:column headerText="Rol asignado" style="width:25%; font-weight:bold">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_users.rol.rol}" /></f:facet>
                    <f:facet name="input">

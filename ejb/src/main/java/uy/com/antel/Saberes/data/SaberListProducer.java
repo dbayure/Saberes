@@ -41,7 +41,14 @@ public class SaberListProducer {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Saber> criteria = cb.createQuery(Saber.class);
 		Root<Saber> saber = criteria.from(Saber.class);
-		criteria.select(saber).orderBy(cb.asc(saber.get("nombre")));
+		criteria.select(saber);
+		criteria.where(
+				cb.or(
+						cb.notEqual(saber.get("institucion"), 6), 
+						cb.isNull(saber.get("institucion"))
+						)
+					);
+		criteria.orderBy(cb.asc(saber.get("nombre")));
 		saberes = em.createQuery(criteria).getResultList();
 	}
 }

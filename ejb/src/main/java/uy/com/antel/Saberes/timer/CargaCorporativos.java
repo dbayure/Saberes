@@ -2,8 +2,6 @@ package uy.com.antel.Saberes.timer;
 
 import java.math.BigInteger;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Schedule;
@@ -42,29 +40,28 @@ public class CargaCorporativos {
         // TODO Auto-generated constructor stub
     }
 	
-	@Schedule(minute="47", hour="14", dayOfWeek="Mon-Fri", dayOfMonth="*", month="*", year="*", info="TimerCargaExpediente")
+	@Schedule(minute="02", hour="12", dayOfWeek="Mon-Fri", dayOfMonth="*", month="*", year="*", info="TimerCargaExpediente")
     private void scheduledTimeout(final Timer t) throws Exception {
-        System.out.println("Ejecutando el timer: " + new java.util.Date());
-		List <Object[]> usuarios = controladorPersona.getAllPersonas();
-		UserTransaction ut = ctx.getUserTransaction();
-		int i = 0;
-		for (Object[] p : usuarios) {
-			Long id = ((BigInteger)(p[0])).longValue();
-			String usuario = ((String)(p[1]));
-			List <Object[]> cursos = controladorCorporativo.getCursosCorporativosPersonasGicca((controladorPersona.getCI(usuario)));
-			System.out.println("Usuario: "+usuario + "con cantidad cursos= " + cursos.size());
-			for (Object[] obj : cursos) {
-				i++;
-				ut.begin();
-				System.out.println("id del saber corporativo a guardar: " + id);
-				TimeUnit.SECONDS.sleep(30);
-				worker.trabajar(obj, id);	
-				ut.commit();
-				if ( i % 1000 == 0 ) {
-					System.out.println("Proc: "+i);
-				}				
-			}
-		}
+//        System.out.println("Ejecutando el timer: " + new java.util.Date());
+//		List <Object[]> usuarios = controladorPersona.getAllPersonas();
+//		UserTransaction ut = ctx.getUserTransaction();
+//		int i = 0;
+//		for (Object[] p : usuarios) {
+//			Long id = ((BigInteger)(p[0])).longValue();
+//			String usuario = ((String)(p[1]));
+//			List <Object[]> cursos = controladorCorporativo.getCursosCorporativosPersonasGicca((controladorPersona.getCI(usuario)));
+//			System.out.println("Usuario: "+usuario + "con cantidad cursos= " + cursos.size());
+//			for (Object[] obj : cursos) {
+//				i++;
+//				ut.begin();
+//				System.out.println("id del saber corporativo a guardar: " + id);
+//				worker.trabajar(obj, id);	
+//				ut.commit();
+//				if ( i % 1000 == 0 ) {
+//					System.out.println("Proc: "+i);
+//				}				
+//			}
+//		}
 		System.out.println("FIN TIMER: Se ejecuto correctamente la actualización");
 		
     }

@@ -10,6 +10,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import uy.com.antel.Saberes.model.Origen;
 
@@ -52,6 +53,18 @@ public class RegistroOrigen {
 		   Origen origen = em.find(Origen.class, id);
 		   em.remove(origen);
 		   origenEventSrc.fire(newOrigen);
+	   }
+	   
+	   public boolean buscarOrigenRepetido() {
+		   Query q = em.createQuery("SELECT o FROM Origen o WHERE UPPER(TRANSLATE(o.descripcion, 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))" + 
+			"LIKE UPPER(TRANSLATE((?1), 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))");
+		   q.setParameter(1,newOrigen.getDescripcion());
+		   if (q.getResultList().isEmpty()){
+			   return false;
+		   }
+		   else{
+			   return true;
+		   }
 	   }
 
 	   @PostConstruct
