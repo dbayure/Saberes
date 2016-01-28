@@ -120,9 +120,9 @@ public class RegistroPersona {
 		
 		if (resultado.isEmpty())
 			return null;
-//		System.out.println("resultado de la consulta " + resultado.get(0).getNombre());
+		System.out.println("resultado de la consulta " + resultado.get(0).getNombre());
 		newPersona = resultado.get(0);
-		return resultado.get(0);
+		return newPersona;
 		}
 		
 		@SuppressWarnings("unchecked")

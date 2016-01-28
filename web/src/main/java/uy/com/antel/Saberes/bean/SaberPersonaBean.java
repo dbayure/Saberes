@@ -31,7 +31,7 @@ public class SaberPersonaBean {
     
     public void upload() {
         if(file != null) {
-            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesMessage message = new FacesMessage("Exito el archivo " + file.getFileName() + " fue subido correctamente", "");
             FacesContext.getCurrentInstance().addMessage(null, message);
         }
     }
@@ -39,41 +39,40 @@ public class SaberPersonaBean {
 	public void registrar() {
 		try {
 			registroSaberPersona.registro();
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El saber de la persona fue registrado correctamente ", "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		catch (Exception e) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al registrar ", "");  
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error no fue posible registrar el saber de la persona ", "");  
         FacesContext.getCurrentInstance().addMessage(null, msg); 
 		}
 	}
 	
 	public void onEdit(RowEditEvent event) {  
-		SaberPersona saberPersona = ((SaberPersona) event.getObject());
-		System.out.println("valor del saber de la persona :" + saberPersona);           
+		SaberPersona saberPersona = ((SaberPersona) event.getObject());         
             try {
             	registroSaberPersona.modificar(saberPersona);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", saberPersona.getSaber().getNombre());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El saber de la persona " + saberPersona.getSaber().getNombre() + " fue modificado correctamente", "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", saberPersona.getSaber().getNombre());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al intentar modificar el saber de la persona " + saberPersona.getSaber().getNombre(), "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }
 	
 	public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Se canceló modificar ", ((SaberPersona) event.getObject()).getSaber().getNombre());  
+        FacesMessage msg = new FacesMessage("Se canceló la modificación del saber de la persona " + ((SaberPersona) event.getObject()).getSaber().getNombre(), "");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
 	
 	public void eliminar(Long id) {
 		try {
 			registroSaberPersona.eliminar(id);
-			FacesMessage msg = new FacesMessage("Se eliminó ", id.toString());  
+			FacesMessage msg = new FacesMessage("El saber de la persona " + id.toString() + " fue eliminado correctamente", "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		catch(Exception e) {
-			FacesMessage msg = new FacesMessage("Error al eliminar", id.toString());  
+			FacesMessage msg = new FacesMessage("Error no fue posible eliminar el saber de la persona " +  id.toString(), "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}

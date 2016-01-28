@@ -99,7 +99,7 @@ public class PersonaBean {
 
 	public void registrar() {
 		FacesMessage msg;
-
+		
 		try {
 
 			Persona aPersona;
@@ -163,7 +163,6 @@ public class PersonaBean {
 
 			if (personaRegistrada()){
 				registroPersona.modificar(aPersona);
-				System.out.println("valor de la division" + aPersona.getDescDivision());
 			}
 			else{
 				registroPersona.registro();
@@ -173,8 +172,7 @@ public class PersonaBean {
 		}
 
 		catch (Exception e) {
-			msg = new FacesMessage(FacesMessage.SEVERITY_INFO,
-					"Error al registrar ", "");
+			msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error no fue posible registrar a la persona ", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 
@@ -194,7 +192,6 @@ public class PersonaBean {
 			String sAppl = "SABERES";
 			String sPass = "SABERES";
 			DatoPer dp = llamada.getDatosPer(sCedula, sAppl, sPass);
-			System.out.println("valor que viene del ws para descdivision " + dp.getDescDivision());
 			return dp;
 		} catch (ServiceException e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error intentando conectarse al dominio ", "");  
@@ -211,12 +208,9 @@ public class PersonaBean {
 	}
 
 	public void upload(FileUploadEvent event) {
-		
 		String userName = SecurityContextAssociation.getPrincipal().getName();
-
 	    String rutaArchivoUsuario = rutaIMG+userName+".jpg";
-		FacesMessage msg = new FacesMessage("Success! ", event.getFile()
-				.getFileName() + " is uploaded.");
+		FacesMessage msg = new FacesMessage("La imagen fue actualizada correctamente " + event.getFile().getFileName(), "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		try {
@@ -237,7 +231,7 @@ public class PersonaBean {
 	}
 
 	public void onCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Se canceló modificar ",((Persona) event.getObject()).getNombre() + " "+((Persona) event.getObject()).getApellido());
+		FacesMessage msg = new FacesMessage("Se canceló la modificación de: " + ((Persona) event.getObject()).getNombre() + " "+((Persona) event.getObject()).getApellido(), "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 	
@@ -250,10 +244,10 @@ public class PersonaBean {
             	else{
             		registroPersona.modificarRol(persona, rol);
             	}
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó el rol al usuario ", persona.getNombre()+" "+persona.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El rol del usuario " + persona.getNombre()+" "+persona.getApellido() + " fue modificado exitosamente" , "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar el rol del usuario ", persona.getNombre()+" "+persona.getApellido());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar el rol del usuario " + persona.getNombre()+" "+persona.getApellido(), "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }
@@ -373,7 +367,6 @@ public class PersonaBean {
 	public List<Persona> listaPersonasPorValidar(){
 		List<Persona> listPersonasPronta = registroPersona.buscarPersonaPendienteValidar();
 //		List<Persona> listPersonasPronta = new ArrayList<Persona>();
-//		System.out.println("cantidd de personas a revisar " + listPersonasValidar.size());
 //		for (Persona per : listPersonasValidar) {
 //			if(faltaValidar(per.getId()) == true){
 //				listPersonasPronta.add(per);
@@ -394,9 +387,9 @@ public class PersonaBean {
 
 	public String convertirAprobacion(boolean aprobacion) {
 		if (aprobacion == true)
-			return "Finalizada";
+			return "Aprobado";
 		else
-			return "En curso";
+			return "No Aprobado";
 	}
 
 	public boolean faltaValidar(long id) {
@@ -412,7 +405,7 @@ public class PersonaBean {
 	}
 
 	public void setUsuario(String usuario) {
-		this.usuario = usuario;
+		this.usuario = usuario.toLowerCase();
 	}
 	
 	public String getUsuario() {
@@ -452,7 +445,7 @@ public class PersonaBean {
 	@PostConstruct
 	public void obtenerRuta() {
 		Properties p = new Properties();
-		String archivoPropiedades = System.getProperty("user.dir") + "/conf/app-properties/saberes.properties";
+		String archivoPropiedades = System.getProperty("user.dir") + "/Conf/app-properties/saberes.properties";
 		try {
 			p.load(new FileInputStream(archivoPropiedades));
 		} catch (FileNotFoundException e) {
@@ -460,18 +453,14 @@ public class PersonaBean {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		rutaPDF = p.getProperty("urlPDF");
 		rutaIMG = p.getProperty("urlIMG");
-		
 	}
 
 
 	public void abrirPdf(long idComprob) {
-
 		try {
 			String rutaArchivoPDF = rutaPDF + idComprob + ".pdf";
-
 			FileInputStream fis = new FileInputStream(rutaArchivoPDF);
 			setStreamedContent(new DefaultStreamedContent(fis,"application/pdf"));
 		} catch (Exception e) {
@@ -564,6 +553,7 @@ public class PersonaBean {
 	}
 
 	public String getRutaPDF() {
+		obtenerRuta();
 		return rutaPDF;
 	}
 
@@ -703,17 +693,15 @@ public class PersonaBean {
     }
     
 	public List<Persona> buscarPersonaPorUsuario(){
-		System.out.println("Contenido del string de usuario a buscar: " + this.getUsuario());
 		Persona p = registroPersona.buscarPersonaPorUsr(usuario);
 		if (p == null){
-			System.out.println("Persona no encontrada");
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario ingresado no existe en la base de datos" , "");  
+            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			return null;
 		}
 		else{
-		System.out.println("Nombre de la persona que encontro: " + p.getNombre());
 		List<Persona> lp = new ArrayList<Persona>();
 		lp.add(p);
-		System.out.println("Cantidad de personas a mostrar " + lp.size());
 		setListaPersonas(lp);
 		return lp;
 		}

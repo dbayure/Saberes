@@ -10,7 +10,6 @@ import javax.inject.Inject;
 
 import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.UploadedFile;
-import org.xnio.Option.SetBuilder;
 
 import uy.com.antel.Saberes.controller.RegistroComprobante;
 import uy.com.antel.Saberes.controller.RegistroNoCorporativo;
@@ -46,9 +45,8 @@ public class NoCorporativoBean {
 	public String registrar() {
 		try {
 			String usuario = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-			System.out.println("valor del usuario a registrar " + usuario);
 			registroNoCorporativo.registro(usuario);
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,	"El saber fué registrado correctamente ", "");
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,	"El saber fue registrado correctamente ", "");
 			FacesContext context = FacesContext.getCurrentInstance();
 			context.getExternalContext().getFlash().setKeepMessages(true);
 			context.addMessage(null, msg);
@@ -64,33 +62,30 @@ public class NoCorporativoBean {
 
 	public void onEdit(RowEditEvent event) {
 		NoCorporativo noCorporativo = ((NoCorporativo) event.getObject());
-//		noCorporativo.setFechaInicio(registroNoCorporativo.getNewNoCorporativo().getFechaInicio());
-//		noCorporativo.setFechaFin(registroNoCorporativo.getNewNoCorporativo().getFechaFin());
-//		noCorporativo.setAprobacion(registroNoCorporativo.getNewNoCorporativo().getAprobacion());
 		try {
 			//registroNoCorporativo.modificar(noCorporativo);
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "La modificación se realizó exitosamente ", noCorporativo.getSaber().getNombre());
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El saber " + noCorporativo.getSaber().getNombre() + " fue modificado exitosamente", "" );
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} 
 		catch (Exception e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "No fué posible realiza la modificación ", noCorporativo.getSaber().getNombre());
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "No fue posible modificar el saber " + noCorporativo.getSaber().getNombre(), "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
 
 	public void onCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Se canceló la modificiación de ",((NoCorporativo) event.getObject()).getSaber().getNombre());
+		FacesMessage msg = new FacesMessage("Se canceló la modificiación del saber " + ((NoCorporativo) event.getObject()).getSaber().getNombre(), "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void eliminar(Long id) {
 		try {
 			registroNoCorporativo.eliminar(id);
-			FacesMessage msg = new FacesMessage("El registro fué eliminado correctamente ", id.toString());
+			FacesMessage msg = new FacesMessage("El saber " + id.toString() + " fue eliminado correctamente ", "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		} 
 		catch (Exception e) {
-			FacesMessage msg = new FacesMessage("No fué posible eliminar el registro", id.toString());
+			FacesMessage msg = new FacesMessage("No fue posible eliminar el saber " + id.toString(), "");
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
@@ -108,7 +103,6 @@ public class NoCorporativoBean {
 	}
 	
 	public void asignarIdBusqueda(long id){
-		System.out.println("id de busqueda para el doc " + id);
 		personaId = id;
 	}
 	
@@ -165,7 +159,6 @@ public class NoCorporativoBean {
 	}
 
 	public void mostrarBotonComprobante(long id){
-		System.out.println("Verifico si existe o no un pdf con es id para mostrar el boton de ser vierto");
 		setMostrarBtnComprobante(registroNoCorporativo.ExisteComprobantePorId(id));
 	}
 

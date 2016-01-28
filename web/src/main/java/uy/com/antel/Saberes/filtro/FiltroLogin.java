@@ -9,6 +9,8 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jboss.security.SecurityContextAssociation;
 
@@ -42,12 +44,13 @@ public class FiltroLogin implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		String userName = SecurityContextAssociation.getPrincipal().getName();
-
+		HttpSession session = ((HttpServletRequest) request).getSession();
 		persona.setUsuario(userName);
-
-		persona.registrar();
-
-		System.out.println("Yeeey! Get me here and find me in the database: "+ userName);
+		if(session.getAttribute("logueado")!="logueado"){
+			persona.registrar();
+			session.setAttribute("logueado", "logueado");	
+			}
+//		System.out.println("Yeeey! Get me here and find me in the database: "+ userName);
 		chain.doFilter(request, response);
 	}
 

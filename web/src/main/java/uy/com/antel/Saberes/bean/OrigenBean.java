@@ -20,12 +20,18 @@ public class OrigenBean {
 	
 	public void registrar() {
 		try {
+			if (registroOrigen.buscarOrigenRepetido()){
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error el origen ingresado ya existe", "");  
+		        FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
+			else{ 
 			registroOrigen.registro();
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se registró ", "con éxito!");  
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El origen fue registrado correctamente", "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
+			}
 		}
 		catch (Exception e) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al registrar ", "");  
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error no fue posible registrar el origen ", "");  
         FacesContext.getCurrentInstance().addMessage(null, msg); 
 		}
 	}
@@ -35,27 +41,27 @@ public class OrigenBean {
            
             try {
             	registroOrigen.modificar(origen);
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se modificó ", origen.getDescripcion());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "El origen " + origen.getDescripcion() + " fue modificado exitosamente", "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			} catch (Exception e) {
-				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al modificar ", origen.getDescripcion());  
+				FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error al intentar modificar el origen " + origen.getDescripcion(), "");  
 	            FacesContext.getCurrentInstance().addMessage(null, msg); 
 			}
     }
 	
 	public void onCancel(RowEditEvent event) {  
-        FacesMessage msg = new FacesMessage("Se canceló modificar ", ((Origen) event.getObject()).getDescripcion());  
+        FacesMessage msg = new FacesMessage("Se canceló la modificación del origen " + ((Origen) event.getObject()).getDescripcion(), "");  
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     }  
 	
 	public void eliminar(Long id) {
 		try {
 			registroOrigen.eliminar(id);
-			FacesMessage msg = new FacesMessage("Se eliminó ", id.toString());  
+			FacesMessage msg = new FacesMessage("El origen " + id.toString() + " se eliminó correctamente", "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		catch(Exception e) {
-			FacesMessage msg = new FacesMessage("Error al eliminar", id.toString());  
+			FacesMessage msg = new FacesMessage("Error al intentar eliminar el origen " + id.toString(), "");  
 	        FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 		  

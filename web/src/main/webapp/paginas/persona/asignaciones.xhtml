@@ -21,7 +21,7 @@
 		</h:panelGrid>
          
          <p>            
-            <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario()}" value="Buscar" update="usuarios" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario()}" value="Buscar" update="form" style="margin-left: 400px;" />
          </p>      
       
        <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" rendered="#{personaBean.usuario != null}" style="text-align:center">

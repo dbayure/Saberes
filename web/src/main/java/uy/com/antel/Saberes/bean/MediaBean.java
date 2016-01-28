@@ -35,7 +35,7 @@ public class MediaBean {
 	public void obtenerRuta() {
 		Properties p = new Properties();
 		String archivoPropiedades = System.getProperty("user.dir")
-				+ "/conf/app-properties/saberes.properties";
+				+ "/Conf/app-properties/saberes.properties";
 		System.out.println("valor del archivo de propiedades **************"
 				+ archivoPropiedades);
 		try {
