@@ -21,7 +21,7 @@
 		</h:panelGrid>
          
          <p>            
-            <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario()}" value="Buscar" update="form" style="margin-left: 400px;" />
+            <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario}" value="Buscar" update="form" style="margin-left: 400px;" />
          </p>      
       
        <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" rendered="#{personaBean.usuario != null}" style="text-align:center">
@@ -44,9 +44,7 @@
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_users.rol.rol}" /></f:facet>
                    <f:facet name="input">
-					<p:selectOneMenu id="rol" value="#{personaBean.rol}" required="true" style="width:100px">
-						<f:converter converterId="rolConverter" />
-						<f:selectItem itemLabel="Seleccione..." itemValue=""/>
+					<p:selectOneMenu id="rol" value="#{personaBean.rol}" converter="rolConverter" required="true" style="width:100px">
 						<f:selectItems value="#{roles}" var="rol" itemLabel="#{rol.rol}" itemValue="#{rol}"/>
 					</p:selectOneMenu> 	
                    </f:facet>  
