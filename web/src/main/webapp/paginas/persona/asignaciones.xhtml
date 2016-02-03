@@ -24,7 +24,7 @@
             <p:commandButton id="register" action="#{personaBean.buscarPersonaPorUsuario}" value="Buscar" update="form" style="margin-left: 400px;" />
          </p>      
       
-       <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" rendered="#{personaBean.usuario != null}" style="text-align:center">
+       <p:dataTable id="usuarios" var="_users" value="#{personaBean.listaPersonas}" editable="true" emptyMessage="No existen datos a mostrar." rendered="#{personaBean.usuario != null}" style="text-align:center">
        		<f:facet name="header">  
             	Asignar rol al usuario
         	</f:facet>
