@@ -102,6 +102,16 @@ public class NoCorporativoBean {
 			}
 	}
 	
+	public ArrayList<Institucion> institucionesPorTipo(Long tipo){
+		ArrayList<Institucion> instituciones = new ArrayList<Institucion>();
+		ArrayList<Saber> saberes = saberBean.buscarPorTipoInstitucion(tipo);
+		for (Saber saber : saberes) {
+			instituciones.add(saber.getInstitucion());
+		}
+		return instituciones;
+	}
+	
+	
 	public void asignarIdBusqueda(long id){
 		personaId = id;
 	}

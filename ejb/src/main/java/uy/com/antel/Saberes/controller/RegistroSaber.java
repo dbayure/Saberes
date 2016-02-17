@@ -83,6 +83,15 @@ public class RegistroSaber {
 		return (ArrayList<Saber>) resultado;
 	}
 	
+	public ArrayList<Saber> buscarPorTipoInstitucion(Long tipo) {
+		Query q = em.createQuery("from Saber as saber where saber.tipoSaber.id = ?");
+		q.setParameter(1, tipo);
+		List <Saber> resultado = q.getResultList();
+		
+		if (resultado.isEmpty())
+			return null;
+		return (ArrayList<Saber>) resultado;
+	}
 	 public boolean buscarSaberRepetido() {
 		   Query q = em.createQuery("SELECT s FROM Saber s WHERE UPPER(TRANSLATE(s.nombre, 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))" + 
 			"LIKE UPPER(TRANSLATE((?1), 'ÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÔÖÚÙáàãâäéèêëíìîïóòõôöúùûü', 'AAAAAEEEEIIIIOOOOOUUaaaaaeeeeiiiiooooouuuu'))");

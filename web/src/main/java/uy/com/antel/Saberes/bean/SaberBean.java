@@ -84,6 +84,16 @@ public class SaberBean implements Serializable {
 		return null;
 	}
 	
-	
+	public ArrayList<Saber> buscarPorTipoInstitucion(Long tipo){
+		try {
+			return registroSaber.buscarPorTipoInstitucion(tipo);
+		}
+		catch(Exception e) {
+			FacesMessage msg = new FacesMessage("No se encontraron saberes", "");  
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+		
+		return null;
+	}
 }
 
