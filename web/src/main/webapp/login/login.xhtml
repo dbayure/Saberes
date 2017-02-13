@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:p="http://primefaces.org/ui"
-   template="/WEB-INF/templates/defaultLogin.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/defaultLogin.xhtml">
 	<ui:define name="content">
-		<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false">
-			<h1 style="text-align: center;">Acceso al Sistema</h1>
 
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<div class="wrapper">
+			
+			<h:form id="login" onsubmit="document.getElementById('login').action='j_security_check';" prependId="false" class="form-signin">
+				
+				<h:panelGroup rendered="#{requestScope['javax.servlet.forward.servlet_path'] == '/paginas/persona/j_security_check'}">
+					<div class="alert alert-danger fade in">
+    					<a href="http://127.0.0.1:8080/Saberes-web/paginas/persona/principal.jsf" class="close" data-dismiss="alert" aria-label="close">x</a>
+    					<strong>Error</strong> Usuario o Contraseña incorrectos.
+  					</div>
+				</h:panelGroup>
+				
+				<div class="control-group warning">
+					<label class="control-label" for="j_username">Usuario</label>
+					<div class="controls">
+						<p:inputText id="j_username" name="j_username" required="required" type="text" class="form-control" /> 
+					</div>
+				</div>
+				
+				<div class="control-group warning">		
+					<label class="control-label" for="j_password">Contraseña</label>
+					<div class="controls">
+						<input id="j_password" name="j_password" type="password" required="required" class="form-control"/>
+					</div>
+				</div>
+				
+				<div class="control-group warning">
+					<div class="controls">
+						<button id="submit" value="Login" class="btn btn-lg btn-primary btn-block" >Iniciar Sesión</button>
+					</div>
+				</div>
+				
+			</h:form>
+			
+		</div>
 
-			<h:panelGrid columns="2" style="margin-left:300px">
-				<p:outputLabel for="j_username" value="Usuario" />
-				<p:inputText id="j_username" name="j_username" required="true" />
-				<p:outputLabel for="j_password" value="Contraseña" />
-				<p:password id="j_password" name="j_password" required="true" />
-				<p:commandButton id="submit" value="Login" ajax="false" />
-			</h:panelGrid>
-
-		</h:form>
 	</ui:define>
 </ui:composition>

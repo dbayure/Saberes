@@ -1,3 +1,19 @@
+/*
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
@@ -12,12 +28,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.jboss.security.auth.spi.Util;
 
 @Entity
 @XmlRootElement
@@ -25,25 +42,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Persona implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@ManyToOne(optional=false) 
-    @JoinColumn(name="idRol", nullable=false, updatable=false)
+
+	@OneToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "idRol", nullable = false, updatable = true)
 	private Rol rol;
-	
-	@OneToMany (fetch = FetchType.EAGER)
-	@JoinColumn(name="idSaberPersona", nullable=false, updatable=false)
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "persona")
 	private List<SaberPersona> saberes;
-	
+
 	private String nombre;
 	private String apellido;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date fechaNacimiento;
-	
+
 	@Temporal(TemporalType.DATE)
 	private Date fechaIngreso;
 	private String sexo;
@@ -57,6 +73,7 @@ public class Persona implements Serializable {
 	private String correo;
 	private String foto;
 	private String division;
+	private String descDivision;
 	private String area;
 	private String unidad;
 	private String piso;
@@ -67,17 +84,29 @@ public class Persona implements Serializable {
 	private String fax;
 	private String profesion;
 	private String direccion;
-	
-	@Column(unique=true, nullable=false) 
+	private String password;
+
+	@Column(unique = true, nullable = false)
 	private String usuario;
-	
-	
+
+	public Persona() {
+		saberes = new ArrayList<SaberPersona>();
+	}
+
 	public String getDivision() {
 		return division;
 	}
 
 	public void setDivision(String division) {
 		this.division = division;
+	}
+
+	public String getDescDivision() {
+		return descDivision;
+	}
+
+	public void setDescDivision(String descDivision) {
+		this.descDivision = descDivision;
 	}
 
 	public String getArea() {
@@ -96,46 +125,59 @@ public class Persona implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Persona(){
-		saberes = new ArrayList<SaberPersona>();
-	}
-	
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public Rol getRol() {
 		return rol;
 	}
+
 	public void setRol(Rol idRol) {
 		this.rol = idRol;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
 	public String getApellido() {
 		return apellido;
 	}
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
 	public Date getFechaNacimiento() {
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//		return formatter.format(fechaNacimiento);
 		return fechaNacimiento;
 	}
+
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
+
 	public String getSexo() {
+//		if (sexo.equals("M"))
+//			return "Masculino";
+//		return "Femenino";
 		return sexo;
 	}
+
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
+
 	public Date getFechaIngreso() {
 		return fechaIngreso;
 	}
@@ -143,88 +185,118 @@ public class Persona implements Serializable {
 	public void setFechaIngreso(Date fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
+
 	public String getClase() {
 		return clase;
 	}
+
 	public void setClase(String clase) {
 		this.clase = clase;
 	}
+
 	public String getJornadaLaboral() {
 		return jornadaLaboral;
 	}
+
 	public void setJornadaLaboral(String jornadaLaboral) {
 		this.jornadaLaboral = jornadaLaboral;
 	}
+
 	public String getDepartamento() {
 		return departamento;
 	}
+
 	public void setDepartamento(String departamento) {
 		this.departamento = departamento;
 	}
+
 	public String getLocalidad() {
 		return localidad;
 	}
+
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
+
 	public String getCorreo() {
 		return correo;
 	}
+
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+
 	public String getFoto() {
 		return foto;
 	}
+
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
 	public String getUnidad() {
 		return unidad;
 	}
+
 	public void setUnidad(String unidad) {
 		this.unidad = unidad;
 	}
+
 	public String getPiso() {
 		return piso;
 	}
+
 	public void setPiso(String piso) {
 		this.piso = piso;
 	}
+
 	public String getOficina() {
 		return oficina;
 	}
+
 	public void setOficina(String oficina) {
 		this.oficina = oficina;
 	}
+
 	public String getTelDirecto() {
 		return telDirecto;
+//		return telDirecto.substring(telDirecto.length() - 8, telDirecto.length());
 	}
+
 	public void setTelDirecto(String telDirecto) {
 		this.telDirecto = telDirecto;
 	}
+
 	public String getTelInterno() {
 		return telInterno;
 	}
+
 	public void setTelInterno(String telInterno) {
 		this.telInterno = telInterno;
 	}
+
 	public String getTelCelular() {
+		if (telCelular == null || telCelular.equals(""))
+			return "Añadir número móvil";
 		return telCelular;
 	}
+
 	public void setTelCelular(String telCelular) {
 		this.telCelular = telCelular;
 	}
+
 	public String getFax() {
 		return fax;
 	}
+
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}	
-	
+	}
+
 	public List<SaberPersona> getSaberes() {
 		return saberes;
 	}
@@ -273,51 +345,52 @@ public class Persona implements Serializable {
 		this.regimen = regimen;
 	}
 
+	public void addSaber(SaberPersona saber) {
+		this.saberes.add(saber);
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		String passHash = Util.createPasswordHash("SHA-256", "base64", null, null, password);
+		this.password = passHash;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result + ((apellido == null) ? 0 : apellido.hashCode());
 		result = prime * result + ((area == null) ? 0 : area.hashCode());
 		result = prime * result + ((clase == null) ? 0 : clase.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((correo == null) ? 0 : correo.hashCode());
-		result = prime * result
-				+ ((departamento == null) ? 0 : departamento.hashCode());
-		result = prime * result
-				+ ((descClase == null) ? 0 : descClase.hashCode());
-		result = prime * result
-				+ ((direccion == null) ? 0 : direccion.hashCode());
-		result = prime * result
-				+ ((division == null) ? 0 : division.hashCode());
+		result = prime * result + ((departamento == null) ? 0 : departamento.hashCode());
+		result = prime * result + ((descClase == null) ? 0 : descClase.hashCode());
+		result = prime * result + ((descDivision == null) ? 0 : descDivision.hashCode());
+		result = prime * result + ((direccion == null) ? 0 : direccion.hashCode());
+		result = prime * result + ((division == null) ? 0 : division.hashCode());
 		result = prime * result + ((fax == null) ? 0 : fax.hashCode());
-		result = prime * result
-				+ ((fechaIngreso == null) ? 0 : fechaIngreso.hashCode());
-		result = prime * result
-				+ ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
+		result = prime * result + ((fechaIngreso == null) ? 0 : fechaIngreso.hashCode());
+		result = prime * result + ((fechaNacimiento == null) ? 0 : fechaNacimiento.hashCode());
 		result = prime * result + ((foto == null) ? 0 : foto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((jornadaLaboral == null) ? 0 : jornadaLaboral.hashCode());
-		result = prime * result
-				+ ((localidad == null) ? 0 : localidad.hashCode());
+		result = prime * result + ((jornadaLaboral == null) ? 0 : jornadaLaboral.hashCode());
+		result = prime * result + ((localidad == null) ? 0 : localidad.hashCode());
 		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		result = prime * result + ((oficina == null) ? 0 : oficina.hashCode());
 		result = prime * result + ((piso == null) ? 0 : piso.hashCode());
-		result = prime * result
-				+ ((profesion == null) ? 0 : profesion.hashCode());
+		result = prime * result + ((profesion == null) ? 0 : profesion.hashCode());
 		result = prime * result + ((regimen == null) ? 0 : regimen.hashCode());
 		result = prime * result + ((rol == null) ? 0 : rol.hashCode());
 		result = prime * result + ((saberes == null) ? 0 : saberes.hashCode());
 		result = prime * result + ((sexo == null) ? 0 : sexo.hashCode());
-		result = prime * result
-				+ ((situacion == null) ? 0 : situacion.hashCode());
-		result = prime * result
-				+ ((telCelular == null) ? 0 : telCelular.hashCode());
-		result = prime * result
-				+ ((telDirecto == null) ? 0 : telDirecto.hashCode());
-		result = prime * result
-				+ ((telInterno == null) ? 0 : telInterno.hashCode());
+		result = prime * result + ((situacion == null) ? 0 : situacion.hashCode());
+		result = prime * result + ((telCelular == null) ? 0 : telCelular.hashCode());
+		result = prime * result + ((telDirecto == null) ? 0 : telDirecto.hashCode());
+		result = prime * result + ((telInterno == null) ? 0 : telInterno.hashCode());
 		result = prime * result + ((unidad == null) ? 0 : unidad.hashCode());
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 		return result;
@@ -347,6 +420,11 @@ public class Persona implements Serializable {
 				return false;
 		} else if (!clase.equals(other.clase))
 			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
 		if (correo == null) {
 			if (other.correo != null)
 				return false;
@@ -361,6 +439,11 @@ public class Persona implements Serializable {
 			if (other.descClase != null)
 				return false;
 		} else if (!descClase.equals(other.descClase))
+			return false;
+		if (descDivision == null) {
+			if (other.descDivision != null)
+				return false;
+		} else if (!descDivision.equals(other.descDivision))
 			return false;
 		if (direccion == null) {
 			if (other.direccion != null)
@@ -478,10 +561,19 @@ public class Persona implements Serializable {
 		} else if (!usuario.equals(other.usuario))
 			return false;
 		return true;
-	}	
-	
-	
-	
-	
-}
+	}
 
+	@Override
+	public String toString() {
+		return "Persona [id=" + id + ", rol=" + rol + ", saberes=" + saberes + ", nombre=" + nombre + ", apellido="
+				+ apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaIngreso=" + fechaIngreso + ", sexo="
+				+ sexo + ", clase=" + clase + ", descClase=" + descClase + ", situacion=" + situacion + ", regimen="
+				+ regimen + ", jornadaLaboral=" + jornadaLaboral + ", departamento=" + departamento + ", localidad="
+				+ localidad + ", correo=" + correo + ", foto=" + foto + ", division=" + division + ", descDivision="
+				+ descDivision + ", area=" + area + ", unidad=" + unidad + ", piso=" + piso + ", oficina=" + oficina
+				+ ", telDirecto=" + telDirecto + ", telInterno=" + telInterno + ", telCelular=" + telCelular + ", fax="
+				+ fax + ", profesion=" + profesion + ", direccion=" + direccion + ", password=" + password
+				+ ", usuario=" + usuario + "]";
+	}
+
+}

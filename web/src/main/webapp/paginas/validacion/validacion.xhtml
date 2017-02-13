@@ -1,96 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	template="/WEB-INF/templates/default.xhtml">
-	<ui:define name="content">
-		<h1 style="text-align: center;">Validacion de Saberes</h1>
 
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
 
 		<h:form id="form" prependId="false">
-			<h2>Bandeja de Entrada</h2>
-			
-			<p:messages id="messages" showDetail="true" autoUpdate="true"
-				closable="true" />
-			<h:outputText value="PDF: " />
-			<h:outputText value="#{personaBean.rutaPDF}" />
-			<h:outputText value="IMG: " />
-			<h:outputText value="#{personaBean.rutaIMG}" />
-			
-				
-			<p:dataScroller id="personasValidar" value="#{personas}" var="_persona" chunkSize="5">
-
-				<h:panelGrid columns="3" style="width:100%"	rendered="#{personaBean.faltaValidar(_persona.id) eq true}">
-
-					<h:panelGrid style="width:30%">
-						<h:graphicImage value="#{personaBean.rutaIMG}/foto.jpeg"
-							style="height: 60px; width: 60px;" />
-					</h:panelGrid>
-
-					<h:panelGrid columns="4" style="width:70%;">
-
-						<h:outputText value="Nombre:" />
-						<h:outputText value="#{_persona.nombre}" style="font-weight: bold" />
-
-						<h:outputText value="Apellido:" />
-						<h:outputText value="#{_persona.apellido}"
-							style="font-weight: bold" />
-
-						<h:outputText value="Usuario:" />
-						<h:outputText value="#{_persona.usuario}"
-							style="font-weight: bold" />
-
-					</h:panelGrid>
-
-					<h:panelGrid style="width:10%">
-
-						<p:commandLink action="#{personaBean.asignarId(_persona.id)}" update=":form">
-							<h:graphicImage value="/resources/imagenes/mas.png" height="20px" />
-						</p:commandLink>
-
-					</h:panelGrid>
-
-				</h:panelGrid>
-				<p:dataTable var="_nc" value="#{personaBean.obtenerSaberesPersona(_persona.id)}" rendered="#{personaBean.idPersona == _persona.id}">
-					<p:column headerText="Nombre">
-						<h:outputText value="#{_nc.saber.nombre}" />
-					</p:column>
-
-					<p:column headerText="Institucion">
-						<h:outputText value="#{_nc.saber.institucion.nombre}" />
-					</p:column>
-
-					<p:column headerText="Fecha inicio">
-						<h:outputText value="#{_nc.fechaInicio}" />
-					</p:column>
-
-					<p:column headerText="Fecha fin">
-						<h:outputText value="#{_nc.fechaFin}" />
-					</p:column>
-					
-					<p:column headerText="Comprobantes">            
-            			<p:commandButton id="comprobante" value="Comprobante" onclick="PF('dlgPDF').show()" />
-         			</p:column>
 		
-					<p:column headerText="Validado">
-						<h:outputText value="#{_nc.validado}" />
-					</p:column>
-				</p:dataTable>
-				
-<!-- 				<h:panelGrid id="panelPDF" rendered="#{personaBean.idPersona == _persona.id}"> -->
+			<h3 class="text-muted">Bandeja de Entrada</h3>
+			<hr color="#0080ff" size="1" />
+			
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
+			
+			<p:dataScroller id="personasValidar" value="#{personaBean.listaPersonasPorValidar()}" var="_persona" chunkSize="5" reflow="true" >
+		
+			<div class="container-fluid">
+				<ul class="list-inline">
+					<li>
+	               		<span></span> 
+	               		<b>Nombre: </b>#{_persona.nombre}
+					</li>
+					<li>
+	               		<span></span> 
+	               		<b>Apellido: </b>#{_persona.apellido}
+					</li>
+					<li>
+	               		<span></span> 
+	               		<b>Usuario: </b>#{_persona.usuario}
+					</li>
+				</ul>
+			</div>
 					
-<!-- 					<p:media value="#{validacionBean.rutaIMG}/1.pdf" width="100%" height="500" player="pdf"/> -->
-<!-- 					<object type="application/pdf" data="/Saberes-web/resources/imagenes/1.pdf?pfdrid_c=true" height="100%" width="100%"/>	 -->
-<!-- 				</h:panelGrid> -->
+			<p:dataTable id="Validar" var="_nc" value="#{personaBean.obtenerSaberesPorPersonaPendienteDeValidar(_persona.id)}"
+			 			 reflow="true" style="text-align: center">
+									
+				<p:column headerText="Nombre" style="text-transform: capitalize;">
+					<h:outputText value="#{_nc.saber.nombre}" />
+				</p:column>
+
+				<p:column headerText="Institucion" style="text-transform: capitalize;">
+					<h:outputText value="#{_nc.saber.institucion.nombre}" />
+				</p:column>
 				
+				<p:column headerText="Fecha inicio" style="text-transform: capitalize;">
+					<h:outputText value="#{_nc.fechaInicio}" />
+				</p:column>
+
+				<p:column headerText="Fecha fin" style="text-transform: capitalize;">
+					<h:outputText value="#{_nc.fechaFin}" />
+				</p:column>
+				
+				<p:column headerText="Comprobantes"	style="text-transform: capitalize;">
+					<p:commandButton id="downloadLink" value="VerPDF" ajax="false" immediate="true" icon="ui-icon-document"
+									 actionListener="#{mediaBean.prepDownload(_nc.comprobante.id)}">
+						<p:fileDownload value="#{mediaBean.download}" />
+					</p:commandButton>
+				</p:column>
+	
+				<p:column headerText="Estado" style="text-transform: capitalize;">
+					<h:outputText value="#{personaBean.convertirValidacion(_nc.validado)}" />
+				</p:column>
+				
+				<p:column headerText="Validar" style="text-transform: capitalize;">
+					<p:commandButton icon="ui-icon-check" action="#{personaBean.validarNoCorporativo(_nc.id, _persona.id)}" 
+									 update=":form" value="Validar" />
+				</p:column>
+				
+				<p:column headerText="Rechazar" style="text-transform: capitalize;">
+					<p:commandButton id="btnComentario" icon="ui-icon-closethick" oncomplete="PF('dlgRechazo').show()" 
+									 value="Rechazar" action="#{personaBean.definirSaberRechazado(_nc.persona.id,_nc.id)}"/>
+				</p:column>	
+					
+			</p:dataTable>
+									
 			</p:dataScroller>
-				
-			<p:dialog widgetVar="dlgPDF" modal="true" width="100%" height="1024px" position="top">
-				<object type="application/pdf" data="#{personaBean.rutaPDF}/1.pdf?pfdrid_c=true" height="100%" width="100%"/>
-			</p:dialog>
+			
+			<h:outputText value="No existen usuarios con saberes pendientes de validación" rendered="#{personaBean.listaVacia}" />
+	
+			<p:dialog widgetVar="dlgRechazo" modal="true" resizable="false" responsive="true">
+				<div class="container-fluid">
+					<div class="row" align="left">
+						<ul class="list-inline">
+							<li>
+								<p class="text-muted">Motivo del rechazo</p>	
+							</li>
+						</ul>
+					</div>
+					<div class="row" align="left">
+						<ul class="list-inline">
+							<li>
+								<p:inputTextarea value="#{personaBean.motivoRechazo}" style="width:200px; height:200px"/>	
+							</li>
+						</ul>
+					</div>
+					<div class="row" align="center">
+						<ul class="list-inline">
+							<li>
+								<p:commandButton value="Aceptar" onclick="PF('dlgRechazo').hide()" action="#{personaBean.rechazarNoCorporativo()}" update=":form"/>
+	
+							</li>
+							<li>
+								<p:commandButton value="Cancelar" onclick="PF('dlgRechazo').hide()" update=":form"/>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</p:dialog>		
 			
 		</h:form>
+		
 	</ui:define>
 </ui:composition>

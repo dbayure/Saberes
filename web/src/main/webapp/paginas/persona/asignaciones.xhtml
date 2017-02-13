@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+   	<h3 class="text-muted">Administar Rol de un Usuario</h3>
+	<br />
+	<hr color="#0080ff" size="1" />
+	
+      <h:form id="form" prependId="false">
+      
+      	<p:growl id="msgs" showDetail="false" />
+			
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	    	<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	        	<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	    	</h:panelGrid>   
+	    </p:confirmDialog>
+	    
+    	<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />       
+       	
+       	<div class="ui-fluid">
+   			<p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" 
+   						 columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2ui-grid-col-3">
+					
+				<label for="usuario">Usuario : * </label>	
+				<p:inputText id="usuario" value="#{personaBean.usuarioRol}" label="usurio" 
+							 required="true" requiredMessage="Debe ingresar un valor para el usuario"/>
+				<p:commandButton id="register" action="#{personaBean.buscarPersonaAsignarRol()}" value="Buscar" 
+			            		 update=":form" icon="ui-icon-search"/>
+			</p:panelGrid>
+		</div>
+        
+       	<hr color="#0080ff" size="1" /> 
+      
+	       <p:dataTable id="usuarios" var="_usuario" value="#{personaBean.listaPersonaRol}" editable="true" editMode="cell" reflow="true"
+	       				emptyMessage="No existen datos a mostrar." rendered="#{personaBean.usuarioRol != null}" style="text-align:center">
+	       				
+	       		<f:facet name="header">  
+	            	<p class="text-muted">Asignar rol al usuario</p>
+	        	</f:facet>
+	        	
+	        	<p:ajax event="cellEdit" listener="#{personaBean.onCellEdit}" update=":form:messages"/>  
+	        	 
+	        	 <p:column headerText="Id" style="text-align: center;">
+	        	 	<h:outputText value="#{_usuario.id}" />
+	        	 </p:column>
+	        	 
+	        	 <p:column headerText="Nombre" style="text-align: center;">  
+					<h:outputText value="#{_usuario.nombre}" />
+	           	 </p:column>  
+	           	 
+	        	 <p:column headerText="Rol asignado" style="text-align: center;">  
+	               <p:cellEditor>  
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_usuario.rol.rol}" />
+	                   </f:facet>
+	                   <f:facet name="input">
+						   <p:selectOneMenu id="rol" value="#{_usuario.rol}" converter="rolConverter" required="true" style="width:100%">
+						   		<f:selectItems value="#{roles}" var="_rol" itemLabel="#{_rol.rol}" itemValue="#{_rol}"/>
+						   </p:selectOneMenu> 	
+	                   </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>  
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

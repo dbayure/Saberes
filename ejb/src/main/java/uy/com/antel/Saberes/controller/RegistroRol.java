@@ -1,3 +1,19 @@
+/*
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.Saberes.controller;
 
 import java.util.logging.Logger;
@@ -9,7 +25,8 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+
+import uy.com.antel.Saberes.data.ExtrasListProducer;
 import uy.com.antel.Saberes.model.Rol;
 
 
@@ -26,9 +43,11 @@ public class RegistroRol {
 
 	   @Inject
 	   private Event<Rol> rolEventSrc;
+	   
+	   @Inject ExtrasListProducer elp;
 
 	   private Rol newRol;
-
+	   
 	   @Produces
 	   @Named
 	   public Rol getNewRol() {
@@ -61,19 +80,16 @@ public class RegistroRol {
 	   }
 
 	   public Rol buscarPerfilBasico() throws Exception{
-		   Query q = em.createQuery("Select r from Rol r where r.descripcion = ?1");
-		   q.setParameter(1,"BASICO");
-		   
-		   Rol rolBasico = (Rol) q.getSingleResult(); 
-		   
-		   return rolBasico;
-
+		  return elp.buscarPerfilBasico();
+	   }
+	   
+	   public boolean buscarRolRepetido() {
+		   return elp.buscarInstitucionRepetida(newRol.getRol());
 	   }
 	   
 	   @PostConstruct
 	   public void initNewrol() {
 		   newRol = new Rol();
 	   }
-	  
-
+	   
 }

@@ -1,3 +1,19 @@
+/*
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.Saberes.data;
 
 import java.util.List;
@@ -43,5 +59,16 @@ public class InstitucionListProducer {
       Root<Institucion> institucion = criteria.from(Institucion.class);
       criteria.select(institucion).orderBy(cb.asc(institucion.get("nombre")));
       instituciones = em.createQuery(criteria).getResultList();
+   }
+   
+   public Institucion getInstitucionPorNombre(String nombre){
+	  Institucion inst = new Institucion();
+      CriteriaBuilder cb = em.getCriteriaBuilder();
+      CriteriaQuery<Institucion> criteria = cb.createQuery(Institucion.class);
+      Root<Institucion> institucion = criteria.from(Institucion.class);
+      criteria.select(institucion);
+      criteria.where(cb.equal(institucion.get("nombre"), nombre));
+      inst = em.createQuery(criteria).getSingleResult();
+      return inst;
    }
 }

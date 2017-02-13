@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:f="http://java.sun.com/jsf/core"
@@ -6,68 +23,82 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración Rol</h1>
+	<h3 class="text-muted">Administar Roles</h3>
+	<br />
+	<hr color="#0080ff" size="1" />
 	
-
       <h:form id="form" prependId="false">
-         <h2>Registro</h2>
-         
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
-         
-         <h:panelGrid columns="2" >
-
-			<p:outputLabel for="nombre" value="Nombre:" />
-			<p:inputText id="nombre" value="#{newRol.rol}" label="nombre" required="true" />
-			
-			<p:outputLabel for="desc" value="Descripcion:" />
-			<p:inputText id="desc" value="#{newRol.descripcion}" label="descripcion" required="false" />
-
-		</h:panelGrid>
-         
-         <p>            
-            <h:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-         </p>      
-      <h:panelGroup rendered="#{empty rol}">
-         <em>No hay Rol registrado.</em>
-      </h:panelGroup>
       
-       <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true">
-       		<f:facet name="header">  
-            	Administrar Rol  
-        	</f:facet>
-        	
-        	<p:ajax event="rowEdit" listener="#{rolBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{rolBean.onCancel}" update=":form:messages" />  
-        	 
-        	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_rol.id}" />
-        	 </p:column>
-        	 
-        	 <p:column headerText="Nombre" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_rol.rol}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputRol" value="#{_rol.rol}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>  
-           	 
-        	 <p:column headerText="Descripcion" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_rol.descripcion}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_rol.descripcion}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>  
-           	            	 
-           	 <p:column style="width:3%">           	 
-	            <p:rowEditor />	         	           
-	        </p:column>
-	       <!--  -->
-	        <p:column style="width:3%">
-	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{rolBean.eliminar(_rol.id)}">
-	        	</p:commandLink>	        	
-	        </p:column>
-	        
-       </p:dataTable>       
+      	<p:growl id="msgs" showDetail="false" />
+							
+	    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	    	<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	        	<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	     	</h:panelGrid>   
+	    </p:confirmDialog>
+         
+       <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />   
+          
+		<div class="ui-fluid">
+   			<p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" 
+   						 columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+					
+					<label for="nombre">Nombre : *</label>	
+					<p:inputText id="nombre" value="#{newRol.rol}" label="nombre" required="true" 
+								 requiredMessage="Debe ingresar un valor para el nombre" maxlength="250"/>
+					<label for="nombre">Descripción : </label>
+					<p:inputText id="desc" value="#{newRol.descripcion}" label="descripcion" required="false" maxlength="250"/>	
+				</p:panelGrid>
+				<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank"	columnClasses="ui-grid-col-10,ui-grid-col-2">
+					<label for="nombre"></label>
+					<p:commandButton id="register" action="#{rolBean.registrar}" value="Registrar" update="form" icon="ui-icon-plus"/>
+				</p:panelGrid>
+			</div>
+        <hr color="#0080ff" size="1" />
+ 		     
+	      <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true" style="text-align:center" editMode="cell" reflow="true"
+	       				emptyMessage="No existen datos a mostrar." sortBy="#{_rol.id}" >
+	       		<f:facet name="header">  
+	            	<p class="text-muted">Roles</p>
+	        	</f:facet>
+	        	
+	        	<p:ajax event="cellEdit" listener="#{rolBean.onCellEdit}" update=":form:messages"/>  
+	        	 
+	        	 <p:column headerText="Id" style="text-transform: capitalize; width:10%">
+	        	 	<h:outputText value="#{_rol.id}" />
+	        	 </p:column>
+	        	 
+	        	 <p:column headerText="Nombre" style="text-transform: capitalize;">  
+	               <p:cellEditor>  
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_rol.rol}" />
+	                   	</f:facet>  
+	                   <f:facet name="input">
+	                   		<p:inputText id="modelInputRol" value="#{_rol.rol}" style="width:96%" required="true"/>
+	                   </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>  
+	           	 
+	        	 <p:column headerText="Descripción" style="text-transform: capitalize;">  
+	               <p:cellEditor>  
+	                   <f:facet name="output">
+	                   		<h:outputText value="#{_rol.descripcion}" />
+	                   </f:facet>  
+	                   <f:facet name="input">
+	                   		<p:inputText id="modelInputDesc" value="#{_rol.descripcion}" style="width:96%" required="false"/>
+	                   </f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>  
+	     
+		        <p:column headerText="Eliminar" style="text-transform: capitalize;">
+		        	<p:commandButton  id="deleteLink" update=":form" immediate="true" ajax="true" icon="ui-icon-trash" value="Eliminar"
+		        					actionListener="#{rolBean.eliminar(_rol.id)}">
+		        		<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el rol" icon="ui-icon-alert" />
+		     		</p:commandButton>	        	
+		        </p:column>
+		  </p:dataTable>
+        
 		</h:form>     
    </ui:define>
 </ui:composition>

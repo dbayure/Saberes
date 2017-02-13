@@ -1,115 +1,164 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:ui="http://java.sun.com/jsf/facelets"
-   xmlns:f="http://java.sun.com/jsf/core"
-   xmlns:h="http://java.sun.com/jsf/html"
-   xmlns:p="http://primefaces.org/ui"
-   template="/WEB-INF/templates/default.xhtml">
-   <ui:define name="content">
-      <h1 style="text-align: center;">Administración de Saberes</h1>
-	
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		<h:form id="form" prependId="false">
+			<h3 class="text-muted">Administrar de Saberes</h3>
+			<br />
+			<hr color="#0080ff" size="1" />
+			
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+	    		<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+	        		<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+	        		<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+	     		</h:panelGrid>   
+	   		 </p:confirmDialog>
 
-      <h:form id="form" prependId="false">
-         
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
 
-			<h:panelGrid>
-				<h2>Saberes</h2>
-				<p:outputLabel for="nombre" value="Nombre:" />
-				<p:inputText id="nombre" value="#{newSaber.nombre}" label="nombre"
-					required="true" />
+			<div class="ui-fluid">
+			
+				<p:panelGrid columns="6" layout="grid" 
+							 columnClasses="ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3,ui-grid-col-1,ui-grid-col-3" 
+							 styleClass="ui-panelgrid-blank">
+					
+					<label>Nombre: </label>
+					<p:inputText id="nombre" value="#{newSaber.nombre}" label="nombre"
+						required="true"
+						requiredMessage="Debe ingresar un valor para el nombre"
+						autocomplete="false" />
+					<label>Tipo: </label>
+					<p:selectOneMenu id="tipoSaber" value="#{newSaber.tipoSaber}"
+						valueChangeListener="#{saberBean.rellenarListener}"
+						required="true"	requiredMessage="Debe ingresar un valor para el tipo de saber"
+						style="vertical-align:middle;">
+						<f:converter converterId="tipoSaberConverter" />
+						<f:selectItem itemLabel="Seleccione..." itemValue="" />
+						<f:selectItems value="#{tipoSaberes}" var="tipoSaber"
+							itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}" />
+						<p:ajax update="@form" />
+					</p:selectOneMenu>
+					<label>Semestres: </label>
+					<p:selectOneMenu id="semestres" style="vertical-align:middle;"
+						value="#{newSaber.duracion}" label="duracion">
+						<f:selectItem itemLabel="1 Año (2 semestres)" itemValue="2" />
+						<f:selectItem itemLabel="1,5 Años (3 semestres)" itemValue="3" />
+						<f:selectItem itemLabel="2 Años (4 semestres)" itemValue="4" />
+						<f:selectItem itemLabel="2,5 Años (5 semestres)" itemValue="5" />
+						<f:selectItem itemLabel="3 Años (6 semestres)" itemValue="6" />
+						<f:selectItem itemLabel="3,5 Años (7 semestres)" itemValue="7" />
+						<f:selectItem itemLabel="4 Años (8 semestres)" itemValue="8" />
+						<f:selectItem itemLabel="4,5 Años (9 semestres)" itemValue="9" />
+						<f:selectItem itemLabel="5 Años (10 semestres)" itemValue="10" />
+						<f:selectItem itemLabel="5,5 Años (11 semestres)" itemValue="11" />
+						<f:selectItem itemLabel="6 Años (12 semestres)" itemValue="12" />
+					</p:selectOneMenu>
+					</p:panelGrid>
+					<p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank"
+								 columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-2,ui-grid-col-3">
+					<label>Institución: </label>
+					<p:selectOneMenu id="institucion" style="vertical-align:middle;" value="#{newSaber.institucion}">
+						<f:converter converterId="institucionConverter" />
+						<f:selectItem itemLabel="Seleccione..." itemValue="" />
+						<f:selectItems value="#{instituciones}" var="institucion"
+							itemLabel="#{institucion.nombre}" itemValue="#{institucion}" />
+					</p:selectOneMenu>
+					<label>Plan: </label>
+					<p:inputText id="anoPlan" value="#{newSaber.añoPlan}" size="4" maxlength="4">
+						<f:validateLength minimum="2" maximum="4" />
+					</p:inputText>
+					<p:commandButton id="register" action="#{saberBean.registrar}"
+						value="Registrar" update="form" icon="ui-icon-search" />
+				</p:panelGrid>
+			</div>
 
-				<p:outputLabel for="tipoSaber" value="Tipo de saber:" />
-				<p:selectOneMenu id="tipoSaber" value="#{newSaber.tipoSaber}"
-					required="true">
-					<f:converter converterId="tipoSaberConverter" />
-					<f:selectItem itemLabel="Seleccione..." itemValue="" />
-					<f:selectItems value="#{tipoSaberes}" var="tipoSaber"
-						itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}" />
-				</p:selectOneMenu>
+			<hr color="#0080ff" size="1" />
 
-				<p:outputLabel for="institucion" value="Institucion:" /> 
-				<p:selectOneMenu id="institucion" value="#{newSaber.institucion}" >
-					<f:converter converterId="institucionConverter" />
-					<f:selectItem itemLabel="Seleccione..." itemValue="" />
-					<f:selectItems value="#{instituciones}" var="institucion"
-						itemLabel="#{institucion.nombre}" itemValue="#{institucion}" />
-				</p:selectOneMenu>
+			<p:dataTable id="saberes" var="_saber" value="#{saberes}" style="text-align:center" rows="10" paginator="true"
+				emptyMessage="No existen datos a mostrar." editable="true" editMode="cell" reflow="true" sortBy="#{_saber.nombre}">
 
-				<p:outputLabel for="duracion" value="Duracion:" />
-				<p:selectOneMenu id="duracion" value="#{newSaber.duracion}"
-					label="duracion">
-					<f:selectItem itemLabel="1 Año" itemValue="1" />
-					<f:selectItem itemLabel="2 Año" itemValue="2" />
-					<f:selectItem itemLabel="3 Año" itemValue="3" />
-					<f:selectItem itemLabel="4 Año" itemValue="4" />
-					<f:selectItem itemLabel="5 Año" itemValue="5" />
-					<f:selectItem itemLabel="6 Año" itemValue="6" />
-				</p:selectOneMenu>
+				<f:facet name="header">
+					<p class="text-muted">Administrar Saberes</p>
+				</f:facet>
 
-				<p:outputLabel for="anoPlan" value="Plan:" />
-				<p:inputText id="anoPlan" value="#{newSaber.añoPlan}"
-					label="anoPlan" size="4" maxlength="4">
-					<f:validateLength minimum="2" maximum="4" />
-				</p:inputText>
+				<p:ajax event="cellEdit" listener="#{saberBean.onCellEdit}" update=":form:messages" />
 
-			</h:panelGrid>
+				<p:column headerText="Id" style="text-transform: capitalize; width:10%">
+					<h:outputText value="#{_saber.id}" />
+				</p:column>
 
-			<p>            
-            <h:commandButton id="register" action="#{saberBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-         </p>      
-      <h:panelGroup rendered="#{empty saberes}">
-         <em>No hay Saber registrado.</em>
-      </h:panelGroup>
-      
-       <p:dataTable id="saberes" var="_saber" value="#{saberes}" editable="true">
-       		<f:facet name="header">  
-            	Administrar Saber  
-        	</f:facet>
-        	
-        	<p:ajax event="rowEdit" listener="#{saberBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{saberBean.onCancel}" update=":form:messages" />  
-        	 
-        	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_saber.id}" />
-        	 </p:column>
-        	 
-        	 <p:column headerText="Nombre" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_saber.nombre}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputSaber" value="#{_saber.nombre}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>  
-           	 
-           	 <p:column headerText="Tipo de Saber" style="width:25%">  
-               <p:cellEditor>  
-               		<f:facet name="output"><h:outputText value="#{_saber.tipoSaber.nombre}" /></f:facet> 
-                   <f:facet name="input">
-               			<p:selectOneMenu value="#{_saber.tipoSaber}" converter="tipoSaberConverter">			
-							<f:selectItems value="#{tipoSaberes}" var="tipoSaber" itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}"  />
-						</p:selectOneMenu>
-             		</f:facet>  
-               </p:cellEditor>  
-           	 </p:column> 
-           	 
-           	 <p:column headerText="Institucion" style="width:25%">  
-               <p:cellEditor>
-                   <f:facet name="output">
-                   		<h:outputText value="#{_saber.institucion.nombre}" />
-                   </f:facet>  
-                   <f:facet name="input">
-                   		<p:selectOneMenu value="#{_saber.institucion}" converter="institucionConverter">			
-							<f:selectItems value="#{instituciones}" var="institucion" itemLabel="#{institucion.nombre}" itemValue="#{institucion}"  />
-						</p:selectOneMenu>
-                   </f:facet>  
-               </p:cellEditor>  
-           	 </p:column>
-           	 
-			<p:column headerText="Duracion" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_saber.duracion}" /></f:facet>  
-                   <f:facet name="input">
-                   			<p:selectOneMenu id="modelInputDuracion" value="#{_saber.duracion}" label="duracion">
+				<p:column headerText="Nombre" style="text-transform: capitalize;">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_saber.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInputSaber" value="#{_saber.nombre}"
+								style="width:96%" required="true"
+								requiredMessage="Debe ingresar un valor para el tipo de saber" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Tipo de Saber" style="text-transform: capitalize;">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_saber.tipoSaber.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{_saber.tipoSaber}"
+								converter="tipoSaberConverter">
+								<f:selectItems value="#{tipoSaberes}" var="tipoSaber"
+									itemLabel="#{tipoSaber.nombre}" itemValue="#{tipoSaber}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Institución" style="text-transform: capitalize;">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_saber.institucion.nombre}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu value="#{_saber.institucion}"
+								converter="institucionConverter">
+								<f:selectItems value="#{instituciones}" var="institucion"
+									itemLabel="#{institucion.nombre}" itemValue="#{institucion}" />
+							</p:selectOneMenu>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Semestres" style="text-transform: capitalize;">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_saber.duracion}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:selectOneMenu id="modelInputDuracion"
+								value="#{_saber.duracion}" label="duracion">
 								<f:selectItem itemLabel="1 Año" itemValue="1" />
 								<f:selectItem itemLabel="2 Año" itemValue="2" />
 								<f:selectItem itemLabel="3 Año" itemValue="3" />
@@ -117,28 +166,31 @@
 								<f:selectItem itemLabel="5 Año" itemValue="5" />
 								<f:selectItem itemLabel="6 Año" itemValue="6" />
 							</p:selectOneMenu>
-                   </f:facet>  
-               </p:cellEditor>  
-           	 </p:column>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
 
-			<p:column headerText="Plan" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_saber.añoPlan}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputAnio" value="#{_saber.añoPlan}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>   
-           	 
-           	 <p:column style="width:3%">           	 
-	            <p:rowEditor />	         	           
-	        </p:column>
-	        <!--  -->
-	        <p:column style="width:3%">
-	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{saberBean.eliminar(_saber.id)}">
-	        	</p:commandLink>	        	
-	        </p:column>
-	        
-       </p:dataTable>       
-		</h:form>     
-   </ui:define>
+				<p:column headerText="Plan" style="text-transform: capitalize;">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{_saber.añoPlan}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText id="modelInputAnio" value="#{_saber.añoPlan}"
+								style="width:96%" required="true" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Eliminar" style="text-transform: capitalize;">
+					<p:commandButton id="deleteLink" update=":form" immediate="true" ajax="true" icon="ui-icon-trash" 
+									 value="Eliminar" actionListener="#{saberBean.eliminar(_saber.id)}">
+						<p:confirm header="Confirmación" message="Esta seguro que desea eliminar el saber" icon="ui-icon-alert" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			
+		</h:form>
+	</ui:define>
 </ui:composition>

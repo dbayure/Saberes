@@ -1,3 +1,19 @@
+/*
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.Saberes.model;
 
 import java.io.Serializable;
@@ -33,9 +49,11 @@ public class Saber implements Serializable {
 		private Institucion institucion;
 		
 		private Integer añoPlan;
-		
 		private Integer duracion;
+		private Integer codgicca; 
+		private String internoexterno;
 
+		
 		public Long getId() {
 			return id;
 		}
@@ -43,9 +61,19 @@ public class Saber implements Serializable {
 		public void setId(Long id) {
 			this.id = id;
 		}
+		
+		public String formatearNombre(String p){
+			if (p != null && !p.equals("")){
+				if (p.length() == 1)
+					return p.substring(0, 1).toUpperCase();
+				else
+					return p.substring(0, 1).toUpperCase() + p.substring(1);
+			}
+			return p;
+		}
 
 		public String getNombre() {
-			return nombre;
+			return formatearNombre(this.nombre);
 		}
 
 		public void setNombre(String nombre) {
@@ -83,9 +111,25 @@ public class Saber implements Serializable {
 		public Integer getDuracion() {
 			return duracion;
 		}
-
+		
 		public void setDuracion(Integer duracion) {
 			this.duracion = duracion;
+		}
+
+		public Integer getCodgicca() {
+			return codgicca;
+		}
+
+		public void setCodgicca(Integer codgicca) {
+			this.codgicca = codgicca;
+		}
+
+		public String getInternoexterno() {
+			return internoexterno;
+		}
+
+		public void setInternoexterno(String internoexterno) {
+			this.internoexterno = internoexterno;
 		}
 
 		@Override
@@ -95,10 +139,15 @@ public class Saber implements Serializable {
 			result = prime * result
 					+ ((añoPlan == null) ? 0 : añoPlan.hashCode());
 			result = prime * result
+					+ ((codgicca == null) ? 0 : codgicca.hashCode());
+			result = prime * result
 					+ ((duracion == null) ? 0 : duracion.hashCode());
 			result = prime * result + ((id == null) ? 0 : id.hashCode());
 			result = prime * result
 					+ ((institucion == null) ? 0 : institucion.hashCode());
+			result = prime
+					* result
+					+ ((internoexterno == null) ? 0 : internoexterno.hashCode());
 			result = prime * result
 					+ ((nombre == null) ? 0 : nombre.hashCode());
 			result = prime * result
@@ -120,6 +169,11 @@ public class Saber implements Serializable {
 					return false;
 			} else if (!añoPlan.equals(other.añoPlan))
 				return false;
+			if (codgicca == null) {
+				if (other.codgicca != null)
+					return false;
+			} else if (!codgicca.equals(other.codgicca))
+				return false;
 			if (duracion == null) {
 				if (other.duracion != null)
 					return false;
@@ -135,6 +189,11 @@ public class Saber implements Serializable {
 					return false;
 			} else if (!institucion.equals(other.institucion))
 				return false;
+			if (internoexterno == null) {
+				if (other.internoexterno != null)
+					return false;
+			} else if (!internoexterno.equals(other.internoexterno))
+				return false;
 			if (nombre == null) {
 				if (other.nombre != null)
 					return false;
@@ -147,8 +206,6 @@ public class Saber implements Serializable {
 				return false;
 			return true;
 		}
-
-
-
+		
 		
 }

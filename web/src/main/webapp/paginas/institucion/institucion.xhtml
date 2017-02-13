@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:f="http://java.sun.com/jsf/core"
@@ -6,58 +23,62 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
    <ui:define name="content">
-      <h1 style="text-align: center;">Administración Institucion</h1>
-	
-
-      <h:form id="form" prependId="false">
-         <h2>Registro</h2>
-         
-         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
-         
-         <h:panelGrid columns="2" >
-
-			<p:outputLabel for="nombre" value="Nombre:" />
-			<p:inputText id="nombre" value="#{newInstitucion.nombre}" label="nombre" required="true" />
+		<h:form id="form" prependId="false">
+		
+			<h3 class="text-muted">Administrar Instituciones</h3>
+			<br />
+			<hr color="#0080ff" size="1" />			
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+		    	<h:panelGrid columns="2" style="margin: 0 auto;" cellpadding="15">
+		        	<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+		        	<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		     	</h:panelGrid>   
+	    	</p:confirmDialog>
+	    	
+			<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
 			
-		</h:panelGrid>
-         
-         <p>            
-            <h:commandButton id="register" action="#{institucionBean.registrar}" value="Registrar" style="margin-left: 400px;" />
-         </p>      
-      <h:panelGroup rendered="#{empty instituciones}">
-         <em>No hay Institucion registrada.</em>
-      </h:panelGroup>
-      
-       <p:dataTable id="instituciones" var="_institucion" value="#{instituciones}" editable="true">
-       		<f:facet name="header">  
-            	Administrar Institucion  
-        	</f:facet>
-        	
-        	<p:ajax event="rowEdit" listener="#{institucionBean.onEdit}" update=":form:messages" />  
-        	<p:ajax event="rowEditCancel" listener="#{institucionBean.onCancel}" update=":form:messages" />  
-        	 
-        	 <p:column headerText="Id" style="width:5%">
-        	 	<h:outputText value="#{_institucion.id}" />
-        	 </p:column>
-        	 
-        	 <p:column headerText="Nombre" style="width:25%">  
-               <p:cellEditor>  
-                   <f:facet name="output"><h:outputText value="#{_institucion.nombre}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInputInstitucion" value="#{_institucion.nombre}" style="width:96%" required="true"/></f:facet>  
-               </p:cellEditor>  
-           	 </p:column>  
-           	            	 
-           	 <p:column style="width:3%">           	 
-	            <p:rowEditor />	         	           
-	        </p:column>
-	       <!--  -->
-	        <p:column style="width:3%">
-	        	<p:commandLink  id="deleteLink" update=":form" immediate="true" ajax="true"
-	        		styleClass="ui-icon ui-icon-trash" actionListener="#{institucionBean.eliminar(_institucion.id)}">
-	        	</p:commandLink>	        	
-	        </p:column>
+			<div class="ui-fluid">
+   				<p:panelGrid columns="4" layout="grid" styleClass="ui-panelgrid-blank" 
+   							 columnClasses="ui-grid-col-2,ui-grid-col-3,ui-grid-col-2ui-grid-col-3">
+					
+					<label for="nombre">Nombre : *</label>	
+					<p:inputText id="nombre" value="#{newInstitucion.nombre}" label="nombre" required="true" 
+	               				 requiredMessage="Debe ingresar un valor para el nombre" autocomplete="false"/> 
+					<p:commandButton id="register" action="#{institucionBean.registrar}" value="Registrar" 
+            						 update="form" icon="ui-icon-search"/>
+				</p:panelGrid>
+			</div>					
+			
+            <hr color="#0080ff" size="1" />
+              
+       		<p:dataTable id="instituciones" var="_institucion" value="#{instituciones}" style="text-align:center" sortBy="#{_institucion.nombre}"
+       					 emptyMessage="No existen datos a mostrar." editable="true" editMode="cell" reflow="true" >
+       					 
+	       		<f:facet name="header">  
+		        	<p class="text-muted">Instituciones creadas</p>
+	        	</f:facet>
+	        	
+	        		<p:ajax event="cellEdit" listener="#{institucionBean.onCellEdit}" update=":form:messages"/>  
+	        	
+	        	 <p:column headerText="Id" style="text-transform: capitalize; width:10%">
+	        	 	<h:outputText value="#{_institucion.id}" />
+	        	 </p:column>
+	        	 
+	        	 <p:column headerText="Nombre" style="text-transform: capitalize;">  
+	               <p:cellEditor>  
+	                   <f:facet name="output"><h:outputText value="#{_institucion.nombre}" /></f:facet>  
+	                   <f:facet name="input"><p:inputText id="modelInputInstitucion" value="#{_institucion.nombre}" style="width:96%" required="true" requiredMessage="Debe ingresar un valor para la institución"/></f:facet>  
+	               </p:cellEditor>  
+	           	 </p:column>  
+	
+		        <p:column style="text-transform: capitalize;" headerText="Eliminar">
+		        	<p:commandButton id="deleteLink" update=":form" immediate="true" ajax="true" icon="ui-icon-trash" value="Eliminar"
+		        					 actionListener="#{institucionBean.eliminar(_institucion.id)}">
+		        		<p:confirm header="Confirmación" message="Esta seguro que desea eliminar la institución" icon="ui-icon-alert" />
+		        	</p:commandButton>	        	
+		        </p:column>
 	        
-       </p:dataTable>       
+       		</p:dataTable>       
 		</h:form>     
    </ui:define>
 </ui:composition>

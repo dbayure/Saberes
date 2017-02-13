@@ -1,3 +1,19 @@
+/*
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.Saberes.rest;
 
 import java.util.List;
@@ -10,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
+import uy.com.antel.Saberes.data.TipoSaberListProducer;
 import uy.com.antel.Saberes.model.TipoSaber;
 /**
  * JAX-RS Example
@@ -22,18 +39,20 @@ public class TipoSaberResourceRESTService {
 	
    @Inject
    private EntityManager em;
+   
+   @Inject
+   private TipoSaberListProducer tslp;
 
    @GET
    @Produces("application/json")
    public List<TipoSaber> listAll() {
       // Use @SupressWarnings to force IDE to ignore warnings about "genericizing" the results of
       // this query
-      @SuppressWarnings("unchecked")
       // We recommend centralizing inline queries such as this one into @NamedQuery annotations on
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      final List<TipoSaber> results = em.createQuery("select c from TipoSaber c order by c.id").getResultList();
+      final List<TipoSaber> results = tslp.getTipoSaberes();
       return results;
    }
 

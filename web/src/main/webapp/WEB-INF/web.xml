@@ -1,89 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
- <display-name>Saberes-web</display-name>
- <context-param>
-  <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
-  <param-value>true</param-value>
- </context-param>
- <context-param>
-  <param-name>primefaces.THEME</param-name>
-  <param-value>bootstrap</param-value>
- </context-param>
- <filter>
-  <filter-name>PrimeFaces FileUpload Filter</filter-name>
-  <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
- </filter>
- <filter>
-  <display-name>FiltroLogin</display-name>
-  <filter-name>FiltroLogin</filter-name>
-  <filter-class>uy.com.antel.Saberes.filtro.FiltroLogin</filter-class>
- </filter>
- <filter-mapping>
-  <filter-name>PrimeFaces FileUpload Filter</filter-name>
-  <servlet-name>Faces Servlet</servlet-name>
- </filter-mapping>
- <filter-mapping>
-  <filter-name>FiltroLogin</filter-name>
-  <url-pattern>/paginas/persona/persona.jsf</url-pattern>
- </filter-mapping>
- <servlet>
-  <servlet-name>Faces Servlet</servlet-name>
-  <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-  <load-on-startup>1</load-on-startup>
- </servlet>
- <servlet-mapping>
-  <servlet-name>Faces Servlet</servlet-name>
-  <url-pattern>/faces/*</url-pattern>
- </servlet-mapping>
- <servlet-mapping>
-  <servlet-name>Faces Servlet</servlet-name>
-  <url-pattern>*.jsf</url-pattern>
- </servlet-mapping>
- <servlet-mapping>
-  <servlet-name>Faces Servlet</servlet-name>
-  <url-pattern>*.faces</url-pattern>
- </servlet-mapping>
- <servlet-mapping>
-  <servlet-name>Faces Servlet</servlet-name>
-  <url-pattern>*.xhtml</url-pattern>
- </servlet-mapping>
- <session-config>
-  <session-timeout>30</session-timeout>
- </session-config>
- <welcome-file-list>
-  <welcome-file>index.html</welcome-file>
- </welcome-file-list>
- <security-constraint>
-  <display-name>Autenticacion Formulario Saberes</display-name>
-  <web-resource-collection>
-   <web-resource-name>Area Segura</web-resource-name>
-   <url-pattern>/paginas/*</url-pattern>
-   <url-pattern>/login/*</url-pattern>
-  </web-resource-collection>
-  <auth-constraint>
-   <role-name>ADMIN</role-name>
-   <role-name>CONSULTA</role-name>
-   <role-name>BASICO</role-name>
-  </auth-constraint>
-  <user-data-constraint>
-   <transport-guarantee>NONE</transport-guarantee>
-  </user-data-constraint>
- </security-constraint>
- <login-config>
-  <auth-method>FORM</auth-method>
-  <form-login-config>
-   <form-login-page>/login/login.jsf</form-login-page>
-   <form-error-page>/login/error.jsf</form-error-page>
-  </form-login-config>
- </login-config>
- <security-role>
-  <role-name>ADMIN</role-name>
- </security-role>
- <security-role>
-  <role-name>CONSULTA</role-name>
- </security-role>
- <security-role>
-  <role-name>BASICO</role-name>
- </security-role>
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>Saberes-web</display-name>
+	<context-param>
+		<param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>delta</param-value>
+	</context-param>
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>commons</param-value>
+	</context-param>
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>/faces/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.jsf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<security-constraint>
+		<display-name>Autenticacion Formulario Saberes</display-name>
+		<web-resource-collection>
+			<web-resource-name>Area Segura</web-resource-name>
+			<url-pattern>/paginas/*</url-pattern>
+			<url-pattern>/login/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMIN</role-name>
+			<role-name>BASICO</role-name>
+			<role-name>VALIDADOR</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login/login.jsf</form-login-page>
+			<form-error-page>/login/login.jsf</form-error-page>
+		</form-login-config>
+	</login-config>
+	<security-role>
+		<role-name>ADMIN</role-name>
+	</security-role>
+	<security-role>
+		<role-name>BASICO</role-name>
+	</security-role>
+	<security-role>
+		<role-name>VALIDADOR</role-name>
+	</security-role>
+	<!-- web fonts -->
+	<mime-mapping>
+		<extension>eot</extension>
+		<mime-type>application/vnd.ms-fontobject</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>otf</extension>
+		<mime-type>font/opentype</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ttf</extension>
+		<mime-type>application/x-font-ttf</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>woff</extension>
+		<mime-type>application/x-font-woff</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>svg</extension>
+		<mime-type>image/svg+xml</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>ico</extension>
+		<mime-type>image/x-icon</mime-type>
+	</mime-mapping>
 </web-app>

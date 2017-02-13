@@ -1,0 +1,132 @@
+<!-- 
+SABERES - Registro de conocimientos, aptitudes del personal de la empresa
+Copyright (C) 2009  ANTEL
+This file is part of SABERES.
+SABERES is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+!-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <ui:composition>
+    <h:form>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="../../paginas/persona/principal.jsf">
+						<i class="fa fa-home" aria-hidden="true"></i>
+             		</a>
+                </div>
+                <div class="navbar-collapse collapse" >
+                    <h:panelGroup rendered="#{facesContext.externalContext.isUserInRole('ADMIN')}">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="dropdown">
+	                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+	                        	<span><i class="fa fa-cogs" aria-hidden="true"></i></span>
+	                        	Administar
+	        				</a>
+					        <ul class="dropdown-menu">
+					          <li>
+					          	<a href="../../paginas/rol/rol.jsf">
+                        		<span><i class="fa fa-users" aria-hidden="true"></i></span>
+					          		Roles
+					          	</a>
+					          </li>
+					          <li>
+					          	<a href="../../paginas/persona/asignaciones.jsf">
+                        		<span><i class="fa fa-user" aria-hidden="true"></i></span>
+					          		Permisos
+					          	</a>
+					          </li>
+					          <li>
+					          	<a href="../../paginas/persona/persona.jsf">
+                        		<span><i class="fa fa-user" aria-hidden="true"></i></span>
+					          		Usuarios
+					          	</a>
+					          </li>					          
+					          <li>
+					          	<a href="../../paginas/institucion/institucion.jsf">
+                        		<span><i class="fa fa-university" aria-hidden="true"></i></span>
+					          		Instituciones
+					          	</a>
+					          </li>
+					          <li>
+					          	<a href="../../paginas/tiposaber/tiposaber.jsf">
+                        		<span><i class="fa fa-sun-o" aria-hidden="true"></i></span>
+					          		Tipos de Saber
+					          	</a>
+					          	</li>
+					          <li>
+					          	<a href="../../paginas/saber/saber.jsf">
+                        		<span><i class="fa fa-lightbulb-o" aria-hidden="true"></i></span>
+					          		Saberes
+					          	</a>
+					          </li>
+					          <li>
+					          	<a href="../../paginas/origen/origen.jsf">
+                        		<span><i class="fa fa-star" aria-hidden="true"></i></span>
+					          		Origenes
+					          	</a>
+					          </li>
+					        </ul>
+					    </li>
+                        <li>
+                        	<a href="../../paginas/validacion/validacion.jsf">
+                        		<span><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+                        		Validación
+                        	</a>
+                        </li>
+                    </ul>
+               		</h:panelGroup> 
+	               <ul class="nav navbar-nav navbar-left">
+	               	<li>
+	               		<a href="../../paginas/ayuda/ayuda.jsf">
+	               			<span><i class="fa fa-question-circle" aria-hidden="true"></i></span> 
+	               			Ayuda
+	               		</a>
+	               	</li>
+	               	</ul>
+	               	<ul class="nav navbar-nav navbar-right">
+	 				<li>
+	 					<a href="#">
+	 						<span><i class="fa fa-user" aria-hidden="true"></i></span>
+	 							 Usuario: #{personaBean.usuario}
+	 					</a>
+	 				</li>
+	 				<li>
+	 					<a href="#">
+	 						<span><i class="fa fa-users" aria-hidden="true"></i></span>
+	 							 Rol: #{personaBean.rol.rol}
+	 					</a>
+	 				</li>
+
+	 				<li>
+	 					<p:commandLink action="#{sessionBean.logout()}">
+	 						<span><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+	 						Salir
+	 					</p:commandLink>
+	 				</li>
+				</ul>
+				</div>
+            </div>
+        </div>
+    </h:form>
+    </ui:composition>
+</html>
